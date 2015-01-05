@@ -17,6 +17,7 @@
     "passport-local": "*",
     "knex": "*",
     "bookshelf": "*",
-    "pg": "*"
+    "pg": "*",
+    "express-session": "*"
   }
 }
