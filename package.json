@@ -18,6 +18,8 @@
     "knex": "*",
     "bookshelf": "*",
     "pg": "*",
-    "express-session": "*"
+    "express-session": "*",
+    "bcrypt-nodejs": "*",
+    "ejs": "*"
   }
 }
