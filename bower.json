@@ -1,0 +1,12 @@
+{
+	"name": "associations",
+	"version": "0.0.0",
+	"private": true,
+	"dependencies": {
+		"angular": "*",
+		"angular-route": "*",
+		"angular-loader": "*",
+		"angular-mocks": "*",
+		"html5-boilerplate": "*"
+	}
+}
