@@ -4,6 +4,7 @@
 	"private": true,
 	"dependencies": {
 		"angular": "*",
+		"bootstrap": "*",
 		"angular-route": "*",
 		"angular-loader": "*",
 		"angular-mocks": "*",
