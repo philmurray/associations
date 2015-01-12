@@ -16,8 +16,7 @@
         "bookshelf": "*",
         "pg": "*",
         "express-session": "*",
-        "bcrypt-nodejs": "*",
-        "ejs": "*"
+        "bcrypt-nodejs": "*"
     },
     "devDependencies": {
         "karma": "*",
