@@ -14,7 +14,7 @@ angular.module('associations.components.login', [
 				return LoginService.login().then(function(){
 					return $http(response.config);
 				}).catch(function(){
-					$location.path = "/";
+					$location.path("/");
 					return response;
 				});
 			}
