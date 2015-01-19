@@ -2,16 +2,13 @@
 
 angular.module('associations.pages.main.components.nav',[])
 
-.directive("MainNavigation", ["$window", function ($window) {
+.directive("mainNavigation", ["$window", function ($window) {
 	return {
 		restrict: 'EA',
+		templateUrl: "pages/main/components/nav.html",
 		scope: {},
 		link: function(scope, element, attrs) {
-			var svg = d3.select(element[0])
-					.append('svg')
-					.style('width', '100%')
-					.style('height', '100%'),
-				w = angular.element($window);
+			var w = angular.element($window);
 
 			// Browser onresize event
 			w.bind('resize', function () {
@@ -26,10 +23,10 @@ angular.module('associations.pages.main.components.nav',[])
 				};
 			}, function() {
 				scope.render();
-			});
+			},true);
 
 			scope.render = function() {
-				// our custom d3 code
+				debugger;
 			};
-		}};
+	}};
 }]);
