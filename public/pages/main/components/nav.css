@@ -5,19 +5,52 @@
 }
 
 #navContainer .node-title {
-	-webkit-border-radius: 1px;
-	border-radius: 1px;
-	-webkit-box-shadow: 0 0 0 11px #999999;
-	box-shadow: 0 0 0 5px #999999;
-	text-shadow: 1px 1px 1px #ABABAB;
+	width: 300px;
+	height: 120px;
+	background: white;
+
+	text-align: center;
+	line-height: 120px;
 	position: absolute;
+}
+#navContainer .node-title label {
+	font: bold 30px arial, sans-serif;
+
+	display: inline-block;
+	vertical-align: middle;
+	line-height: normal;
 }
 
 #navContainer .node-word {
-	-webkit-border-radius: 1px;
-	border-radius: 1px;
-	-webkit-box-shadow: 0 0 0 11px #999999;
-	box-shadow: 0 0 0 5px #999999;
-	text-shadow: 1px 1px 1px #ABABAB;
+	width: 100px;
+	height: 30px;
+	background: grey;
+
+	text-align: center;
+	line-height: 30px;
 	position: absolute;
+}
+#navContainer .node-word label {
+	font: 12px arial, sans-serif;
+
+	display: inline-block;
+	vertical-align: middle;
+	line-height: normal;
+}
+
+#navContainer .node-link {
+	width: 100px;
+	height: 100px;
+	background: white;
+
+	text-align: center;
+	line-height: 100px;
+	position: absolute;
+}
+#navContainer .node-link a {
+	font: 18px arial, sans-serif;
+
+	display: inline-block;
+	vertical-align: middle;
+	line-height: normal;
 }

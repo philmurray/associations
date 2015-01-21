@@ -1,7 +1,21 @@
 <div id="navContainer">
 
-	<label id="title" class="node-title">
-		Associations
-	</label>
+	<div ng-repeat="word in model.words" class="node-word" id="word{{word}}">
+		<label>
+			{{word}}
+		</label>
+	</div>
+
+	<div class="node-title" id="title{{model.title}}">
+		<label>
+			{{model.title}}
+		</label>
+	</div>
+
+	<div ng-repeat="link in model.links" class="node-link" id="link{{link.id}}">
+		<a href="{{link.href}}">
+			{{link.text}}
+		</a>
+	</div>
 
 </div>
