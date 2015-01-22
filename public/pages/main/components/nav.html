@@ -1,21 +1,15 @@
 <div id="navContainer">
 
-	<div ng-repeat="word in model.words" class="node-word" id="word{{word}}">
-		<label>
-			{{word}}
-		</label>
-	</div>
+	<label ng-repeat="word in model.words" class="node-word" id="{{word.id}}">
+		{{word.text}}
+	</label>
 
-	<div class="node-title" id="title{{model.title}}">
-		<label>
-			{{model.title}}
-		</label>
-	</div>
+	<label class="node-title" id="{{model.title.id}}">
+		{{model.title.text}}
+	</label>
 
-	<div ng-repeat="link in model.links" class="node-link" id="link{{link.id}}">
-		<a href="{{link.href}}">
-			{{link.text}}
-		</a>
-	</div>
+	<a href="{{link.href}}"  ng-repeat="link in model.links" class="node-link" id="{{link.id}}">
+		{{link.text}}
+	</a>
 
 </div>

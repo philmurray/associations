@@ -28,3 +28,6 @@ public/bower_components
 
 # Users Environment Variables
 .lock-wscript
+
+.settings
+.c9revisions

@@ -28,12 +28,6 @@ angular.module('associations.pages.main.components.nav',[])
 				$scope.render();
 			},true);
 
-			$scope.center = function(container, ele) {
-				ele.style.left = (container.clientWidth - ele.offsetWidth)/2 + 'px';
-				ele.style.top = (container.clientHeight - ele.offsetHeight)/2 + 'px';
-			};
-
-
 			var MyForceDirected = function() {
 				Springy.Layout.ForceDirected.apply(this, Array.prototype.slice.call(arguments, 0));
 			};
@@ -51,12 +45,21 @@ angular.module('associations.pages.main.components.nav',[])
 			MyForceDirected.prototype.point = function(node) {
 				if (!(node.id in this.nodePoints)) {
 					var mass = (node.data.mass !== undefined) ? node.data.mass : 1.0;
-					var point = node.data.fixed || new Springy.Vector(Math.random(),Math.random());
+					var point = node.data.initial || Springy.Vector.random();
 					this.nodePoints[node.id] = new Springy.Layout.ForceDirected.Point(point, mass);
 				}
 
 				return this.nodePoints[node.id];
 			};
+
+			var plumbInstance = jsPlumb.getInstance({
+				Container:element.querySelector('#navContainer'),
+				Anchor:"AutoDefault",
+				Connector: "Straight",
+				Endpoints: ["Dot","Blank"],
+				Overlays: [["Arrow", {location:1}]]
+
+			});
 
 			$scope.render = function() {
 				var toScreen = function(p) {
@@ -72,6 +75,7 @@ angular.module('associations.pages.main.components.nav',[])
 						ele.style.left = (p.x - ele.offsetWidth/2) + 'px';
 						ele.style.top = (p.y - ele.offsetHeight/2) + 'px';
 					});
+					plumbInstance.repaintEverything();
 				};
 
 				// make a new graph
@@ -81,16 +85,21 @@ angular.module('associations.pages.main.components.nav',[])
 
 						//add nodes
 						var nodes = {};
-						nodes[$scope.model.title] = $scope.graph.newNode({element: element.querySelector('#title' + $scope.model.title), fixed: new Springy.Vector(0,0)});
-						$scope.model.words.forEach(function(word){
-							nodes[word] = $scope.graph.newNode({element: element.querySelector('#word' + word)});
-						});
-						$scope.model.links.forEach(function(link){
-							nodes[link.id] = $scope.graph.newNode({element: element.querySelector('#link' + link.id)});
-						});
+						var addNode = function(node){
+							nodes[node.id] = $scope.graph.newNode({
+								element: element.querySelector('#' + node.id),
+								initial: node.initial ? new Springy.Vector(node.initial.x, node.initial.y) : undefined,
+								fixed: node.fixed
+							});
+						};
+						addNode($scope.model.title,true);
+						$scope.model.words.forEach(addNode);
+						$scope.model.links.forEach(addNode);
+
 
 						$scope.model.connections.forEach(function(connection){
 							$scope.graph.newEdge(nodes[connection.from], nodes[connection.to]);
+							plumbInstance.connect({source:nodes[connection.from].data.element, target:nodes[connection.to].data.element});
 						});
 
 						$scope.layout = new MyForceDirected($scope.graph,50.0, 10.0, 0.75, 0.01);

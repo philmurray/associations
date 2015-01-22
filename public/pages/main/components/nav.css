@@ -5,52 +5,79 @@
 }
 
 #navContainer .node-title {
-	width: 300px;
-	height: 120px;
+    padding: 5px;
 	background: white;
-
-	text-align: center;
-	line-height: 120px;
-	position: absolute;
-}
-#navContainer .node-title label {
 	font: bold 30px arial, sans-serif;
+    border-radius: 25px;
 
-	display: inline-block;
-	vertical-align: middle;
-	line-height: normal;
+	position: absolute;
+	z-index:20;
 }
 
 #navContainer .node-word {
-	width: 100px;
-	height: 30px;
-	background: grey;
-
-	text-align: center;
-	line-height: 30px;
-	position: absolute;
-}
-#navContainer .node-word label {
+    padding: 5px;
+	background: lightgrey;
 	font: 12px arial, sans-serif;
+    border-radius: 5px;
 
-	display: inline-block;
-	vertical-align: middle;
-	line-height: normal;
+	position: absolute;
+	z-index:20;
 }
 
 #navContainer .node-link {
-	width: 100px;
-	height: 100px;
+    padding: 5px;
 	background: white;
-
-	text-align: center;
-	line-height: 100px;
-	position: absolute;
-}
-#navContainer .node-link a {
 	font: 18px arial, sans-serif;
+    border-radius: 10px;
 
-	display: inline-block;
-	vertical-align: middle;
-	line-height: normal;
+	position: absolute;
+	z-index:20;
+}
+._jsPlumb_connector { z-index:4; }
+._jsPlumb_connector * { stroke:white; fill:white; stroke-width:4px }
+
+._jsPlumb_endpoint { z-index:5; }
+._jsPlumb_endpoint * { stroke:white; fill:white }
+._jsPlumb_overlay { z-index:6; }
+
+@media (min-width: 768px) {
+    #navContainer .node-title {
+        padding: 10px;
+    }
+
+    #navContainer .node-word {
+        padding: 10px;
+    }
+
+    #navContainer .node-link {
+        padding: 10px;
+    }
+}
+
+@media (min-width: 992px) {
+    #navContainer .node-title {
+        padding: 15px;
+    }
+
+    #navContainer .node-word {
+        padding: 15px;
+    }
+
+    #navContainer .node-link {
+        padding: 15px;
+    }
+}
+
+@media (min-width: 1200px) {
+    #navContainer .node-title {
+        padding: 20px;
+    }
+
+    #navContainer .node-word {
+        padding: 20px;
+    }
+
+    #navContainer .node-link {
+        padding: 20px;
+    }
 }

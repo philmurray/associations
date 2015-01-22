@@ -9,6 +9,7 @@
 	"afterEach": false,
 	"module": false,
 	"inject": false,
-	"Springy": false
+	"Springy": false,
+	"jsPlumb": false
 }
 }
