@@ -34,10 +34,16 @@
 	z-index:20;
 }
 ._jsPlumb_connector { z-index:4; }
-._jsPlumb_connector * { stroke:white; fill:white; stroke-width:4px }
+._jsPlumb_connector * {
+	stroke:lightblue;
+	fill:lightblue;
+}
 
 ._jsPlumb_endpoint { z-index:5; }
-._jsPlumb_endpoint * { stroke:white; fill:white }
+._jsPlumb_endpoint circle {
+	stroke:lightblue;
+	fill:lightblue;
+}
 ._jsPlumb_overlay { z-index:6; }
 
 @media (min-width: 768px) {
@@ -74,10 +80,10 @@
     }
 
     #navContainer .node-word {
-        padding: 20px;
+        padding: 20px, 15px;
     }
 
     #navContainer .node-link {
-        padding: 20px;
+        padding: 20px, 15px;
     }
 }

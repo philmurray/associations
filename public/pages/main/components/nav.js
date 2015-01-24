@@ -54,10 +54,9 @@ angular.module('associations.pages.main.components.nav',[])
 
 			var plumbInstance = jsPlumb.getInstance({
 				Container:element.querySelector('#navContainer'),
-				Anchor:"AutoDefault",
-				Connector: "Straight",
-				Endpoints: ["Dot","Blank"],
-				Overlays: [["Arrow", {location:1}]]
+				Connector: "StateMachine",
+				Endpoints: [["Dot",{radius:7, cssClass:"endpoint"}],"Blank"],
+				Overlays: [["PlainArrow", {cssClass:"arrow", width: 15, length: 15, location:1}]]
 
 			});
 
@@ -98,11 +97,15 @@ angular.module('associations.pages.main.components.nav',[])
 
 
 						$scope.model.connections.forEach(function(connection){
-							$scope.graph.newEdge(nodes[connection.from], nodes[connection.to]);
-							plumbInstance.connect({source:nodes[connection.from].data.element, target:nodes[connection.to].data.element});
+							$scope.graph.newEdge(nodes[connection.from.id], nodes[connection.to.id]);
+							plumbInstance.connect({
+								source:nodes[connection.from.id].data.element,
+								target:nodes[connection.to.id].data.element,
+								anchor:[connection.from.anchor, connection.to.anchor]
+							});
 						});
 
-						$scope.layout = new MyForceDirected($scope.graph,50.0, 10.0, 0.75, 0.01);
+						$scope.layout = new MyForceDirected($scope.graph,50.0, 10.0, 0.85, 0.07);
 						$scope.layout.start(render);
 
 					});

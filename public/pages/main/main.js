@@ -5,15 +5,28 @@ angular.module('associations.pages.main',["associations.pages.main.components.na
 .controller("MainController", ["$scope", function ($scope) {
 	$scope.nav = {
 		words: [
-			{id:'Play',text:"Play",initial:{x:0,y:-0.5}},
-			{id:'Explore',text:"Explore",initial:{x:-0.5,y:0.5}},
-			{id:'Me',text:"Me",initial:{x:0.5,y:0.5}},
+			{
+				id:'Play',
+				text:"Play",
+				initial:{x:0,y:-0.5}
+			},
+			{
+				id:'Explore',
+				text:"Explore",
+				initial:{x:-0.5,y:0.5}
+			},
+			{
+				id:'Me',
+				text:"Me",
+				initial:{x:0.5,y:0.5}
+			}
 		],
 		links:[{
 			id: "playerProfile",
 			href: "#/playerProfile",
 			text: "Profile",
-			initial:{x:1,y:1}
+			initial:{x:1,y:1},
+			anchor: ""
 		},{
 			id: "playerStatistics",
 			href: "#/playerStatistics",
@@ -40,43 +53,102 @@ angular.module('associations.pages.main',["associations.pages.main.components.na
 			text: "Multiplayer",
 			initial:{x:0.5,y:-0.5}
 		}],
-		title: {id:"Associations",text:"Associations",initial:{x:0,y:0},fixed:true},
+		title: {
+			id:"Associations",
+			text:"Associations",
+			initial:{x:0,y:0},
+			fixed:true
+		},
 		connections: [
 			{
-				from: "Associations",
-				to: "Play"
+				from: {
+					id:"Associations",
+					anchor:"Top"
+				},
+				to: {
+					id:"Play",
+					anchor:"Bottom"
+				}
 			},
 			{
-				from: "Associations",
-				to: "Explore"
+				from: {
+					id:"Associations",
+					anchor:"Left"
+				},
+				to: {
+					id:"Explore",
+					anchor:"Right"
+				}
 			},
 			{
-				from: "Associations",
-				to: "Me"
+				from: {
+					id:"Associations",
+					anchor:"Right"
+				},
+				to: {
+					id:"Me",
+					anchor:"Left"
+				}
 			},
 			{
-				from: "Explore",
-				to: "exploreWords"
+				from: {
+					id:"Explore",
+					anchor:"Bottom"
+				},
+				to: {
+					id:"exploreWords",
+					anchor:"Top"
+				}
 			},
 			{
-				from: "Explore",
-				to: "exploreStatistics"
+				from: {
+					id:"Explore",
+					anchor:"Left"
+				},
+				to: {
+					id:"exploreStatistics",
+					anchor:"Right"
+				}
 			},
 			{
-				from: "Me",
-				to: "playerProfile"
+				from: {
+					id:"Me",
+					anchor:"Bottom"
+				},
+				to: {
+					id:"playerProfile",
+					anchor:"Top"
+				}
 			},
 			{
-				from: "Me",
-				to: "playerStatistics"
+				from: {
+					id:"Me",
+					anchor:"Right"
+				},
+				to: {
+					id:"playerStatistics",
+					anchor:"Left"
+				}
 			},
 			{
-				from: "Play",
-				to: "singleGame"
+				from: {
+					id:"Play",
+					anchor:"Top"
+				},
+				to: {
+					id:"singleGame",
+					anchor:"Bottom"
+				}
 			},
 			{
-				from: "Play",
-				to: "multiGame"
+				from: {
+					id:"Play",
+					anchor:"Top"
+				},
+				to: {
+					id:"multiGame",
+					anchor:"Bottom"
+				}
 			}
 		]
 	};
