@@ -4,7 +4,7 @@
 
 -- Dumped from database version 9.3.5
 -- Dumped by pg_dump version 9.3.5
--- Started on 2015-01-26 06:59:12 EST
+-- Started on 2015-01-26 16:53:47 EST
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -14,7 +14,7 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- TOC entry 2016 (class 1262 OID 16385)
+-- TOC entry 2026 (class 1262 OID 16385)
 -- Name: associations; Type: DATABASE; Schema: -; Owner: associations_dbuser
 --
 
@@ -33,7 +33,7 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- TOC entry 175 (class 3079 OID 11787)
+-- TOC entry 177 (class 3079 OID 11787)
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
 --
 
@@ -41,8 +41,8 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 2019 (class 0 OID 0)
--- Dependencies: 175
+-- TOC entry 2029 (class 0 OID 0)
+-- Dependencies: 177
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
 
@@ -50,7 +50,7 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
 --
--- TOC entry 176 (class 3079 OID 16387)
+-- TOC entry 178 (class 3079 OID 16387)
 -- Name: uuid-ossp; Type: EXTENSION; Schema: -; Owner: 
 --
 
@@ -58,8 +58,8 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
 
 
 --
--- TOC entry 2020 (class 0 OID 0)
--- Dependencies: 176
+-- TOC entry 2030 (class 0 OID 0)
+-- Dependencies: 178
 -- Name: EXTENSION "uuid-ossp"; Type: COMMENT; Schema: -; Owner: 
 --
 
@@ -83,6 +83,50 @@ CREATE TABLE games (
 
 
 ALTER TABLE public.games OWNER TO associations_dbuser;
+
+--
+-- TOC entry 172 (class 1259 OID 16415)
+-- Name: usf_norms; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+CREATE TABLE usf_norms (
+    "from" text NOT NULL,
+    "to" text NOT NULL,
+    "group" integer DEFAULT 0 NOT NULL,
+    pick integer DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE public.usf_norms OWNER TO associations_dbuser;
+
+--
+-- TOC entry 175 (class 1259 OID 16451)
+-- Name: graph_nodes; Type: VIEW; Schema: public; Owner: associations_dbuser
+--
+
+CREATE VIEW graph_nodes AS
+ SELECT DISTINCT usf_norms."from" AS node
+   FROM usf_norms
+UNION
+ SELECT DISTINCT usf_norms."to" AS node
+   FROM usf_norms;
+
+
+ALTER TABLE public.graph_nodes OWNER TO associations_dbuser;
+
+--
+-- TOC entry 176 (class 1259 OID 16464)
+-- Name: graph_rels; Type: VIEW; Schema: public; Owner: associations_dbuser
+--
+
+CREATE VIEW graph_rels AS
+ SELECT usf_norms."from",
+    usf_norms."to",
+    ((usf_norms.pick)::double precision / (usf_norms."group")::double precision) AS score
+   FROM usf_norms;
+
+
+ALTER TABLE public.graph_rels OWNER TO associations_dbuser;
 
 --
 -- TOC entry 174 (class 1259 OID 16431)
@@ -130,22 +174,7 @@ CREATE TABLE users (
 ALTER TABLE public.users OWNER TO associations_dbuser;
 
 --
--- TOC entry 172 (class 1259 OID 16415)
--- Name: usf_norms; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
---
-
-CREATE TABLE usf_norms (
-    "from" text NOT NULL,
-    "to" text NOT NULL,
-    pick integer DEFAULT 0 NOT NULL,
-    "group" integer DEFAULT 0 NOT NULL
-);
-
-
-ALTER TABLE public.usf_norms OWNER TO associations_dbuser;
-
---
--- TOC entry 1900 (class 2606 OID 16430)
+-- TOC entry 1908 (class 2606 OID 16430)
 -- Name: games_pkey; Type: CONSTRAINT; Schema: public; Owner: associations_dbuser; Tablespace: 
 --
 
@@ -154,7 +183,7 @@ ALTER TABLE ONLY games
 
 
 --
--- TOC entry 1902 (class 2606 OID 16439)
+-- TOC entry 1910 (class 2606 OID 16439)
 -- Name: picks_pkey; Type: CONSTRAINT; Schema: public; Owner: associations_dbuser; Tablespace: 
 --
 
@@ -163,7 +192,7 @@ ALTER TABLE ONLY picks
 
 
 --
--- TOC entry 1896 (class 2606 OID 16414)
+-- TOC entry 1904 (class 2606 OID 16414)
 -- Name: session_pkey; Type: CONSTRAINT; Schema: public; Owner: associations_dbuser; Tablespace: 
 --
 
@@ -172,7 +201,7 @@ ALTER TABLE ONLY session
 
 
 --
--- TOC entry 1894 (class 2606 OID 16406)
+-- TOC entry 1902 (class 2606 OID 16406)
 -- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: associations_dbuser; Tablespace: 
 --
 
@@ -181,7 +210,7 @@ ALTER TABLE ONLY users
 
 
 --
--- TOC entry 1898 (class 2606 OID 16424)
+-- TOC entry 1906 (class 2606 OID 16424)
 -- Name: usf_norms_pkey; Type: CONSTRAINT; Schema: public; Owner: associations_dbuser; Tablespace: 
 --
 
@@ -190,7 +219,7 @@ ALTER TABLE ONLY usf_norms
 
 
 --
--- TOC entry 1903 (class 2606 OID 16440)
+-- TOC entry 1911 (class 2606 OID 16440)
 -- Name: picks_gameId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: associations_dbuser
 --
 
@@ -199,7 +228,7 @@ ALTER TABLE ONLY picks
 
 
 --
--- TOC entry 1904 (class 2606 OID 16445)
+-- TOC entry 1912 (class 2606 OID 16445)
 -- Name: picks_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: associations_dbuser
 --
 
@@ -208,7 +237,7 @@ ALTER TABLE ONLY picks
 
 
 --
--- TOC entry 2018 (class 0 OID 0)
+-- TOC entry 2028 (class 0 OID 0)
 -- Dependencies: 6
 -- Name: public; Type: ACL; Schema: -; Owner: postgres
 --
@@ -220,7 +249,7 @@ GRANT ALL ON SCHEMA public TO PUBLIC;
 GRANT ALL ON SCHEMA public TO associations_dbuser;
 
 
--- Completed on 2015-01-26 06:59:12 EST
+-- Completed on 2015-01-26 16:53:48 EST
 
 --
 -- PostgreSQL database dump complete

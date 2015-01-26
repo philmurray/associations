@@ -12,7 +12,7 @@ urls[7]="http://w3.usf.edu/FreeAssociation/AppendixA/Cue_Target_Pairs.T-Z"
 
 for p in "${urls[@]}"
 do
-	curl "$p" | tail -n+5 | head -n-3 | cut -d , -f 1-2,4-5 | tr '[:upper:]' '[:lower:]'
+	curl "$p" | tail -n+5 | head -n-3 | cut -d , -f 1-2,4-5 | tr -d '[:blank:]' | tr '[:upper:]' '[:lower:]'
 done
 
 
