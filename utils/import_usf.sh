@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#urls[0]="http://w3.usf.edu/FreeAssociation/AppendixA/Cue_Target_Pairs.A-B"
+urls[0]="http://w3.usf.edu/FreeAssociation/AppendixA/Cue_Target_Pairs.A-B"
 urls[1]="http://w3.usf.edu/FreeAssociation/AppendixA/Cue_Target_Pairs.C"
 urls[2]="http://w3.usf.edu/FreeAssociation/AppendixA/Cue_Target_Pairs.D-F"
 urls[3]="http://w3.usf.edu/FreeAssociation/AppendixA/Cue_Target_Pairs.G-K"
