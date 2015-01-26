@@ -52,12 +52,7 @@ angular.module('associations.pages.main.components.nav',[])
 				return this.nodePoints[node.id];
 			};
 
-			var plumbInstance = jsPlumb.getInstance({
-				Container:element.querySelector('#navContainer'),
-				Connector: "StateMachine",
-				Endpoints: [["Dot",{radius:7, cssClass:"endpoint"}],"Blank"],
-				Overlays: [["PlainArrow", {cssClass:"arrow", width: 15, length: 15, location:1}]]
-
+			jsPlumb.ready(function(){
 			});
 
 			$scope.render = function() {
@@ -66,6 +61,7 @@ angular.module('associations.pages.main.components.nav',[])
 					var sy = element.offsetHeight/2 + (element.offsetHeight/10) * p.y;
 					return new Springy.Vector(sx, sy);
 				},
+				plumbInstance,
 				render = function render() {
 					$scope.layout.eachNode(function(node, point) {
 						var ele = node.data.element,
@@ -80,6 +76,13 @@ angular.module('associations.pages.main.components.nav',[])
 				// make a new graph
 				if (!$scope.layout){
 					$timeout(function(){
+						plumbInstance = plumbInstance || jsPlumb.getInstance({
+							Container:element.querySelector('#navContainer'),
+							Connector: "StateMachine",
+							Endpoints: [["Dot",{radius:7, cssClass:"endpoint"}],"Blank"],
+							Overlays: [["PlainArrow", {cssClass:"arrow", width: 15, length: 15, location:1}]]
+						});
+
 						$scope.graph = new Springy.Graph();
 
 						//add nodes
