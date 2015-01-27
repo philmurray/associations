@@ -19,10 +19,15 @@ public class App
     public static String getNeo4jUrl() {
         String var =  System.getenv("NEO4J_URL");
         if(var == null || var.isEmpty()) {
-            return DEFAULT_NEO4J_URL;
+            var = DEFAULT_NEO4J_URL;
         }
-        return var;
+        return var.replace("http://","jdbc:neo4j://");
     }
+
+    public static String getPgUrl() {
+        return "jdbc:postgresql://" + App.getPgDbHost() + ":" + App.getPgDbPort() + "/" + App.getPgDbName();
+    }
+
     public static String getPgDbHost() {
         String var =  System.getenv("PG_DB_HOST");
         if(var == null || var.isEmpty()) {
@@ -59,34 +64,105 @@ public class App
         return var;
     }
 
-    public static void main( String[] args )
+    public static void main( String[] args ) throws Exception
     {
-        Connection neo4j_connection;
-        Connection pg_connection;
+        Connection neo4j_connection = null;
+        Connection pg_connection = null;
+        Statement createConstraint = null;
+        Statement createIndex = null;
+        PreparedStatement updateNodes = null;
+        PreparedStatement updateRels = null;
+        Statement getNodes = null;
+        Statement getRels = null;
+        ResultSet nodes = null;
+        ResultSet rels = null;
+
         try {
-            neo4j_connection = DriverManager.getConnection(App.getNeo4jUrl().replace("http://","jdbc:neo4j://"));
-            pg_connection = DriverManager.getConnection("jdbc:postgresql://" + App.getPgDbHost() + ":" + App.getPgDbPort() + "/" + App.getPgDbName(),App.getPgDbUser(),App.getPgDbPassword());
+            System.out.println("connecting to databases: ");
 
-            Statement st = pg_connection.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM graph_nodes");
-            while (rs.next())
-            {
-                //add or update all nodes in neo4j
-            }
-            rs.close();
-            st.close();
+            System.out.println(App.getNeo4jUrl());
+            neo4j_connection = DriverManager.getConnection(App.getNeo4jUrl());
+            System.out.println(App.getPgUrl());
+            pg_connection = DriverManager.getConnection(App.getPgUrl(),App.getPgDbUser(),App.getPgDbPassword());
 
-            Statement st = pg_connection.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM graph_rels");
-            while (rs.next())
+            System.out.println("creating constraints");
+            createConstraint = neo4j_connection.createStatement();
+            createConstraint.executeUpdate("CREATE CONSTRAINT ON (word:Word) ASSERT word.Text IS UNIQUE");
+            createConstraint.close();
+
+            System.out.println("creating indexes");
+            createIndex = neo4j_connection.createStatement();
+            createIndex.executeUpdate("CREATE INDEX ON :Word(text)");
+            createIndex.close();
+
+            neo4j_connection.setAutoCommit(false);
+
+
+            System.out.println("updating nodes");
+            updateNodes = neo4j_connection.prepareStatement("MERGE (word:Word { text: {1} })");
+            getNodes = pg_connection.createStatement();
+            nodes = getNodes.executeQuery("SELECT * FROM graph_nodes");
+            while (nodes.next())
             {
-                //add or update all relationships in neo4j
+                updateNodes.setString(1, nodes.getString("node"));
+                updateNodes.executeUpdate();
             }
-            rs.close();
-            st.close();
+            updateNodes.close();
+            nodes.close();
+            getNodes.close();
+
+            System.out.println("updating relationships");
+            updateRels = neo4j_connection.prepareStatement("MATCH (from:Word { text: {1} }),(to:Word { text: {2}}) MERGE from-[r:Association {score:{3}}]->to");
+            getRels = pg_connection.createStatement();
+            rels = getRels.executeQuery("SELECT * FROM graph_rels");
+            while (rels.next())
+            {
+                updateRels.setString(1, rels.getString("from"));
+                updateRels.setString(2, rels.getString("to"));
+                updateRels.setFloat(3, rels.getFloat("score"));
+                updateRels.executeUpdate();
+            }
+            updateRels.close();
+            rels.close();
+            getRels.close();
+
+            neo4j_connection.commit();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
+        } finally {
+            if (neo4j_connection != null){
+                neo4j_connection.close();
+            }
+            if (pg_connection != null){
+                pg_connection.close();
+            }
+            if (createConstraint != null){
+                createConstraint.close();
+            }
+            if (createIndex != null){
+                createIndex.close();
+            }
+            if (updateNodes != null){
+                updateNodes.close();
+            }
+            if (updateRels != null){
+                updateRels.close();
+            }
+            if (getNodes != null){
+                getNodes.close();
+            }
+            if (getRels != null){
+                getRels.close();
+            }
+            if (nodes != null){
+                nodes.close();
+            }
+            if (rels != null){
+                rels.close();
+            }
+
+            neo4j_connection.setAutoCommit(true);
         }
 
     }
