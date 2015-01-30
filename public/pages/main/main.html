@@ -1,3 +1,15 @@
-<div main-navigation nav-model="nav" >
+<div diagram diagram-model="model" diagram-config="config" >
+
+	<label ng-repeat="node in model.nodes | filter:{word:true}" class="node-word" id="{{node.id}}">
+		{{node.text}}
+	</label>
+
+	<label ng-repeat="node in model.nodes | filter:{title:true}" class="node-title" id="{{node.id}}">
+		{{node.text}}
+	</label>
+
+	<a href="{{node.href}}"  ng-repeat="node in model.nodes | filter:{link:true}" class="node-link" id="{{node.id}}">
+		{{node.text}}
+	</a>
 
 </div>
