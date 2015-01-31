@@ -4,7 +4,7 @@ angular.module('associations',
 	[
 		'ngRoute',
 		'associations.pages.main',
-		'associations.pages.explore',
+		'associations.pages.exploreWords',
 		'associations.pages.profile',
 		'associations.components.login',
 	])
@@ -26,9 +26,9 @@ angular.module('associations',
 				controller: 'ProfileController',
 				resolve: authenticatedRoute
 			})
-			.when('/explore', {
-				templateUrl: 'pages/explore/explore.html',
-				controller: 'ExploreController'
+			.when('/exploreWords', {
+				templateUrl: 'pages/exploreWords/exploreWords.html',
+				controller: 'ExploreWordsController'
 			})
 			.otherwise({redirectTo: '/'});
 

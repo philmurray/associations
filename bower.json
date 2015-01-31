@@ -4,10 +4,12 @@
   "private": true,
   "dependencies": {
     "angular": "*",
+    "angular-sanitize": "*",
     "bootstrap": "*",
     "angular-route": "*",
     "angular-mocks": "*",
     "angular-ui-bootstrap-bower": "*",
+    "angular-ui-select":"*",
     "springy": "*",
     "jsplumb":"*"
   },

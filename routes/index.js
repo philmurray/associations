@@ -2,7 +2,8 @@
 
 var express = require('express'),
     router = express.Router(),
-    passport = require('passport');
+    passport = require('passport'),
+    Word = require('../lib/models').Word;
 
 var isAuthenticated = function (req, res, next) {
     if (req.isAuthenticated())
@@ -22,6 +23,13 @@ router.get('/rpc/logout', function(req, res) {
 
 router.get('/rpc/user', isAuthenticated, function(req, res){
     res.json(res.user);
+});
+
+router.get('/rpc/word', function(req,res){
+    Word.search(req.query.text || "", 10, function(err, words){
+        if (err){ return res.status(500).send(err.message); }
+        res.json(words);
+    });
 });
 
 module.exports = router;
