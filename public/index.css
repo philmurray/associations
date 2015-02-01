@@ -21,7 +21,22 @@ body {
 	height:100%;
 }
 
-
+.page-menu {
+	position: absolute;
+	width: 100%;
+	height: 50px;
+	z-index: 100;
+}
+.page-menu-left {
+	line-height: 50px;
+	float: left;
+	padding: 0 15px 0 15px;
+}
+.page-menu-right {
+	line-height: 50px;
+	float: right;
+	padding: 0 15px 0 15px;
+}
 
 .node-title {
 	padding: 5px;

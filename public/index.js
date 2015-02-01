@@ -28,7 +28,8 @@ angular.module('associations',
 			})
 			.when('/exploreWords', {
 				templateUrl: 'pages/exploreWords/exploreWords.html',
-				controller: 'ExploreWordsController'
+				controller: 'ExploreWordsController',
+				reloadOnSearch: false
 			})
 			.otherwise({redirectTo: '/'});
 

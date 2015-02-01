@@ -5,7 +5,7 @@ angular.module('associations.pages.exploreWords',[
 	"associations.components.diagram"
 	])
 
-.controller("ExploreWordsController", ["$scope", function ($scope) {
+.controller("ExploreWordsController", ["$scope", "$location", function ($scope, $location) {
 	var word = {
 		id: "word",
 		initial: {
@@ -18,9 +18,10 @@ angular.module('associations.pages.exploreWords',[
 	$scope.diagramConfig = {};
 
 	$scope.selected = {
-		word:""
+		word:$location.search().word || ""
 	};
 	$scope.$watch("selected.word", function(word){
-		console.log(word);
+		$location.search("word", word).replace();
+		// run webservice call to get words
 	});
 }]);
