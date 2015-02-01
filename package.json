@@ -9,7 +9,6 @@
         "morgan": "*",
         "serve-favicon": "*",
         "debug": "*",
-        "jade": "*",
         "passport": "*",
         "passport-local": "*",
         "knex": "*",

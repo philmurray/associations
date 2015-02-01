@@ -1,6 +1,7 @@
 {
 "globalstrict": true,
 "globals": {
+	"process": false,
 	"require": false,
 	"angular": false,
 	"describe": false,

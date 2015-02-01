@@ -7,6 +7,7 @@
     "angular-sanitize": "*",
     "bootstrap": "*",
     "angular-route": "*",
+    "angular-animate": "*",
     "angular-mocks": "*",
     "angular-ui-bootstrap-bower": "*",
     "angular-ui-select":"*",

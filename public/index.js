@@ -2,6 +2,7 @@
 
 angular.module('associations',
 	[
+		'ngAnimate',
 		'ngRoute',
 		'associations.pages.main',
 		'associations.pages.exploreWords',
