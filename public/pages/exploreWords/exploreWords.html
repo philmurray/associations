@@ -1,9 +1,5 @@
-<div diagram diagram-model="model" diagram-config="config" >
-
-	<ui-select id="word" ng-model="selectedWord" theme="bootstrap">
-		<ui-select-match placeholder="Enter a word">{{$selectedWord}}</ui-select-match>
-		<ui-select-choices repeat="wordOption in wordOptions" refresh="refreshWords($select.search)" refresh-delay="0">
-			<div ng-bind-html="wordOption | highlight: $select.search"></div>
-		</ui-select-choices>
-	</ui-select>
+<div diagram diagram-model="model" diagram-config="diagramConfig" >
+	<div id="word" class="node-enter-word">
+		<select-word selected="selected"></select-word>
+	</div>
 </div>

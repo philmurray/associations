@@ -142,7 +142,7 @@ angular.module('associations.components.diagram', [])
 				if (!$scope.layout){
 					$timeout(initDiagram);
 				} else {
-					$scope.layout.start();
+					$scope.layout.start(render);
 				}
 			};
 

@@ -1,13 +1,11 @@
 "use strict";
 
 angular.module('associations.pages.exploreWords',[
-	"ui.select",
-	"ngSanitize",
-	"associations.components.data.word",
+	"associations.components.selectWord",
 	"associations.components.diagram"
 	])
 
-.controller("ExploreWordsController", ["$scope", "WordService", function ($scope, WordService) {
+.controller("ExploreWordsController", ["$scope", function ($scope) {
 	var word = {
 		id: "word",
 		initial: {
@@ -17,19 +15,12 @@ angular.module('associations.pages.exploreWords',[
 		fixed: true
 	};
 	$scope.model = {nodes:[word], links:[]};
+	$scope.diagramConfig = {};
 
-	$scope.config = {};
-
-	$scope.selectedWord = "";
-
-	$scope.wordOptions = [];
-	$scope.refreshWords = function(searchTerm){
-		WordService.search(searchTerm).then(function(res){
-			$scope.wordOptions = res.data || [];
-		});
+	$scope.selected = {
+		word:""
 	};
-
-	$scope.$watch("selectedWord", function(word){
-
+	$scope.$watch("selected.word", function(word){
+		console.log(word);
 	});
 }]);

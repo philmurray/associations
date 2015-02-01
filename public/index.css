@@ -43,6 +43,17 @@ body {
 	z-index:20;
 }
 
+.node-enter-word {
+	padding: 5px;
+	background: lightgrey;
+	font: 12px arial, sans-serif;
+	border-radius: 5px;
+	min-width: 200px;
+
+	position: absolute;
+	z-index:20;
+}
+
 .node-link {
 	padding: 5px;
 	background: white;
@@ -74,6 +85,10 @@ body {
 		padding: 10px;
 	}
 
+	.node-enter-word {
+		padding: 10px;
+	}
+
 	.node-link {
 		padding: 10px;
 	}
@@ -88,6 +103,10 @@ body {
 		padding: 15px;
 	}
 
+	.node-enter-word {
+		padding: 15px;
+	}
+
 	.node-link {
 		padding: 15px;
 	}
@@ -99,10 +118,14 @@ body {
 	}
 
 	.node-word {
-		padding: 20px, 15px;
+		padding: 20px 15px;
+	}
+
+	.node-enter-word {
+		padding: 20px 15px;
 	}
 
 	.node-link {
-		padding: 20px, 15px;
+		padding: 20px 15px;
 	}
 }
