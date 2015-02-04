@@ -10,6 +10,14 @@ angular.module('associations.components.data.word', [])
 					url: url,
 					cache: true
 				});
+			},
+			getGraph: function(word){
+				var url = "/rpc/wordGraph/" + word;
+				return $http({
+					method: 'GET',
+					url: url,
+					cache: true
+				});
 			}
 		};
 	}]);

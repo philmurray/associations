@@ -3,7 +3,8 @@
 var express = require('express'),
     router = express.Router(),
     passport = require('passport'),
-    Word = require('../lib/models').Word;
+    Word = require('../lib/models').Word,
+    graph = require('../lib/graph');
 
 var isAuthenticated = function (req, res, next) {
     if (req.isAuthenticated())
@@ -29,6 +30,13 @@ router.get('/rpc/word', function(req,res){
     Word.search(req.query.text || "", 10, function(err, words){
         if (err){ return res.status(500).send(err.message); }
         res.json(words);
+    });
+});
+
+router.get('/rpc/wordGraph/:word', function(req,res){
+    graph.getWordGraph(req.params.word,function(err, graph){
+        if (err){ return res.status(500).send(err.message); }
+        res.json(graph);
     });
 });
 

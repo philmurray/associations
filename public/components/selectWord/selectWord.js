@@ -5,7 +5,7 @@ angular.module('associations.components.selectWord', [
 	"ngSanitize",
 	"associations.components.data.word"
 ])
-.directive('selectWord', ["WordService", function (WordService) {
+.directive('selectWord', ["WordService", "$log", function (WordService, $log) {
 	return {
 		restrict: 'EA',
 		scope: {
@@ -17,9 +17,11 @@ angular.module('associations.components.selectWord', [
 
 			$scope.wordOptions = [];
 			$scope.refreshWords = function(searchTerm){
-				WordService.search(searchTerm).then(function(res){
-					$scope.wordOptions = res.data || [];
-				});
+				WordService.search(searchTerm)
+					.success(function(data){
+						$scope.wordOptions = data || [];
+					})
+					.error($log);
 			};
 		}
 	};

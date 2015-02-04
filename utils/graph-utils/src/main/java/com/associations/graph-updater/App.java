@@ -9,7 +9,7 @@ import java.util.*;
  */
 public class App
 {
-    public static final String DEFAULT_NEO4J_URL = "http://192.168.1.100:7474";
+    public static final String NEO4J_URL = "http://192.168.1.100:7474";
     public static final String PG_DB_HOST = "192.168.1.100";
     public static final String PG_DB_PORT = "5433";
     public static final String PG_DB_USER = "associations_dbuser";
@@ -19,7 +19,7 @@ public class App
     public static String getNeo4jUrl() {
         String var =  System.getenv("NEO4J_URL");
         if(var == null || var.isEmpty()) {
-            var = DEFAULT_NEO4J_URL;
+            var = NEO4J_URL;
         }
         return var.replace("http://","jdbc:neo4j://");
     }
