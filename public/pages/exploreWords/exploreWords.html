@@ -3,8 +3,11 @@
 		<a class="page-menu-left" href="#/">Assertions</a>
 	</div>
 	<div diagram diagram-model="model" diagram-config="diagramConfig" >
-		<div id="word" class="node-enter-word">
-			<select-word selected="selected"></select-word>
+		<div ng-repeat="(id, node) in model.nodes" id="{{id}}"  ng-class="{'node-word':id != 'searchWord', 'node-enter-word':id == 'searchWord'}">
+			<label ng-if="id != 'searchWord'">
+				{{node.text}}
+			</label>
+			<select-word ng-if="id == 'searchWord'" selected="selected"></select-word>
 		</div>
 	</div>
 </div>

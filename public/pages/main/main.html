@@ -1,14 +1,14 @@
 <div diagram diagram-model="model" diagram-config="config" >
 
-	<label ng-repeat="node in model.nodes | filter:{word:true}" class="node-word" id="{{node.id}}">
+	<label ng-repeat="(id, node) in words" class="node-word" id="{{id}}">
 		{{node.text}}
 	</label>
 
-	<label ng-repeat="node in model.nodes | filter:{title:true}" class="node-title" id="{{node.id}}">
+	<label ng-repeat="(id, node) in title" class="node-title" id="{{id}}">
 		{{node.text}}
 	</label>
 
-	<a href="{{node.href}}"  ng-repeat="node in model.nodes | filter:{link:true}" class="node-link" id="{{node.id}}">
+	<a href="{{node.href}}"  ng-repeat="(id,node) in links" class="node-link" id="{{id}}">
 		{{node.text}}
 	</a>
 

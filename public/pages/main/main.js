@@ -3,35 +3,32 @@
 angular.module('associations.pages.main', ["associations.components.diagram"])
 
 .controller("MainController", ["$scope", function($scope) {
-	$scope.config = {};
-	$scope.model = {
-		nodes: [{
-			word:true,
-			id: 'Play',
+	$scope.words = {
+		Play: {
 			text: "Play",
 			initial: {
 				x: 0,
 				y: -0.5
 			}
-		}, {
-			word:true,
-			id: 'Explore',
+		},
+		Explore: {
 			text: "Explore",
 			initial: {
 				x: -0.5,
 				y: 0.5
 			}
-		}, {
-			word:true,
-			id: 'Me',
+		},
+		Me: {
+			word: true,
 			text: "Me",
 			initial: {
 				x: 0.5,
 				y: 0.5
 			}
-		}, {
-			link:true,
-			id: "playerProfile",
+		}
+	};
+	$scope.links = {
+		playerProfile: {
 			href: "#/playerProfile",
 			text: "Profile",
 			initial: {
@@ -39,142 +36,154 @@ angular.module('associations.pages.main', ["associations.components.diagram"])
 				y: 1
 			},
 			anchor: ""
-		}, {
-			link:true,
-			id: "playerStatistics",
+		},
+		playerStatistics: {
 			href: "#/playerStatistics",
 			text: "Statistics",
 			initial: {
 				x: 1,
 				y: 0.75
 			}
-		}, {
-			link:true,
-			id: "exploreWords",
+		},
+		exploreWords: {
 			href: "#/exploreWords",
 			text: "Words",
 			initial: {
 				x: -1,
 				y: 1
 			}
-		}, {
-			link:true,
-			id: "exploreStatistics",
+		},
+		exploreStatistics: {
 			href: "#/globalStatistics",
 			text: "Statistics",
 			initial: {
 				x: -1,
 				y: 0.75
 			}
-		}, {
-			link:true,
-			id: "singleGame",
+		},
+		singleGame: {
 			href: "#/singleGame",
 			text: "Single",
 			initial: {
 				x: -0.5,
 				y: -0.5
 			}
-		}, {
-			link:true,
-			id: "multiGame",
+		},
+		multiGame: {
 			href: "#/multiGame",
 			text: "Multiplayer",
 			initial: {
 				x: 0.5,
 				y: -0.5
 			}
-		}, {
-			title:true,
-			id: "Associations",
+		}
+	};
+
+	$scope.title = {
+		Associations: {
 			text: "Associations",
 			initial: {
 				x: 0,
 				y: 0
 			},
 			fixed: true
-		}],
+		}
+	};
+
+	$scope.config = {};
+	$scope.model = {
+		nodes: {
+		},
 		links: [{
-			from: {
+			source: {
 				id: "Associations",
 				anchor: "Top"
 			},
-			to: {
+			target: {
 				id: "Play",
 				anchor: "Bottom"
 			}
-		}, {
-			from: {
+		},
+		{
+			source: {
 				id: "Associations",
 				anchor: "Left"
 			},
-			to: {
+			target: {
 				id: "Explore",
 				anchor: "Right"
 			}
-		}, {
-			from: {
+		},
+		{
+			source: {
 				id: "Associations",
 				anchor: "Right"
 			},
-			to: {
+			target: {
 				id: "Me",
 				anchor: "Left"
 			}
-		}, {
-			from: {
+		},
+		{
+			source: {
 				id: "Explore",
 				anchor: "Bottom"
 			},
-			to: {
+			target: {
 				id: "exploreWords",
 				anchor: "Top"
 			}
-		}, {
-			from: {
+		},
+		{
+			source: {
 				id: "Explore",
 				anchor: "Left"
 			},
-			to: {
+			target: {
 				id: "exploreStatistics",
 				anchor: "Right"
 			}
-		}, {
-			from: {
+		},
+		{
+			source: {
 				id: "Me",
 				anchor: "Bottom"
 			},
-			to: {
+			target: {
 				id: "playerProfile",
 				anchor: "Top"
 			}
-		}, {
-			from: {
+		},
+		{
+			source: {
 				id: "Me",
 				anchor: "Right"
 			},
-			to: {
+			target: {
 				id: "playerStatistics",
 				anchor: "Left"
 			}
-		}, {
-			from: {
+		},
+		{
+			source: {
 				id: "Play",
 				anchor: "Top"
 			},
-			to: {
+			target: {
 				id: "singleGame",
 				anchor: "Bottom"
 			}
-		}, {
-			from: {
+		},
+		{
+			source: {
 				id: "Play",
 				anchor: "Top"
 			},
-			to: {
+			target: {
 				id: "multiGame",
 				anchor: "Bottom"
 			}
 		}]
 	};
+	angular.extend($scope.model.nodes,$scope.words,$scope.links,$scope.title);
 }]);

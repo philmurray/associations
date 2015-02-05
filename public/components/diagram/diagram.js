@@ -34,7 +34,7 @@ angular.module('associations.components.diagram', [])
 	MyForceDirected.prototype.point = function(node) {
 		if (!(node.id in this.nodePoints)) {
 			var mass = (node.data.mass !== undefined) ? node.data.mass : 1.0;
-			var point = node.data.initial || Springy.Vector.random();
+			var point = node.data.initial || new Springy.Vector(5.0 * (Math.random() - 0.5), 5.0 * (Math.random() - 0.5));
 			this.nodePoints[node.id] = new Springy.Layout.ForceDirected.Point(point, mass);
 		}
 
@@ -98,34 +98,45 @@ angular.module('associations.components.diagram', [])
 				$scope.plumbInstance.repaintEverything();
 			};
 
-			var addNode = function(node){
-				return $scope.graph.newNode({
-					element: element.querySelector('#' + node.id),
-					initial: node.initial ? new Springy.Vector(node.initial.x, node.initial.y) : undefined,
-					fixed: node.fixed
+			var mergeModel = function(newModel, oldModel){
+
+				if (!$scope.plumbInstance) return;
+
+				$scope.graph = new Springy.Graph();
+
+				// nodes
+				angular.forEach(newModel.nodes, function(data, id){
+					var node = new Springy.Node(id, {
+						element: element.querySelector('#' + id),
+						initial: data.initial ? new Springy.Vector(data.initial.x, data.initial.y) : undefined,
+						fixed: data.fixed
+					});
+					$scope.graph.addNode(node);
 				});
+
+				$scope.plumbInstance.reset();
+				// edges
+				angular.forEach(newModel.links, function(link){
+					var edge = new Springy.Edge(link.source.id + "_" + link.target.id, link.source, link.target, {});
+					edge.data.connection = $scope.plumbInstance.connect({
+						source:link.source.id,
+						target:link.target.id,
+						anchor:[link.source.anchor, link.target.anchor]
+					});
+					$scope.graph.addEdge(edge);
+				});
+
+				if ($scope.layout) {
+					$scope.layout.graph = $scope.graph;
+					$scope.layout.start(render);
+				}
 			};
 
 			var initDiagram = function(){
 				jsPlumb.ready(function(){
 					$scope.plumbInstance = $scope.plumbInstance || jsPlumb.getInstance($scope.config.jsPlumb);
 
-					$scope.graph = new Springy.Graph();
-
-					//add nodes
-					var nodes = {};
-					$scope.model.nodes.forEach(function(node){
-						nodes[node.id] = addNode(node);
-					});
-
-					$scope.model.links.forEach(function(connection){
-						$scope.graph.newEdge(nodes[connection.from.id], nodes[connection.to.id]);
-						$scope.plumbInstance.connect({
-							source:connection.from.id,
-							target:connection.to.id,
-							anchor:[connection.from.anchor, connection.to.anchor]
-						});
-					});
+					mergeModel($scope.model);
 
 					$scope.layout = new MyForceDirected(
 						$scope.graph,
@@ -137,6 +148,10 @@ angular.module('associations.components.diagram', [])
 					$scope.layout.start(render);
 				});
 			};
+
+			$scope.$watch('model', function (n,o){
+				$timeout(mergeModel.bind(null,n,o),100);
+			});
 
 			$scope.render = function() {
 				if (!$scope.layout){
