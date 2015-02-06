@@ -3,7 +3,8 @@
 angular.module('associations.pages.exploreWords',[
 	"associations.components.selectWord",
 	"associations.components.diagram",
-	"associations.components.data.word"
+	"associations.components.data.word",
+	"associations.pages.exploreWords.components.graph"
 	])
 
 .controller("ExploreWordsController", ["$scope", "$location", "WordService", "$log", function ($scope, $location, WordService, $log) {
@@ -14,7 +15,7 @@ angular.module('associations.pages.exploreWords',[
 		},
 		fixed: true
 	};
-	$scope.model = {nodes:{searchWord:searchWord}, links:[]};
+	$scope.model = {nodes:{}, links:{}};
 	$scope.diagramConfig = {};
 
 	$scope.selected = {
@@ -26,15 +27,7 @@ angular.module('associations.pages.exploreWords',[
 			WordService.getGraph(word)
 				.success(function(data){
 					$scope.model = data;
-
-					delete $scope.model.nodes[word];
-					$scope.model.nodes.searchWord = searchWord;
-
-					for (var i = 0, l = $scope.model.links.length; i<l; i++){
-						var link = $scope.model.links[i];
-						if (link.source.id === word) link.source.id = "searchWord";
-						if (link.target.id === word) link.target.id = "searchWord";
-					}
+					$scope.model.word = word;
 				})
 				.error($log);
 		}
