@@ -18,6 +18,7 @@ angular.module('associations.pages.exploreWords',[
 	$scope.model = {nodes:{}, links:{}};
 	$scope.diagramConfig = {};
 
+	$scope.mode = 1;
 	$scope.selected = {
 		word:$location.search().word || ""
 	};
@@ -32,4 +33,8 @@ angular.module('associations.pages.exploreWords',[
 				.error($log);
 		}
 	});
+	$scope.onGraphClick = function(word){
+		$scope.selected.word = word;
+		$scope.$digest();
+	};
 }]);

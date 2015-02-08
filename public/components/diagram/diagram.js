@@ -3,8 +3,8 @@
 angular.module('associations.components.diagram', [])
 
 .constant("plumbDefaults",{
-	Connector: "StateMachine",
-	Endpoints: [["Dot",{radius:7, cssClass:"endpoint"}],"Blank"],
+	Connector: ["StateMachine",{proximityLimit:30}],
+	Endpoints: ["Blank","Blank"],
 	Overlays: [["PlainArrow", {cssClass:"arrow", width: 15, length: 15, location:1}]]
 })
 

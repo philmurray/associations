@@ -8,16 +8,32 @@ angular.module('associations.pages.exploreWords.components.graph', [])
 	edges: {
 		style: 'arrow',
 		widthMax: 8,
-		arrowScaleFactor: 0.75
+		arrowScaleFactor: 0.75,
+		color: 'blueviolet'
+	},
+	nodes: {
+		shape: 'box',
+		borderWidth: 2,
+		borderWidthSelected: 2,
+		color: {
+			border: 'white',
+			background: 'black',
+			highlight: {
+				background: "#222"
+			}
+		},
+		fontColor: 'white',
+		fontSize: 18
+
 	}
 })
-.directive("wordGraph", ["$window", "GraphDefaults", function ($window, GraphDefaults) {
+.directive("wordGraph", ["$window", "GraphDefaults", "$timeout", function ($window, GraphDefaults, $timeout) {
 	return {
 		restrict: 'EA',
 		scope: {
 			model:'=graphModel',
 			config:'=graphConfig',
-			staticElements:'=graphStatics'
+			onClick:'&graphOnClick'
 		},
 		link: function($scope, $element, attrs) {
 			var w = angular.element($window),
@@ -47,43 +63,61 @@ angular.module('associations.pages.exploreWords.components.graph', [])
 					$scope.edges.clear();
 					return;
 				}
-				angular.forEach(n.nodes, function(data,id){
-					var existing = $scope.nodes.get(id);
-					if(!existing){
-						var newNode = {
-							id:id,
-							label:data
-						};
-						if (data === n.word){
-							newNode.x = 0;
-							newNode.y = 0;
-							newNode.mass = 15;
-							newNode.label = "                                                             \n                                                             \n                                                             \n";
-							newNode.shape = "box";
+				var prevFocusId = $scope.focusId;
+				if (prevFocusId){
+					$scope.nodes.remove(prevFocusId);
+				}
 
-							$scope.focusId = id;
-						}
-						$scope.nodes.add(newNode);
-					} else {
-						//unset x and y
-					}
-				});
 				$scope.nodes.getIds().forEach(function(id){
 					if (!(id in n.nodes)) $scope.nodes.remove(id);
 				});
+				$scope.edges.getIds().forEach(function(id){
+					if (!(id in n.links)) $scope.edges.remove(id);
+				});
+
+				var timeoutDelay = 0,
+					timeoutInterval = 75,
+					addNode = function (id){
+						var node = $scope.nodes.get(id),
+							update = false;
+						if(!node){
+							node = {
+								id:id,
+								label:n.nodes[id]
+							};
+							update = true;
+						}
+						if (n.nodes[id] === n.word && $scope.focusId !== id){
+							node.x = 0;
+							node.y = 0;
+							node.mass = 15;
+							node.label = "";
+							node.shape = "image";
+							node.image = "assets/img/selectWord.png";
+
+							$scope.focusId = id;
+							update = true;
+						}
+						if (update){
+							$scope.nodes.update(node);
+						}
+
+					};
+
 				angular.forEach(n.links, function(data, id){
 					var existing = $scope.edges.get(id);
 					if(!existing){
-						$scope.edges.add({
-							id: id,
-							from: data.from,
-							to: data.to,
-							value: data.value
-						});
+						$timeout(function(){
+							addNode(data.from);
+							addNode(data.to);
+							$scope.edges.add({
+								id: id,
+								from: data.from,
+								to: data.to,
+								value: data.value
+							});
+						}, (timeoutDelay += timeoutInterval));
 					}
-				});
-				$scope.edges.getIds().forEach(function(id){
-					if (!(id in n.links)) $scope.edges.remove(id);
 				});
 			};
 
@@ -92,6 +126,11 @@ angular.module('associations.pages.exploreWords.components.graph', [])
 				$scope.edges = new vis.DataSet();
 
 				$scope.graph = new vis.Network(element, {nodes:$scope.nodes, edges:$scope.edges}, $scope.config);
+				$scope.graph.on('doubleClick', function(event){
+					if (event.nodes.length === 1){
+						$scope.onClick({word:$scope.model.nodes[event.nodes[0]]});
+					}
+				});
 
 				mergeModel($scope.model);
 			};

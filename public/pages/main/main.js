@@ -8,7 +8,7 @@ angular.module('associations.pages.main', ["associations.components.diagram"])
 			text: "Play",
 			initial: {
 				x: 0,
-				y: -0.5
+				y: -0.55
 			}
 		},
 		Explore: {

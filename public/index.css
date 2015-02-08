@@ -10,8 +10,14 @@ body {
 	position: absolute;
 	height: 30px;
 	bottom: 0px;
+	background: rgba(0,0,0,0.5);
+	margin-top: -1px;
+	width: 100%;
 }
-
+#footer p {
+	margin: 0 15px 0 15px;
+	line-height: 30px;
+}
 .center-container > div {
 	height:100%;
 }
@@ -49,21 +55,41 @@ body {
 	width: 100%;
 	height: 50px;
 	z-index: 100;
+	background: rgba(0,0,0,0.5);
+	border-bottom-color: blueviolet;
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
 }
-.page-menu-left {
-	line-height: 50px;
-	float: left;
-	padding: 0 15px 0 15px;
+.page-menu a {
+	width: 100px;
+	height: 37px;
+	line-height: 32px;
+	margin: 5px 15px 0px 15px;
+	background: transparent;
+	color: white;
+	border-style: none;
+	border-bottom-color: white;
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
+	text-align: center;
+	text-decoration: none;
+	border-radius: 5px;
 }
-.page-menu-right {
-	line-height: 50px;
-	float: right;
-	padding: 0 15px 0 15px;
+
+.page-menu a.selected{
+	border: 2px solid white;
+	background: rgba(265,256,256,0.2);
+}
+
+.page-menu a:hover {
+	background: rgba(265,256,256,0.2);
 }
 
 .node-title {
 	padding: 5px;
-	background: white;
+	background: black;
+	color: white;
+	border: 2px solid white;
 	font: bold 30px arial, sans-serif;
 	border-radius: 25px;
 
@@ -73,44 +99,73 @@ body {
 
 .node-word {
 	padding: 5px;
-	background: lightgrey;
-	font: 12px arial, sans-serif;
-	border-radius: 5px;
+	background: black;
+	color: white;
+	border: 2px solid white;
+	font: bold 18px arial, sans-serif;
+	border-radius: 10px;
 
 	position: absolute;
 	z-index:20;
 }
 
 .node-enter-word {
-	padding: 5px;
-	background: lightgrey;
+	margin: auto;
+	top: 0; right: 0; bottom: 0; left: 0;
+	height: 52px;
+	width: 200px;
+
 	font: 12px arial, sans-serif;
-	border-radius: 5px;
-	min-width: 200px;
 
 	position: absolute;
 	z-index:20;
+}
+
+.node-enter-word button,  .node-enter-word input{
+	color: white;
+	background: black;
+	border-width: 3px;
+	font-size: 24px;
+}
+.node-enter-word button span {
+	color: white;
+}
+.node-enter-word button:hover{
+	background: #222;
+	color: white;
+	border-color: white
+}
+.node-enter-word .ui-select-choices{
+	background: black;
+	border: 1px solid white;
+}
+.node-enter-word .ui-select-choices .ui-select-choices-row-inner{
+	color: white;
 }
 
 .node-link {
 	padding: 5px;
-	background: white;
-	font: 18px arial, sans-serif;
+	background: black;
+	color: blueviolet;
+	border: 2px solid white;
+	font: bold 24px arial, sans-serif;
 	border-radius: 10px;
+	text-decoration: none;
 
 	position: absolute;
 	z-index:20;
 }
-._jsPlumb_connector { z-index:4; }
-._jsPlumb_connector * {
-	stroke:lightblue;
-	fill:lightblue;
+.node-link:hover {
+	background: #222;
+	border-width: 3px;
+	text-decoration: none;
+	color: blueviolet;
 }
 
-._jsPlumb_endpoint { z-index:5; }
-._jsPlumb_endpoint circle {
-	stroke:lightblue;
-	fill:lightblue;
+._jsPlumb_connector { z-index:4; }
+._jsPlumb_connector * {
+	stroke:blueviolet;
+	fill:blueviolet;
 }
 ._jsPlumb_overlay { z-index:6; }
 
@@ -120,15 +175,11 @@ body {
 	}
 
 	.node-word {
-		padding: 10px;
-	}
-
-	.node-enter-word {
-		padding: 10px;
+		padding: 5px 10px;
 	}
 
 	.node-link {
-		padding: 10px;
+		padding: 10px 10px;
 	}
 }
 
@@ -138,15 +189,11 @@ body {
 	}
 
 	.node-word {
-		padding: 15px;
-	}
-
-	.node-enter-word {
-		padding: 15px;
+		padding: 5px 15px;
 	}
 
 	.node-link {
-		padding: 15px;
+		padding: 10px 15px;
 	}
 }
 
@@ -156,14 +203,10 @@ body {
 	}
 
 	.node-word {
-		padding: 20px 15px;
-	}
-
-	.node-enter-word {
-		padding: 20px 15px;
+		padding: 5px 15px;
 	}
 
 	.node-link {
-		padding: 20px 15px;
+		padding: 10px 15px;
 	}
 }
