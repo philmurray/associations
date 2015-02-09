@@ -18,23 +18,56 @@ angular.module('associations.pages.exploreWords',[
 	$scope.model = {nodes:{}, links:{}};
 	$scope.diagramConfig = {};
 
-	$scope.mode = 1;
-	$scope.selected = {
+	$scope.selectedWord = {
 		word:$location.search().word || ""
 	};
-	$scope.$watch("selected.word", function(word){
-		if (word){
-			$location.search("word", word).replace();
-			WordService.getGraph(word)
-				.success(function(data){
-					$scope.model = data;
-					$scope.model.word = word;
-				})
-				.error($log);
+	$scope.selectedOtherWord = {
+		word:$location.search().otherWord || ""
+	};
+	$scope.mode = $scope.selectedWord.word && $scope.selectedOtherWord.word ? 2 : 1;
+
+
+	$scope.$watch("mode", function(n,o){
+		if (n !== o){
+			$scope.selectedWord.word = "";
+			$scope.selectedOtherWord.word = "";
+			$scope.model = {nodes:{}, links:{}};
 		}
 	});
+	$scope.$watch("selectedWord.word", function(word){
+		$location.search("word", word).replace();
+		if (word){
+			if ($scope.mode === 1){
+				$scope.getGraph();
+			} else {
+				$scope.getPaths();
+			}
+		}
+	});
+	$scope.$watch("selectedOtherWord.word", function(word){
+		$location.search("otherWord", word).replace();
+		if (word){
+			$scope.getPaths();
+		}
+	});
+	$scope.getPaths = function(){
+		var word = $scope.selectedWord.word,
+			otherWord = $scope.selectedOtherWord.word;
+		if (word && otherWord){
+
+		}
+	};
+	$scope.getGraph = function(){
+		var word = $scope.selectedWord.word;
+		WordService.getGraph(word)
+			.success(function(data){
+				$scope.model = data;
+				$scope.model.word = word;
+			})
+			.error($log);
+	};
 	$scope.onGraphClick = function(word){
-		$scope.selected.word = word;
+		$scope.selectedWord.word = word;
 		$scope.$digest();
 	};
 }]);

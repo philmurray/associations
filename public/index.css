@@ -119,6 +119,18 @@ body {
 
 	position: absolute;
 	z-index:20;
+
+	-webkit-transition: 0.25s linear all;
+	transition: 0.25s linear all;
+}
+.node-enter-word.source {
+	right: calc(100% - 220px);
+}
+.node-enter-word.target {
+	left: calc(100% - 220px);
+}
+.node-enter-word.target.ng-hide {
+	left: 0;
 }
 
 .node-enter-word button,  .node-enter-word input{

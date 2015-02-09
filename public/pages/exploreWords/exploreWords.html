@@ -4,6 +4,7 @@
 		<a class="pull-right" ng-class="{selected:mode == 2}" ng-click="mode = 2"><span>Two Words</span></a>
 		<a class="pull-right" ng-class="{selected:mode == 1}" ng-click="mode = 1"><span>One Word</span></a>
 	</div>
-	<select-word id="enterSingleWord" selected="selected" class="node-enter-word"></select-word>
+	<select-word id="enterSingleWord" selected="selectedWord" class="node-enter-word" ng-class="{source:mode == 2}"></select-word>
+	<select-word id="enterOtherWord" selected="selectedOtherWord" class="node-enter-word target" ng-show="mode == 2"></select-word>
 	<div word-graph graph-model="model" graph-config="diagramConfig" graph-on-click="onGraphClick(word)" style="width: 100%; height: 100%;"></div>
 </div>
