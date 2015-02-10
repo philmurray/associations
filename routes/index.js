@@ -40,4 +40,11 @@ router.get('/rpc/wordGraph/:word', function(req,res){
     });
 });
 
+router.get('/rpc/wordPath/:from/:to', function(req,res){
+    graph.getWordPath(req.params.from,req.params.to,function(err, graph){
+        if (err){ return res.status(500).send(err.message); }
+        res.json(graph);
+    });
+});
+
 module.exports = router;

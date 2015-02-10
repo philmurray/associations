@@ -18,6 +18,14 @@ angular.module('associations.components.data.word', [])
 					url: url,
 					cache: true
 				});
+			},
+			getPath: function(from, to){
+				var url = "/rpc/wordPath/" + from + "/" + to;
+				return $http({
+					method: 'GET',
+					url: url,
+					cache: true
+				});
 			}
 		};
 	}]);
