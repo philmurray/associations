@@ -18,6 +18,7 @@ angular.module('associations.pages.exploreWords',[
 	$scope.model = {nodes:{}, links:{}};
 	$scope.diagramConfig = {};
 
+	$scope.loading = false;
 	$scope.selectedWord = {
 		word:$location.search().word || ""
 	};
@@ -59,8 +60,10 @@ angular.module('associations.pages.exploreWords',[
 	};
 	$scope.getGraph = function(){
 		var word = $scope.selectedWord.word;
+		$scope.loading = true;
 		WordService.getGraph(word)
 			.success(function(data){
+				$scope.loading = false;
 				$scope.model = data;
 				$scope.model.word = word;
 			})
