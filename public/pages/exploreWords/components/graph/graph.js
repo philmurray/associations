@@ -58,8 +58,6 @@ angular.module('associations.pages.exploreWords.components.graph', [])
 
 			$scope.config = angular.extend(angular.copy(GraphDefaults), $scope.config || {});
 
-			var wordElement = $document[0].getElementById($scope.wordId),
-				otherWordElement = $document[0].getElementById($scope.otherWordId);
 
 			var mergeModel = function mergeModel(n,o){
 				if (!$scope.nodes || !$scope.edges) return;
@@ -68,6 +66,10 @@ angular.module('associations.pages.exploreWords.components.graph', [])
 					$scope.edges.clear();
 					return;
 				}
+				
+				var wordElement = $document[0].getElementById($scope.wordId),
+					otherWordElement = $document[0].getElementById($scope.otherWordId);
+					
 				var isPath = n.word && n.otherWord;
 
 				if ($scope.word && n.word && $scope.word !== n.word){
@@ -86,10 +88,27 @@ angular.module('associations.pages.exploreWords.components.graph', [])
 
 				var timeoutDelay = 0,
 					timeoutInterval = 75,
+					updateAnchor = function(node, id, modelId, prevKey, element){
+						if (id === modelId && $scope["prevKey"] !== id){
+							var pos = $scope.graph.DOMtoCanvas({
+								x:element.offsetLeft + element.offsetWidth/2,
+								y:element.offsetTop + element.offsetHeight/2}
+							);
+							node.x = pos.x;
+							node.y = pos.y;
+							node.mass = 15;
+							node.label = "";
+							node.shape = "image";
+							node.image = "assets/img/selectWord.png";
+
+							$scope["prevKey"] = id;
+							return true;
+						}
+						return false;
+					},
 					addNode = function (id){
 						var node = $scope.nodes.get(id),
-							update = false,
-							pos;
+							update = false;
 						if(!node){
 							node = {
 								id:id,
@@ -97,35 +116,8 @@ angular.module('associations.pages.exploreWords.components.graph', [])
 							};
 							update = true;
 						}
-						if (id === n.word && $scope.word !== id){
-							pos = $scope.graph.DOMtoCanvas({
-								x:wordElement.offsetLeft + wordElement.offsetWidth/2,
-								y:wordElement.offsetTop + wordElement.offsetHeight/2}
-							);
-							node.x = pos.x;
-							node.y = pos.y;
-							if (!isPath) node.mass = 15;
-							node.label = "";
-							node.shape = "image";
-							node.image = "assets/img/selectWord.png";
-
-							$scope.word = id;
-							update = true;
-						}
-						if (isPath && id === n.otherWord && $scope.otherWord !== id){
-							pos = $scope.graph.DOMtoCanvas({
-								x:otherWordElement.offsetLeft + otherWordElement.offsetWidth/2,
-								y:otherWordElement.offsetTop + otherWordElement.offsetHeight/2}
-							);
-							node.x = pos.x;
-							node.y = pos.y;
-							node.label = "";
-							node.shape = "image";
-							node.image = "assets/img/selectWord.png";
-
-							$scope.otherWord = id;
-							update = true;
-						}
+						update = updateAnchor(node, id, n.word, "word", wordElement) || update;
+						update = updateAnchor(node, id, n.otherWord, "otherWord", otherWordElement) || update;
 						if (update){
 							$scope.nodes.update(node);
 						}

@@ -7,6 +7,11 @@
 	<div id="enterSingleWord" class="node-enter-word" ng-class="{source:mode == 2}">
 		<select-word selected="selectedWord" class='select-word'></select-word>
 	</div>
+	<div ng-if="noData" class="no-data">
+		<h3 ng-if="!selectedOtherWord.word">No data was found for {{selectedWord.word}}.</h3>
+		<h3 ng-if="selectedOtherWord.word">No data was found to link {{selectedWord.word}} and {{selectedOtherWord.word}}.</h3>
+	</div>
+	
 	<div ng-class="{loading:loading}" class='loading-box l1'>
 
 	</div>

@@ -117,10 +117,12 @@ body {
 
 	position: absolute;
 	z-index:20;
-
+}
+.explore-words .node-enter-word.ng-animate {
 	-webkit-transition: 0.25s linear all;
 	transition: 0.25s linear all;
 }
+
 .explore-words .node-enter-word.source {
 	right: calc(100% - 220px);
 }
@@ -131,6 +133,19 @@ body {
 	left: 0;
 }
 
+
+.explore-words .no-data {
+	margin: auto;
+	top: -130px;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	height: 52px;
+	width: 500px;
+	position: absolute;
+	z-index: 20;
+	text-align: center;
+}
 
 .explore-words .loading-box {
 	background: white;
