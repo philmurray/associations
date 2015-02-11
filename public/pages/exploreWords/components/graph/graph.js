@@ -58,6 +58,47 @@ angular.module('associations.pages.exploreWords.components.graph', [])
 
 			$scope.config = angular.extend(angular.copy(GraphDefaults), $scope.config || {});
 
+			var wordElement = $document[0].getElementById($scope.wordId),
+				otherWordElement = $document[0].getElementById($scope.otherWordId);
+
+			var styleAnchorNode = function(node, ele){
+				var pos = $scope.graph.DOMtoCanvas({
+					x:ele.offsetLeft + ele.offsetWidth/2,
+					y:ele.offsetTop + ele.offsetHeight/2}
+				);
+				node.x = pos.x;
+				node.y = pos.y;
+				node.mass = 15;
+				node.label = "";
+				node.shape = "image";
+				node.image = "assets/img/selectWord.png";
+			};
+
+			var addNode = function (id){
+				var node = $scope.nodes.get(id),
+					update = false;
+				if(!node){
+					node = {
+						id:id,
+						label:$scope.model.nodes[id]
+					};
+					update = true;
+				}
+				if (id === $scope.model.word && $scope.word !== id){
+					styleAnchorNode(node,wordElement);
+					$scope.word = id;
+					update = true;
+				}
+				if (id === $scope.model.otherWord && $scope.otherWord !== id){
+					styleAnchorNode(node,otherWordElement);
+					$scope.otherWord = id;
+					update = true;
+				}
+				if (update){
+					$scope.nodes.update(node);
+				}
+
+			};
 
 			var mergeModel = function mergeModel(n,o){
 				if (!$scope.nodes || !$scope.edges) return;
@@ -66,10 +107,7 @@ angular.module('associations.pages.exploreWords.components.graph', [])
 					$scope.edges.clear();
 					return;
 				}
-				
-				var wordElement = $document[0].getElementById($scope.wordId),
-					otherWordElement = $document[0].getElementById($scope.otherWordId);
-					
+
 				var isPath = n.word && n.otherWord;
 
 				if ($scope.word && n.word && $scope.word !== n.word){
@@ -87,42 +125,7 @@ angular.module('associations.pages.exploreWords.components.graph', [])
 				});
 
 				var timeoutDelay = 0,
-					timeoutInterval = 75,
-					updateAnchor = function(node, id, modelId, prevKey, element){
-						if (id === modelId && $scope["prevKey"] !== id){
-							var pos = $scope.graph.DOMtoCanvas({
-								x:element.offsetLeft + element.offsetWidth/2,
-								y:element.offsetTop + element.offsetHeight/2}
-							);
-							node.x = pos.x;
-							node.y = pos.y;
-							node.mass = 15;
-							node.label = "";
-							node.shape = "image";
-							node.image = "assets/img/selectWord.png";
-
-							$scope["prevKey"] = id;
-							return true;
-						}
-						return false;
-					},
-					addNode = function (id){
-						var node = $scope.nodes.get(id),
-							update = false;
-						if(!node){
-							node = {
-								id:id,
-								label:n.nodes[id]
-							};
-							update = true;
-						}
-						update = updateAnchor(node, id, n.word, "word", wordElement) || update;
-						update = updateAnchor(node, id, n.otherWord, "otherWord", otherWordElement) || update;
-						if (update){
-							$scope.nodes.update(node);
-						}
-
-					};
+					timeoutInterval = 75;
 
 				addNode(n.word);
 				if (isPath) addNode(n.otherWord);
@@ -166,6 +169,22 @@ angular.module('associations.pages.exploreWords.components.graph', [])
 				} else {
 					$scope.graph.redraw();
 					$scope.graph.moveTo({position:{x:0,y:0}});
+
+					var node;
+					if ($scope.word) {
+						node = $scope.nodes.get($scope.word);
+						if (node){
+							styleAnchorNode(node, wordElement);
+							$scope.nodes.update(node);
+						}
+					}
+					if ($scope.otherWord) {
+						node = $scope.nodes.get($scope.otherWord);
+						if (node){
+							styleAnchorNode(node, otherWordElement);
+							$scope.nodes.update(node);
+						}
+					}
 				}
 			};
 		}
