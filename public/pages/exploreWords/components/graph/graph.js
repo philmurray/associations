@@ -61,17 +61,37 @@ angular.module('associations.pages.exploreWords.components.graph', [])
 			var wordElement = $document[0].getElementById($scope.wordId),
 				otherWordElement = $document[0].getElementById($scope.otherWordId);
 
-			var styleAnchorNode = function(node, ele){
+			var setAnchorNodePosition = function(node, ele){
 				var pos = $scope.graph.DOMtoCanvas({
 					x:ele.offsetLeft + ele.offsetWidth/2,
 					y:ele.offsetTop + ele.offsetHeight/2}
 				);
 				node.x = pos.x;
 				node.y = pos.y;
-				node.mass = 15;
-				node.label = "";
-				node.shape = "image";
-				node.image = "assets/img/selectWord.png";
+			};
+
+			var styleAnchorNode = function(node, ele){
+				if (node.label){
+					setAnchorNodePosition(node,ele);
+					node.mass = 15;
+					node.label = "";
+					node.shape = "image";
+					node.image = "assets/img/selectWord.png";
+					return true;
+				}
+				return false;
+			};
+
+			var styleNormalNode = function(node, label){
+				if (!node.label){
+					//I really really wish there were a way to delete properties on a DataSet node...
+					$scope.nodes.remove(node);
+					$scope.nodes.add({
+						id:node.id,
+						label:label
+					});
+				}
+				return false;
 			};
 
 			var addNode = function (id){
@@ -84,16 +104,14 @@ angular.module('associations.pages.exploreWords.components.graph', [])
 					};
 					update = true;
 				}
-				if (id === $scope.model.word && $scope.word !== id){
-					styleAnchorNode(node,wordElement);
-					$scope.word = id;
-					update = true;
+				if (id == $scope.model.word){
+					update = styleAnchorNode(node,wordElement) || update;
+				} else if (id == $scope.model.otherWord){
+					update = styleAnchorNode(node,otherWordElement) || update;
+				} else {
+					update = styleNormalNode(node, $scope.model.nodes[id]) || update;
 				}
-				if (id === $scope.model.otherWord && $scope.otherWord !== id){
-					styleAnchorNode(node,otherWordElement);
-					$scope.otherWord = id;
-					update = true;
-				}
+
 				if (update){
 					$scope.nodes.update(node);
 				}
@@ -108,15 +126,6 @@ angular.module('associations.pages.exploreWords.components.graph', [])
 					return;
 				}
 
-				var isPath = n.word && n.otherWord;
-
-				if ($scope.word && n.word && $scope.word !== n.word){
-					$scope.nodes.remove($scope.word);
-				}
-				if ($scope.otherWord && n.otherWord && $scope.otherWord !== n.otherWord){
-					$scope.nodes.remove($scope.otherWord);
-				}
-
 				$scope.nodes.getIds().forEach(function(id){
 					if (!(id in n.nodes)) $scope.nodes.remove(id);
 				});
@@ -127,8 +136,10 @@ angular.module('associations.pages.exploreWords.components.graph', [])
 				var timeoutDelay = 0,
 					timeoutInterval = 75;
 
-				addNode(n.word);
-				if (isPath) addNode(n.otherWord);
+				if (n.word) addNode(n.word);
+				if (n.otherWord) addNode(n.otherWord);
+				if (o && o.word && o.word in n.nodes) addNode(o.word);
+				if (o && o.otherWord && o.otherWord in n.nodes) addNode(o.otherWord);
 
 				angular.forEach(n.links, function(data, id){
 					var existing = $scope.edges.get(id);
@@ -171,17 +182,17 @@ angular.module('associations.pages.exploreWords.components.graph', [])
 					$scope.graph.moveTo({position:{x:0,y:0}});
 
 					var node;
-					if ($scope.word) {
-						node = $scope.nodes.get($scope.word);
+					if ($scope.model.word) {
+						node = $scope.nodes.get($scope.model.word);
 						if (node){
-							styleAnchorNode(node, wordElement);
+							setAnchorNodePosition(node, wordElement);
 							$scope.nodes.update(node);
 						}
 					}
-					if ($scope.otherWord) {
-						node = $scope.nodes.get($scope.otherWord);
+					if ($scope.model.otherWord) {
+						node = $scope.nodes.get($scope.model.otherWord);
 						if (node){
-							styleAnchorNode(node, otherWordElement);
+							setAnchorNodePosition(node, otherWordElement);
 							$scope.nodes.update(node);
 						}
 					}

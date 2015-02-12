@@ -20,15 +20,18 @@ angular.module('associations.pages.exploreWords',[
 
 	$scope.loading = false;
 	$scope.selectedWord = {
-		word:$location.search().word || ""
+		word:$location.search().word || "",
+		placeholderText:"Enter a Word"
 	};
 	$scope.selectedOtherWord = {
-		word:$location.search().otherWord || ""
+		word:$location.search().otherWord || "",
+		placeholderText:"'To' word"
 	};
 	$scope.mode = $scope.selectedWord.word && $scope.selectedOtherWord.word ? 2 : 1;
 
 
 	$scope.$watch("mode", function(n,o){
+		$scope.selectedWord.placeholderText = (n === 1) ? "Enter a Word" : "'From' word"
 		if (n !== o){
 			$scope.noData = false;
 			$scope.model = {nodes:{}, links:{}};
