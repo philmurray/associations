@@ -12,6 +12,7 @@
 	"module": false,
 	"inject": false,
 	"Springy": false,
-	"jsPlumb": false
+	"jsPlumb": false,
+	"vis": false
 }
 }

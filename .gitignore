@@ -25,6 +25,8 @@ build/Release
 node_modules
 
 public/bower_components
+public/app.css
+public/app.js
 
 # Users Environment Variables
 .lock-wscript

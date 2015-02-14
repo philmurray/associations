@@ -21,13 +21,23 @@
         "karma": "*",
         "protractor": "*",
         "bower": "*",
-        "karma-junit-reporter": "*"
+        "karma-junit-reporter": "*",
+
+        "grunt": "*",
+        "grunt-cli": "*",
+        "grunt-html2js": "*",
+        "grunt-contrib-uglify": "*",
+        "grunt-contrib-concat": "*",
+        "grunt-contrib-jshint": "*",
+        "grunt-contrib-watch": "*",
+        "grunt-bower-task": "*",
+        "grunt-nodemon": "*",
+        "grunt-concurrent":"*",
+		"grunt-contrib-less": "*",
+		"grunt-contrib-cssmin": "*"
     },
     "scripts": {
-        "postinstall": "bower install",
-
-        "prestart": "npm install",
-        "start": "node ./bin/www",
+        "start": "./node_modules/grunt-cli/bin/grunt",
 
         "pretest": "npm install",
         "test": "karma start karma.conf.js",

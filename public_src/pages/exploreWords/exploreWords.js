@@ -31,7 +31,7 @@ angular.module('associations.pages.exploreWords',[
 
 
 	$scope.$watch("mode", function(n,o){
-		$scope.selectedWord.placeholderText = (n === 1) ? "Enter a Word" : "'From' word"
+		$scope.selectedWord.placeholderText = (n === 1) ? "Enter a Word" : "'From' word";
 		if (n !== o){
 			$scope.noData = false;
 			$scope.model = {nodes:{}, links:{}};
@@ -96,7 +96,7 @@ angular.module('associations.pages.exploreWords',[
 		if ($scope.mode === 1) {
 			$scope.selectedWord.word = word;
 		} else {
-			$scope.selectedOtherWord.word = word
+			$scope.selectedOtherWord.word = word;
 		}
 
 		$scope.$digest();

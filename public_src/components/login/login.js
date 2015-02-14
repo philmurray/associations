@@ -43,7 +43,7 @@ angular.module('associations.components.login', [
 			})
 			.then($modalInstance.close)
 			.catch(function(){
-				debugger;
+
 			});
 	};
 	$scope.cancel = $modalInstance.dismiss;

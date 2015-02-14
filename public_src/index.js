@@ -2,6 +2,7 @@
 
 angular.module('associations',
 	[
+		'templates',
 		'ngAnimate',
 		'ngRoute',
 		'associations.pages.main',
