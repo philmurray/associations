@@ -1,14 +1,18 @@
-<div diagram diagram-model="model" diagram-config="config" >
+<div diagram diagram-model="model" diagram-config="config" class="page-main">
 
-	<label ng-repeat="(id, node) in words" class="node-word" id="{{id}}">
-		{{node.text}}
-	</label>
+	<button type="button" ng-repeat="(id, node) in words" class="node btn btn-primary btn-sm disabled" id="{{id}}">
+				{{node.text}}
+	</button>
 
-	<label ng-repeat="(id, node) in title" class="node-title" id="{{id}}">
-		{{node.text}}
-	</label>
+	<div ng-repeat="(id, node) in title" class="node panel panel-default" id="{{id}}">
+		<div class="panel-body">
+			<h1 >
+				{{node.text}}
+			</h1>
+		</div>
+	</div>
 
-	<a href="{{node.href}}"  ng-repeat="(id,node) in links" class="node-link" id="{{id}}">
+	<a href="{{node.href}}"  ng-repeat="(id,node) in links" class="node btn btn-lg btn-primary" role="button" id="{{id}}">
 		{{node.text}}
 	</a>
 

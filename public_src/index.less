@@ -1,22 +1,21 @@
+@import "../public/bower_components/bootstrap/less/bootstrap.less";
+@import "bootstrap-vars.less";
+
+@import "pages/main/main.less";
+@import "pages/exploreWords/exploreWords.less";
+@import "components/selectWord/selectWord.less";
+
 html,
 body {
 	height: 100%;
 }
-body {
-	background: black;
-}
 
 #footer {
 	position: absolute;
-	height: 30px;
 	bottom: 0px;
-	background: rgba(0,0,0,0.5);
-	margin-top: -1px;
 	width: 100%;
-}
-#footer p {
-	margin: 0 15px 0 15px;
-	line-height: 30px;
+	margin-bottom: 0px;
+	padding-left: 20px;
 }
 .center-container > div {
 	height:100%;
@@ -50,240 +49,9 @@ body {
 	opacity: 0;
 }
 
-.page-menu {
-	position: absolute;
-	width: 100%;
-	height: 50px;
-	z-index: 100;
-	background: rgba(0,0,0,0.5);
-	border-bottom-color: blueviolet;
-	border-bottom-width: 2px;
-	border-bottom-style: solid;
-}
-.page-menu a {
-	width: 100px;
-	height: 37px;
-	line-height: 32px;
-	margin: 5px 15px 0px 15px;
-	background: transparent;
-	color: white;
-	border-style: none;
-	border-bottom-color: white;
-	border-bottom-width: 2px;
-	border-bottom-style: solid;
-	text-align: center;
-	text-decoration: none;
-	border-radius: 5px;
-}
-
-.page-menu a.selected{
-	border: 2px solid white;
-	background: rgba(265,256,256,0.2);
-}
-
-.page-menu a:hover {
-	background: rgba(265,256,256,0.2);
-}
-
-.node-title {
-	padding: 5px;
-	background: black;
-	color: white;
-	border: 2px solid white;
-	font: bold 30px arial, sans-serif;
-	border-radius: 25px;
-
-	position: absolute;
-	z-index:20;
-}
-
-.node-word {
-	padding: 5px;
-	background: black;
-	color: white;
-	border: 2px solid white;
-	font: bold 18px arial, sans-serif;
-	border-radius: 10px;
-
-	position: absolute;
-	z-index:20;
-}
-
-.explore-words .node-enter-word {
-	margin: auto;
-	top: 0; right: 0; bottom: 0; left: 0;
-	height: 52px;
-	width: 200px;
-
-	position: absolute;
-	z-index:20;
-}
-.explore-words .node-enter-word.ng-animate {
-	-webkit-transition: 0.25s linear all;
-	transition: 0.25s linear all;
-}
-
-.explore-words .node-enter-word.source {
-	right: ~"calc(100% - 220px)";
-}
-.explore-words .node-enter-word.target {
-	left: ~"calc(100% - 220px)";
-}
-.explore-words .node-enter-word.target.ng-hide {
-	left: 0;
-}
-
-
-.explore-words .no-data {
-	margin: auto;
-	top: -130px;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	height: 52px;
-	width: 500px;
-	position: absolute;
-	z-index: 20;
-	text-align: center;
-}
-
-.explore-words .loading-box {
-	background: white;
-	position: absolute;
-	width: 6px;
-	height: 6px;
-	z-index:19;
-	top: ~"calc(50% - 32px)";
-	left: ~"calc(50% - 106px)";
-
-	display: none;
-}
-.explore-words .loading-box.loading {
-	display: block;
-	-webkit-animation: loadingmove 1.5s infinite ease-in-out;
-	animation: loadingmove 1.5s infinite ease-in-out;
-}
-.explore-words .loading-box.l0 {
-	-webkit-animation-delay: 0s;
-	animation-delay: 0s;
-}
-.explore-words .loading-box.l1 {
-	-webkit-animation-delay: -0.1s;
-	animation-delay: -0.1s;
-}
-.explore-words .loading-box.l2 {
-	-webkit-animation-delay: -0.2s;
-	animation-delay: -0.2s;
-}
-
-@-webkit-keyframes loadingmove {
-25% { -webkit-transform: translateX(206px) }
-50% { -webkit-transform: translateX(206px) translateY(58px)}
-75% { -webkit-transform: translateX(0px) translateY(58px)}
-100% { }
-}
-
-@keyframes loadingmove {
-25% {
-	transform: translateX(206px);
-	-webkit-transform: translateX(206px);
-} 50% {
-	transform: translateX(206px) translateY(58px);
-	-webkit-transform: translateX(206px) translateY(58px);
-} 75% {
-	transform: translateX(0px) translateY(58px);
-	-webkit-transform: translateX(0px) translateY(58px);
-} 100% {
-}
-}
-
-
-.select-word button,  .select-word input{
-	color: white;
-	background: black;
-	border-width: 3px;
-	font-size: 24px;
-}
-.select-word button span {
-	color: white;
-}
-.select-word button:hover{
-	background: #222;
-	color: white;
-	border-color: white
-}
-.select-word .ui-select-choices{
-	background: black;
-	border: 1px solid white;
-}
-.select-word .ui-select-choices .ui-select-choices-row-inner{
-	color: white;
-}
-
-.node-link {
-	padding: 5px;
-	background: black;
-	color: blueviolet;
-	border: 2px solid white;
-	font: bold 24px arial, sans-serif;
-	border-radius: 10px;
-	text-decoration: none;
-
-	position: absolute;
-	z-index:20;
-}
-.node-link:hover {
-	background: #222;
-	border-width: 3px;
-	text-decoration: none;
-	color: blueviolet;
-}
-
 ._jsPlumb_connector { z-index:4; }
 ._jsPlumb_connector * {
 	stroke:blueviolet;
 	fill:blueviolet;
 }
 ._jsPlumb_overlay { z-index:6; }
-
-@media (min-width: 768px) {
-	.node-title {
-		padding: 10px;
-	}
-
-	.node-word {
-		padding: 5px 10px;
-	}
-
-	.node-link {
-		padding: 10px 10px;
-	}
-}
-
-@media (min-width: 992px) {
-	.node-title {
-		padding: 15px;
-	}
-
-	.node-word {
-		padding: 5px 15px;
-	}
-
-	.node-link {
-		padding: 10px 15px;
-	}
-}
-
-@media (min-width: 1200px) {
-	.node-title {
-		padding: 20px;
-	}
-
-	.node-word {
-		padding: 5px 15px;
-	}
-
-	.node-link {
-		padding: 10px 15px;
-	}
-}

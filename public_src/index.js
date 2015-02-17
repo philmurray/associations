@@ -7,7 +7,7 @@ angular.module('associations',
 		'ngRoute',
 		'associations.pages.main',
 		'associations.pages.exploreWords',
-		'associations.pages.profile',
+		'associations.pages.playerProfile',
 		'associations.components.login',
 	])
 	.config(['$routeProvider', '$httpProvider',
@@ -23,9 +23,9 @@ angular.module('associations',
 				templateUrl: 'pages/main/main.html',
 				controller: 'MainController'
 			})
-			.when('/profile', {
-				templateUrl: 'pages/profile/profile.html',
-				controller: 'ProfileController',
+			.when('/playerProfile', {
+				templateUrl: 'pages/playerProfile/playerProfile.html',
+				controller: 'PlayerProfileController',
 				resolve: authenticatedRoute
 			})
 			.when('/exploreWords', {
