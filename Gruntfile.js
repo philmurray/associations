@@ -51,7 +51,7 @@ module.exports = function(grunt) {
 
 		less: {
 			dev: {
-				src: path.join(sourceDir, 'index.less'),
+				src: path.join(sourceDir, 'app.less'),
 				dest: path.join(targetDir, 'app.css')
 			}
 		},
