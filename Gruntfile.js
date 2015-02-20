@@ -73,11 +73,11 @@ module.exports = function(grunt) {
 		watch: {
 			css: {
 				files: [path.join(sourceDir, '**/*.css'), path.join(sourceDir, '**/*.less')],
-				tasks: ['less', 'cssmin']
+				tasks: ['less']
 			},
 			js: {
 				files: [path.join(sourceDir, '**/*.js'), path.join(sourceDir, '**/*.html')],
-				tasks: ['jshint', 'html2js', 'concat', 'uglify']
+				tasks: ['jshint', 'html2js', 'concat']
 			}
 		},
 		concurrent: {
@@ -99,5 +99,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-less');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 
-	grunt.registerTask('default', [ 'bower', 'jshint', 'html2js', 'concat', 'uglify', 'less', 'cssmin', 'concurrent' ]);
+	grunt.registerTask('default', [ 'bower', 'jshint', 'html2js', 'concat', 'less', 'concurrent' ]);
+	grunt.registerTask('prepare', [ 'bower', 'jshint', 'html2js', 'concat', 'uglify', 'less', 'cssmin']);
 };

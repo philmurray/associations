@@ -4,18 +4,22 @@
   "private": true,
   "dependencies": {
         "express": "*",
+        "express-session": "*",
         "body-parser": "*",
         "cookie-parser": "*",
         "morgan": "*",
         "serve-favicon": "*",
-        "debug": "*",
-        "passport": "*",
-        "passport-local": "*",
+
         "knex": "*",
         "bookshelf": "*",
         "pg": "*",
-        "express-session": "*",
-        "bcrypt-nodejs": "*"
+        "bcrypt-nodejs": "*",
+
+        "passport": "*",
+        "passport-local": "*",
+        "passport-google": "*",
+        "passport-facebook": "*",
+        "passport-twitter": "*"
     },
     "devDependencies": {
         "karma": "*",
@@ -37,6 +41,7 @@
 		"grunt-contrib-cssmin": "*"
     },
     "scripts": {
+        "postinstall": "./node_modules/grunt-cli/bin/grunt prepare",
         "start": "./node_modules/grunt-cli/bin/grunt",
 
         "pretest": "npm install",

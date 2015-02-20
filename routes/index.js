@@ -16,6 +16,34 @@ router.post('/rpc/localLogin', passport.authenticate('localLogin'), function(req
     res.json(true);
 });
 
+router.get('/auth/facebook',passport.authenticate('facebook'),function(req, res) {});
+router.get('/auth/facebook/callback',
+	passport.authenticate('facebook', {
+		failureRedirect: '/'
+	}),
+	function(req, res) {
+		res.redirect('/account');
+	});
+
+router.get('/auth/twitter',	passport.authenticate('twitter'),function(req, res) {});
+router.get('/auth/twitter/callback',
+	passport.authenticate('twitter', {
+		failureRedirect: '/'
+	}),
+	function(req, res) {
+		res.redirect('/account');
+	});
+
+router.get('/auth/google',passport.authenticate('google'),function(req, res) {});
+router.get('/auth/google/callback',
+	passport.authenticate('google', {
+		failureRedirect: '/'
+	}),
+	function(req, res) {
+		res.redirect('/account');
+	});
+
+
 /* Handle Logout */
 router.get('/rpc/logout', function(req, res) {
     req.logout();
