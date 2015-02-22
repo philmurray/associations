@@ -37,7 +37,7 @@ angular.module('associations.components.login', [
 }])
 .controller('LoginController', ['$scope', '$http', '$modalInstance', function($scope, $http, $modalInstance){
 	$scope.submitEmail = function(){
-		$http.post('/rpc/localLogin',{
+		$http.post('/auth/local',{
 				email: $scope.email,
 				password: $scope.password || '-'
 			})

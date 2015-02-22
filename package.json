@@ -17,7 +17,7 @@
 
         "passport": "*",
         "passport-local": "*",
-        "passport-google": "*",
+        "passport-google-oauth": "*",
         "passport-facebook": "*",
         "passport-twitter": "*"
     },
