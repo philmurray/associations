@@ -78,6 +78,10 @@ module.exports = function(grunt) {
 			js: {
 				files: [path.join(sourceDir, '**/*.js'), path.join(sourceDir, '**/*.html')],
 				tasks: ['jshint', 'html2js', 'concat']
+			},
+			bower: {
+				files: ['bower.json'],
+				tasks: ['bower']
 			}
 		},
 		concurrent: {

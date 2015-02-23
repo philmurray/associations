@@ -166,10 +166,11 @@ ALTER TABLE public.session OWNER TO associations_dbuser;
 CREATE TABLE users (
     id uuid DEFAULT uuid_generate_v4() NOT NULL,
     alias text,
+    email text,
+    password text,
     oauth_id text,
     oauth_provider text,
-    email text,
-    password text
+    color text
 );
 
 

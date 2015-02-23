@@ -13,7 +13,8 @@
     "angular-ui-select": "*",
     "springy": "*",
     "jsplumb": "*",
-    "vis": "*"
+    "vis": "*",
+    "fontawesome": "*"
   },
   "resolutions": {
     "angular": "1.3.13"

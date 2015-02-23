@@ -37,7 +37,7 @@ router.get('/twitter/callback/:route*',
 router.get('/google/:route*',function(req, res, next) {
 	req.session.route = req.params.route;
 	passport.authenticate('google', {
-		scope: "https://www.googleapis.com/auth/userinfo.profile"
+		scope: "https://www.googleapis.com/auth/plus.login"
 	})(req, res, next);
 });
 router.get('/google/callback',
@@ -45,7 +45,9 @@ router.get('/google/callback',
 		failureRedirect: '/'
 	}),
 	function(req, res) {
-		res.redirect('/#/' + req.session.route);
+		if (req.isAuthenticated())
+			res.redirect('/#/' + req.session.route);
+			return next();
 	});
 
 /* Handle Logout */
