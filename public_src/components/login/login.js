@@ -35,7 +35,7 @@ angular.module('associations.components.login', [
 		}
 	};
 }])
-.controller('LoginController', ['$scope', '$http', '$modalInstance', function($scope, $http, $modalInstance){
+.controller('LoginController', ['$scope', '$http', '$modalInstance', '$window', '$location', function($scope, $http, $modalInstance, $window, $location){
 	$scope.submitEmail = function(){
 		$http.post('/auth/local',{
 				email: $scope.email,
@@ -47,4 +47,7 @@ angular.module('associations.components.login', [
 			});
 	};
 	$scope.cancel = $modalInstance.dismiss;
+	$scope.login = function(provider){
+		$window.location.href = "/auth/" + provider + "/login" + $location.path();
+	};
 }]);
