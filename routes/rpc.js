@@ -12,7 +12,7 @@ var isAuthenticated = function (req, res, next) {
 };
 
 router.get('/user', isAuthenticated, function(req, res){
-	res.json(res.user);
+	res.json(req.user.safeModel());
 });
 
 router.get('/word', function(req,res){

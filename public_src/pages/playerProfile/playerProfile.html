@@ -1,53 +1,86 @@
-<div class="container">
-	<div class="row">
-		<h1>
-			Player Profile
-		</h1>
-		<div class="panel panel-default">
-			<div class="panel-body">
-				<form class="form-horizontal">
-					<div class="form-group">
-						<label for="displayName" class="col-sm-3 control-label">Display Name</label>
-						<div class="col-sm-9">
-						<input class="form-control" id="displayName" placeholder="Enter your display name">
-						</div>
-					</div>
-				</form>
+<div class="page-player-profile">
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#/">Main Menu</a>
 			</div>
-		</div>
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title">
-					Login information
-				</h3>
-			</div>
-			<div class="panel-body">
-				<form class="form-horizontal">
-					<div class="form-group">
-						<label for="email" class="col-sm-3 control-label">Email</label>
-						<div class="col-sm-9">
-						<input type="email" class="form-control" id="email" placeholder="Enter your email address">
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+
+				</ul>
+			</div><!-- /.navbar-collapse -->
+		</div><!-- /.container-fluid -->
+	</nav>
+
+	<div class="container">
+		<div class="row">
+			<h1>
+				Player Profile
+			</h1>
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<form class="form-horizontal">
+						<div class="form-group">
+							<label for="displayName" class="col-sm-3 control-label">Display Name</label>
+							<div class="col-sm-9">
+							<input class="form-control" id="displayName" placeholder="Enter your display name" ng-model="user.alias">
+							</div>
 						</div>
-					</div>
-					<div class="form-group">
-						<label for="password" class="col-sm-3 control-label">Password</label>
-						<div class="col-sm-9">
-						<input type="password" class="form-control" id="password" placeholder="Enter your password (optional)">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="passwordConfirm" class="col-sm-3 control-label">Confirm</label>
-						<div class="col-sm-9">
-						<input type="password" class="form-control" id="passwordConfirm">
-						</div>
-					</div>
-				</form>
-			</div>
-			<div class="panel-footer">
-				<div class="pull-right">
-					<button class="btn btn-info btn-xs">Log out</button>
+					</form>
 				</div>
-				<div class="clearfix"></div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						Login information
+					</h3>
+				</div>
+				<div class="panel-body" ng-switch="user.provider">
+					<div ng-switch-when="google">
+						You are logged in with <strong class="google-plus">google-plus</strong>
+					</div>
+					<div ng-switch-when="facebook">
+						You are logged in with <strong class="facebook">facebook</strong>
+					</div>
+					<div ng-switch-when="twitter">
+						You are logged in with <strong class="twitter">twitter</strong>
+					</div>
+					<form class="form-horizontal" ng-switch-default>
+						<div class="form-group">
+							<label for="email" class="col-sm-3 control-label">Email</label>
+							<div class="col-sm-9">
+							<input type="email" class="form-control" id="email" placeholder="Enter your email address">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="password" class="col-sm-3 control-label">Password</label>
+							<div class="col-sm-9">
+							<input type="password" class="form-control" id="password" placeholder="Enter your password (optional)">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="passwordConfirm" class="col-sm-3 control-label">Confirm</label>
+							<div class="col-sm-9">
+							<input type="password" class="form-control" id="passwordConfirm">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="panel-footer">
+					<div class="pull-right">
+						<button class="btn btn-info btn-xs">Log out</button>
+					</div>
+					<div class="clearfix"></div>
+				</div>
 			</div>
 		</div>
 	</div>
