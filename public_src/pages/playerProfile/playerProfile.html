@@ -7,11 +7,16 @@
 			</h1>
 			<div class="panel panel-default col-sm-12 col-md-5">
 				<div class="panel-body">
-					<form class="form-horizontal">
-						<div class="form-group">
-							<label for="displayName" class="col-sm-3 control-label">Name</label>
+					<form class="form-horizontal" name="forms.display">
+						<div class="form-group" ng-class="{'has-error':forms.display.displayName.$invalid}">
+							<label for="displayName" class="col-sm-3 control-label">
+								Name
+								<ul ng-show="forms.display.displayName.$invalid" class="list-unstyled">
+									<li ng-show="forms.display.displayName.$error.required">* required</li>
+								</ul>
+							</label>
 							<div class="col-sm-9">
-							<input class="form-control" id="displayName" placeholder="Enter your display name" ng-model="user.alias">
+							<input class="form-control" id="displayName" name="displayName" placeholder="Enter your display name" ng-model="user.alias" required>
 							</div>
 						</div>
 					</form>
@@ -33,25 +38,38 @@
 					<div ng-switch-when="twitter">
 						You are logged in with <strong class="twitter">twitter</strong>
 					</div>
-					<form class="form-horizontal" ng-switch-default>
-						<div class="form-group">
-							<label for="email" class="col-sm-3 control-label">Email</label>
+					<form class="form-horizontal" ng-switch-default name="forms.local">
+						<div class="form-group" ng-class="{'has-error':forms.local.email.$invalid}">
+							<label for="email" class="col-sm-3 control-label">
+								Email
+								<ul ng-show="forms.local.email.$invalid" class="list-unstyled">
+									<li ng-show="forms.local.email.$error.required">* required</li>
+									<li ng-show="forms.local.email.$error.email">* invalid</li>
+								</ul>
+							</label>
 							<div class="col-sm-9">
-							<input type="email" class="form-control" id="email" placeholder="Enter your email address">
+								<input type="email" required class="form-control" id="email" name="email" placeholder="Enter your email address" ng-model="user.email">
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="form-group" ng-class="{'has-error':forms.local.passwordConfirm.$invalid}">
 							<label for="password" class="col-sm-3 control-label">Password</label>
 							<div class="col-sm-9">
-							<input type="password" class="form-control" id="password" placeholder="Enter your password (optional)">
+							<input type="password" class="form-control" id="password" name="password" placeholder="Enter your password (optional)" ng-model="user.password">
 							</div>
 						</div>
-						<div class="form-group">
-							<label for="passwordConfirm" class="col-sm-3 control-label">Confirm</label>
+						<div class="form-group" ng-class="{'has-error':forms.local.passwordConfirm.$invalid}">
+							<label for="passwordConfirm" class="col-sm-3 control-label">
+								Confirm
+								<ul ng-show="forms.local.passwordConfirm.$invalid" class="list-unstyled">
+									<li ng-show="forms.local.passwordConfirm.$error.match">* doesn't match</li>
+									<li ng-show="forms.local.passwordConfirm.$error.required">* required</li>
+								</ul>
+							</label>
 							<div class="col-sm-9">
-							<input type="password" class="form-control" id="passwordConfirm">
+							<input ng-required='user.password' type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" ng-model="confirmPassword" match="user.password">
 							</div>
 						</div>
+
 					</form>
 				</div>
 				<div class="panel-footer">
@@ -61,6 +79,9 @@
 					<div class="clearfix"></div>
 				</div>
 			</div>
+		</div>
+		<div class="row">
+			<button ng-click="save" ng-disabled="forms.local.$invalid || forms.display.$invalid" class="btn btn-primary pull-right">Save Changes</button>
 		</div>
 	</div>
 </div>

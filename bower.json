@@ -11,6 +11,7 @@
     "angular-mocks": "*",
     "angular-ui-bootstrap-bower": "*",
     "angular-ui-select": "*",
+    "angular-input-match": "*",
     "springy": "*",
     "jsplumb": "*",
     "vis": "*",
