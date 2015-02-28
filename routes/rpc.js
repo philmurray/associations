@@ -15,6 +15,13 @@ router.get('/user', isAuthenticated, function(req, res){
 	res.json(req.user.safeModel());
 });
 
+router.post('/user', isAuthenticated, function(req, res){
+	req.user.updateUser(req.body, function(err){
+		if (err){ return res.status(500).json(err); }
+		res.send(true);
+	});
+});
+
 router.get('/word', function(req,res){
 	Word.search(req.query.text || "", 10, function(err, words){
 		if (err){ return res.status(500).send(err.message); }

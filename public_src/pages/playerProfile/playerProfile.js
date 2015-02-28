@@ -5,14 +5,15 @@ angular.module('associations.pages.playerProfile',[
 	'associations.components.data.user'])
 
 .controller("PlayerProfileController", ["$scope", "user", "UserService", function ($scope, user, UserService) {
-	var blank = "................";
-
 	$scope.user = angular.extend({},user.data);
-	$scope.user.password = $scope.passwordConfirm = $scope.user.hasPassword ? blank : "";
 
 	$scope.forms = {};
 
 	$scope.save = function (){
+		UserService.save($scope.user).then(function(){
 
+		}).catch(function(err){
+
+		});
 	};
 }]);

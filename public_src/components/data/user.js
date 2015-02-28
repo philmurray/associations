@@ -10,8 +10,12 @@ angular.module('associations.components.data.user', [])
 					cache: true
 				});
 			},
-			save: function(){
-
+			save: function(user){
+				return $http({
+					method: 'POST',
+					url: '/rpc/user',
+					data: user
+				});
 			}
 		};
 	}]);
