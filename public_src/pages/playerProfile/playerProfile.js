@@ -8,6 +8,7 @@ angular.module('associations.pages.playerProfile',[
 	$scope.user = angular.extend({},user.data);
 
 	$scope.forms = {};
+	$scope.activePage = "Profile";
 
 	$scope.save = function (){
 		UserService.save($scope.user).then(function(){

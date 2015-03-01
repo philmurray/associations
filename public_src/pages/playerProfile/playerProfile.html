@@ -1,12 +1,21 @@
 <div class="page-player-profile">
-
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#/">Associations</a>
+			</div>
+		</div>
+	</nav>
 	<div class="container-fluid">
-
 		<div class="row">
 			<div class="col-md-2 col-sm-3 col-xs-3">
-
+				<ul class="nav nav-pills nav-stacked">
+					<li role="presentation" ng-class="{active:activePage=='Profile'}"><a ng-click="activePage='Profile'">Profile</a></li>
+					<li role="presentation" ng-class="{active:activePage=='Survey'}"><a ng-click="activePage='Survey'">Survey</a></li>
+					<li role="presentation" ng-class="{active:activePage=='Statistics'}"><a ng-click="activePage='Statistics'">Statistics</a></li>
+				</ul>
 			</div>
-			<div class="col-md-10 col-sm-9 col-xs-9">
+			<div ng-if="activePage=='Profile'" class="col-md-10 col-sm-9 col-xs-9">
 				<div class="row">
 					<h1 class="col-sm-12">
 						Player Profile
@@ -97,8 +106,19 @@
 						<button ng-click="save()" ng-disabled="forms.local.$invalid || forms.display.$invalid" class="btn btn-primary pull-right">Save Changes</button>
 					</div>
 				</div>
-
 			</div>
+			<div ng-if="activePage=='Survey'" class="col-md-10 col-sm-9 col-xs-9">
+				<div class="row">
+					<h1 class="col-sm-12">
+						Player Survey
+					</h1>
+				</div></div>
+			<div ng-if="activePage=='Statistics'" class="col-md-10 col-sm-9 col-xs-9">
+				<div class="row">
+					<h1 class="col-sm-12">
+						Player Statistics
+					</h1>
+				</div></div>
 		</div>
 	</div>
 </div>
