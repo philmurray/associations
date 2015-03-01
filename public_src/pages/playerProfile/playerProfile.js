@@ -12,9 +12,9 @@ angular.module('associations.pages.playerProfile',[
 
 	$scope.save = function (){
 		UserService.save($scope.user).then(function(){
-
+			$scope.addAlert({type: "success", msg: "Player profile saved!"});
 		}).catch(function(err){
-
+			$scope.addAlert({type: "danger", msg: "Player profile could not be saved!"});
 		});
 	};
 }]);

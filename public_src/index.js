@@ -9,6 +9,7 @@ angular.module('associations',
 		'associations.pages.exploreWords',
 		'associations.pages.playerProfile',
 		'associations.components.login',
+		'ui.bootstrap.alert'
 	])
 	.config(['$routeProvider', '$httpProvider',
 	function($routeProvider, $httpProvider) {
@@ -36,4 +37,21 @@ angular.module('associations',
 			.otherwise({redirectTo: '/'});
 
 		$httpProvider.interceptors.push('LoginInterceptorService');
+	}])
+	.controller("AppController", ["$scope", "$timeout", function($scope, $timeout){
+		$scope.alerts = [];
+
+		$scope.addAlert = function(alert) {
+			$scope.alerts.push(alert);
+			$timeout(function(){
+				var i = $scope.alerts.indexOf(alert);
+				if (i !== -1){
+					$scope.alerts.splice(i,1);
+				}
+			}, 2500);
+		};
+
+		$scope.closeAlert = function(index) {
+			$scope.alerts.splice(index, 1);
+		};
 	}]);

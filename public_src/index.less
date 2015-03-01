@@ -3,6 +3,35 @@ body {
 	height: 100%;
 }
 
+.alert-box {
+	z-index: 10;
+	position: absolute;
+	margin: auto;
+	right: 100px;
+	left: 100px;
+}
+
+.alert.ng-move,
+.alert.ng-enter,
+.alert.ng-leave {
+	-webkit-transition:all linear 0.2s;
+	-moz-transition: all linear 0.2s;
+	-o-transition: all linear 0.2s;
+	transition:all linear 0.2s;
+}
+
+.alert.ng-leave.ng-leave-active,
+.alert.ng-move,
+.alert.ng-enter {
+	opacity:0;
+}
+
+.alert.ng-leave,
+.alert.ng-move.ng-move-active,
+.alert.ng-enter.ng-enter-active {
+	opacity:1;
+}
+
 #footer {
 	position: absolute;
 	bottom: 0px;

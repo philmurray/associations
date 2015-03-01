@@ -11,17 +11,21 @@
 
 	<link rel="stylesheet" href="app.css">
 </head>
-<body>
+<body ng-controller="AppController">
+
+	<div class="alert-box">
+		<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+	</div>
 
 	<ng-view class="center-container fade">
 
 	</ng-view>
 
 	<ul id="footer" class="list-inline">
-			<li><small>Associations</small></li>
-			<li><small>version 0.0.0</small></li>
-			<li><a href="#/"><small>privacy policy</small></a></li>
-			<li><a href="#/"><small>about</small></a></li>
+		<li><small>Associations</small></li>
+		<li><small>version 0.0.0</small></li>
+		<li><a href="#/"><small>privacy policy</small></a></li>
+		<li><a href="#/"><small>about</small></a></li>
 	</ul>
 
 	<script src="bower_components/angular/angular.min.js"></script>
