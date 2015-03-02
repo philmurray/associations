@@ -7,15 +7,19 @@
 			<h3 class="panel-title">Email login</h3>
 		</div>
 		<div class="panel-body">
-			<form>
-				<div class="form-group">
-					<input type="email" class="form-control" id="emailInput" placeholder="Enter email" ng-model="email">
+			<form name="form">
+				<div class="form-group" ng-class="{'has-error':form.email.$invalid}">
+					<input type="email" class="form-control" id="emailInput" placeholder="Enter email" ng-model="email" required>
+					<ul ng-show="form.email.$invalid" class="list-unstyled">
+						<li ng-show="form.email.$error.required">* required</li>
+						<li ng-show="form.email.$error.email">* invalid</li>
+					</ul>
 				</div>
-				<div ng-show="passwordRequired" class="form-group">
+				<div ng-show="passwordRequired" class="form-group" ng-class="{'has-error':badPassword}">
 					<label for="passwordInput">Password</label>
 					<input type="password" class="form-control" id="passwordInput" placeholder="Password" ng-model="password">
 				</div>
-				<button class="btn btn-primary pull-right" ng-click="submitEmail()">OK</button>
+				<button ng-disabled="form.$invalid" class="btn btn-primary pull-right" ng-click="submitEmail()">OK</button>
 			</form>
 		</div>
 	</div>

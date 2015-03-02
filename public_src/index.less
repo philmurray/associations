@@ -14,22 +14,21 @@ body {
 .alert.ng-move,
 .alert.ng-enter,
 .alert.ng-leave {
-	-webkit-transition:all linear 0.2s;
-	-moz-transition: all linear 0.2s;
-	-o-transition: all linear 0.2s;
-	transition:all linear 0.2s;
+	.transition(all linear 0.2s);
+	.transform(translateY(0px));
 }
 
 .alert.ng-leave.ng-leave-active,
 .alert.ng-move,
 .alert.ng-enter {
-	opacity:0;
+	.opacity(0);
+	.transform(translateY(-50px));
 }
 
 .alert.ng-leave,
 .alert.ng-move.ng-move-active,
 .alert.ng-enter.ng-enter-active {
-	opacity:1;
+	.opacity(1);
 }
 
 #footer {
@@ -52,24 +51,21 @@ body {
 	left: 0;
 	right: 0;
 	height: 100%;
-	opacity: 1;
+	.opacity(1);
 }
 .fade.ng-enter,
 .fade.ng-leave {
-	-webkit-transition: all 0.75s ease;
-	-moz-transition: all 0.75s ease;
-	-o-transition: all 0.75s ease;
-	transition: all 0.75s ease;
+	.transition(all 0.75s ease);
 }
 .fade.ng-enter {
-	opacity: 0;
+	.opacity(0);
 }
 .fade.ng-enter-active {
-	opacity: 1;
+	.opacity(1);
 }
 .fade.ng-leave {
-	opacity: 1;
+	.opacity(1);
 }
 .fade.ng-leave-active {
-	opacity: 0;
+	.opacity(0);
 }

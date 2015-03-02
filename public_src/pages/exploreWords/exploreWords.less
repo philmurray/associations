@@ -15,8 +15,7 @@
 		z-index:20;
 	}
 	.node-enter-word.ng-animate {
-		-webkit-transition: 0.25s linear all;
-		transition: 0.25s linear all;
+		.transition(0.25s linear all);
 	}
 
 	.node-enter-word.source {
@@ -57,40 +56,29 @@
 	}
 	.loading-box.loading {
 		display: block;
-		-webkit-animation: loadingmove 1.5s infinite ease-in-out;
-		animation: loadingmove 1.5s infinite ease-in-out;
+		.animation(loadingmove 1.5s infinite ease-in-out);
 	}
 	.loading-box.l0 {
-		-webkit-animation-delay: 0s;
-		animation-delay: 0s;
+		.animation-delay(0s);
 	}
 	.loading-box.l1 {
-		-webkit-animation-delay: -0.1s;
-		animation-delay: -0.1s;
+		.animation-delay(-0.1s);
 	}
 	.loading-box.l2 {
-		-webkit-animation-delay: -0.2s;
-		animation-delay: -0.2s;
+		.animation-delay(-0.2s);
 	}
 
 	@-webkit-keyframes loadingmove {
-		25% { -webkit-transform: translateX(206px) }
-		50% { -webkit-transform: translateX(206px) translateY(58px)}
-		75% { -webkit-transform: translateX(0px) translateY(58px)}
+		25% { .transform(translateX(206px)); }
+		50% { .transform(translateX(206px) translateY(58px)); }
+		75% { .transform(translateX(0px) translateY(58px));	}
 		100% { }
 	}
 
 	@keyframes loadingmove {
-		25% {
-			transform: translateX(206px);
-			-webkit-transform: translateX(206px);
-		} 50% {
-			transform: translateX(206px) translateY(58px);
-			-webkit-transform: translateX(206px) translateY(58px);
-		} 75% {
-			transform: translateX(0px) translateY(58px);
-			-webkit-transform: translateX(0px) translateY(58px);
-		} 100% {
-		}
+		25% { .transform(translateX(206px)); }
+		50% { .transform(translateX(206px) translateY(58px)); }
+		75% { .transform(translateX(0px) translateY(58px));	}
+		100% { }
 	}
 }
