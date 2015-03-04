@@ -18,10 +18,10 @@ angular.module('associations.components.selectWord', [
 			$scope.wordOptions = [];
 			$scope.refreshWords = function(searchTerm){
 				WordService.search(searchTerm)
-					.success(function(data){
-						$scope.wordOptions = data || [];
+					.then(function(response){
+						$scope.wordOptions = response.data || [];
 					})
-					.error($log);
+					.catch($log);
 			};
 		}
 	};

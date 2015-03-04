@@ -18,7 +18,7 @@ angular.module('associations.components.login', [
 					return $q.reject(err);
 				});
 			}
-			return response;
+			return $q.reject(response);
 		}
 	};
 }])
@@ -42,7 +42,10 @@ angular.module('associations.components.login', [
 				email: $scope.email,
 				password: $scope.password || '-'
 			})
-			.then(function(response){
+			.then(function(){
+				$modalInstance.close();
+			})
+			.catch(function(response){
 				if (response.status === 401){
 					if ($scope.passwordRequired){
 						$scope.badPassword = true;
@@ -51,10 +54,7 @@ angular.module('associations.components.login', [
 					}
 					return;
 				}
-				$modalInstance.close();
-			})
-			.catch(function(){
-				// ???
+				$modalInstance.dismiss(response.data);
 			});
 	};
 	$scope.cancel = $modalInstance.dismiss;

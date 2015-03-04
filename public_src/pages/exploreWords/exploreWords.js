@@ -65,16 +65,16 @@ angular.module('associations.pages.exploreWords',[
 			$scope.loading = true;
 			$scope.noData = false;
 			WordService.getPath(word, otherWord)
-				.success(function(data){
+				.then(function(response){
 					$scope.loading = false;
-					$scope.model = data;
+					$scope.model = response.data;
 					$scope.noData = !(Object.keys($scope.model.nodes).length);
 					angular.forEach($scope.model.nodes, function(val,key){
 						if (val === word) $scope.model.word = key;
 						else if (val === otherWord) $scope.model.otherWord = key;
 					});
 				})
-				.error($log);
+				.catch($log);
 		}
 	};
 	$scope.getGraph = function(){
@@ -82,15 +82,15 @@ angular.module('associations.pages.exploreWords',[
 		$scope.loading = true;
 		$scope.noData = false;
 		WordService.getGraph(word)
-			.success(function(data){
+			.then(function(response){
 				$scope.loading = false;
-				$scope.model = data;
+				$scope.model = response.data;
 				$scope.noData = !(Object.keys($scope.model.nodes).length);
 				angular.forEach($scope.model.nodes, function(val,key){
 					if (val === word) $scope.model.word = key;
 				});
 			})
-			.error($log);
+			.catch($log);
 	};
 	$scope.onGraphClick = function(word){
 		if ($scope.mode === 1) {
