@@ -2,8 +2,9 @@
 
 var express = require('express'),
 	router = express.Router(),
-	Word = require('../lib/models').Word,
-	graph = require('../lib/graph');
+	models = require('../lib/models'),
+	Word = models.Word,
+	words = models.words;
 
 var isAuthenticated = function (req, res, next) {
 	if (req.isAuthenticated())
@@ -22,22 +23,36 @@ router.post('/user', isAuthenticated, function(req, res){
 	});
 });
 
+router.get('/color', function(req,res){
+	models.Color.getActiveColor(req.user, function(err, color){
+		if (err){ return res.status(500).send(err.message); }
+		res.json(color);
+	});
+});
+
+router.get('/colorlist', function(req,res){
+	models.Color.getAllColors(function(err, colors){
+		if (err){ return res.status(500).send(err.message); }
+		res.json(colors);
+	});
+});
+
 router.get('/word', function(req,res){
-	Word.search(req.query.text || "", 10, function(err, words){
+	models.Word.search(req.query.text || "", 10, function(err, words){
 		if (err){ return res.status(500).send(err.message); }
 		res.json(words);
 	});
 });
 
 router.get('/wordGraph/:word', function(req,res){
-	graph.getWordGraph(req.params.word,function(err, graph){
+	models.words.getWordGraph(req.params.word,function(err, graph){
 		if (err){ return res.status(500).send(err.message); }
 		res.json(graph);
 	});
 });
 
 router.get('/wordPath/:from/:to', function(req,res){
-	graph.getWordPath(req.params.from,req.params.to,function(err, graph){
+	models.words.getWordPath(req.params.from,req.params.to,function(err, graph){
 		if (err){ return res.status(500).send(err.message); }
 		res.json(graph);
 	});

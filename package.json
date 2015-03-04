@@ -12,6 +12,7 @@
 
         "knex": "*",
         "bookshelf": "*",
+        "bluebird": "*",
         "pg": "*",
         "bcrypt-nodejs": "*",
 

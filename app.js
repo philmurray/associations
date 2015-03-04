@@ -7,8 +7,8 @@ var express = require('express'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     routes = require('./routes/index'),
-    passportInit = require('./lib/passport'),
-    sessionInit = require('./lib/session');
+    passportInit = require('./lib/policy/passport'),
+    sessionInit = require('./lib/policy/session');
 
 var app = express();
 
