@@ -1,8 +1,13 @@
 "use strict";
 
-angular.module('associations.pages.main', ["associations.components.diagram"])
+angular.module('associations.pages.main', [
+	"associations.components.diagram"
+])
 
-.controller("MainController", ["$scope", function($scope) {
+.controller("MainController", ["$scope", "color", function($scope, color) {
+
+	$scope.color = color;
+
 	$scope.words = {
 		Play: {
 			text: "Play",

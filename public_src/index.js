@@ -9,30 +9,43 @@ angular.module('associations',
 		'associations.pages.exploreWords',
 		'associations.pages.playerProfile',
 		'associations.components.login',
+		'associations.components.data.color',
 		'ui.bootstrap.alert'
 	])
 	.config(['$routeProvider', '$httpProvider',
 	function($routeProvider, $httpProvider) {
-		var authenticatedRoute = {
-			user: ["LoginService", function(LoginService){
+		var authenticatedRoute = ["LoginService", function(LoginService){
 				return LoginService.isLoggedIn();
+			}],
+			userColor = ["ColorService", function(ColorService){
+				return ColorService.getUserColor().then(function(response){
+					return response.data;
+				});
 			}]
-		};
+		;
 
 		$routeProvider
 			.when('/', {
 				templateUrl: 'pages/main/main.html',
-				controller: 'MainController'
+				controller: 'MainController',
+				resolve: {
+					color: userColor
+				}
 			})
 			.when('/playerProfile', {
 				templateUrl: 'pages/playerProfile/playerProfile.html',
 				controller: 'PlayerProfileController',
-				resolve: authenticatedRoute
+				resolve: {
+					user: authenticatedRoute
+				}
 			})
 			.when('/exploreWords', {
 				templateUrl: 'pages/exploreWords/exploreWords.html',
 				controller: 'ExploreWordsController',
-				reloadOnSearch: false
+				reloadOnSearch: false,
+				resolve: {
+					color: userColor
+				}
 			})
 			.otherwise({redirectTo: '/'});
 

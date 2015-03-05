@@ -7,7 +7,7 @@ angular.module('associations.pages.exploreWords',[
 	"associations.pages.exploreWords.components.graph"
 	])
 
-.controller("ExploreWordsController", ["$scope", "$location", "WordService", "$log", function ($scope, $location, WordService, $log) {
+.controller("ExploreWordsController", ["$scope", "$location", "WordService", "$log", "color", function ($scope, $location, WordService, $log, color) {
 	var searchWord = {
 		initial: {
 			x: 0,
@@ -16,7 +16,14 @@ angular.module('associations.pages.exploreWords',[
 		fixed: true
 	};
 	$scope.model = {nodes:{}, links:{}};
-	$scope.diagramConfig = {};
+	$scope.diagramConfig = {
+		edges: {
+			style: 'arrow',
+			widthMax: 8,
+			arrowScaleFactor: 0.75,
+			color: color.hex
+		}
+	};
 
 	$scope.loading = false;
 	$scope.selectedWord = {

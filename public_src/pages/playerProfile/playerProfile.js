@@ -2,13 +2,18 @@
 
 angular.module('associations.pages.playerProfile',[
 	'directives.inputMatch',
-	'associations.components.data.user'])
+	'associations.components.data.user',
+	'associations.components.data.color'])
 
-.controller("PlayerProfileController", ["$scope", "user", "UserService", function ($scope, user, UserService) {
+.controller("PlayerProfileController", ["$scope", "user", "UserService", "ColorService", "$log", function ($scope, user, UserService, ColorService, $log) {
 	$scope.user = angular.extend({},user.data);
 
 	$scope.forms = {};
 	$scope.activePage = "Profile";
+
+	ColorService.getColorList().then(function(response){
+		$scope.colors = response.data;
+	}).catch($log);
 
 	$scope.save = function (){
 		UserService.save($scope.user).then(function(){

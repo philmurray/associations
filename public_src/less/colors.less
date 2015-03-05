@@ -1,0 +1,68 @@
+.button-variant(@color; @background; @border) {
+  &:hover,
+  &:focus,
+  &.focus,
+  &:active,
+  .open > .dropdown-toggle& {
+    color: @color;
+    background-color: lighten(@background, 10%);
+        border-color: lighten(@border, 12%);
+  }
+
+  &.active {
+    color: @background;
+    background-color: @border;
+        border-color: @color;
+  }
+
+  &.active:hover,
+  &.active:focus,
+  &.active.focus,
+  &.active:active {
+    color: @background;
+    background-color: darken(@border, 10%);
+        border-color: darken(@color, 12%);
+  }
+
+}
+
+.user-color(@color) {
+
+	&.btn {
+		.button-variant(darken(@color, 5%); #111; darken(@color, 5%));
+	}
+
+	._jsPlumb_connector * {
+		stroke:@color;
+		fill:@color;
+	}
+}
+
+.google-plus {
+	color: @google-plus-color;
+}
+.facebook {
+	color: @facebook-color;
+}
+.twitter {
+	color: @twitter-color;
+}
+
+.neon-green {
+	.user-color(@neon-green);
+}
+.neon-purple {
+	.user-color(@neon-purple);
+}
+.neon-red {
+	.user-color(@neon-red);
+}
+.neon-orange {
+	.user-color(@neon-orange);
+}
+.neon-blue {
+	.user-color(@neon-blue);
+}
+.neon-yellow {
+	.user-color(@neon-yellow);
+}
