@@ -3,9 +3,10 @@
 angular.module('associations.pages.playerProfile',[
 	'directives.inputMatch',
 	'associations.components.data.user',
-	'associations.components.data.color'])
+	'associations.components.data.color',
+	'associations.components.data.question'])
 
-.controller("PlayerProfileController", ["$scope", "user", "UserService", "ColorService", "$log", function ($scope, user, UserService, ColorService, $log) {
+.controller("PlayerProfileController", ["$scope", "user", "UserService", "ColorService", "$log", "QuestionService", function ($scope, user, UserService, ColorService, $log, QuestionService) {
 	$scope.user = angular.extend({},user.data);
 
 	$scope.forms = {};
@@ -15,11 +16,19 @@ angular.module('associations.pages.playerProfile',[
 		$scope.colors = response.data;
 	}).catch($log);
 
-	$scope.save = function (){
+	QuestionService.getQuestionList().then(function(response){
+		$scope.questions = response.data;
+	});
+
+	$scope.saveProfile = function (){
 		UserService.save($scope.user).then(function(){
 			$scope.addAlert({type: "success", msg: "Player profile saved!"});
 		}).catch(function(err){
 			$scope.addAlert({type: "danger", msg: "Player profile could not be saved!"});
 		});
+	};
+
+	$scope.saveSurvey = function(){
+
 	};
 }]);

@@ -2,9 +2,7 @@
 
 var express = require('express'),
 	router = express.Router(),
-	models = require('../lib/models'),
-	Word = models.Word,
-	words = models.words;
+	models = require('../lib/models');
 
 var isAuthenticated = function (req, res, next) {
 	if (req.isAuthenticated())
@@ -16,10 +14,18 @@ router.get('/user', isAuthenticated, function(req, res){
 	res.json(req.user.safeModel());
 });
 
+
 router.post('/user', isAuthenticated, function(req, res){
 	req.user.updateUser(req.body, function(err){
 		if (err){ return res.status(500).json(err); }
 		res.send(true);
+	});
+});
+
+router.get('/questions', isAuthenticated, function(req,res){
+	models.Question.getAllQuestions(function(err, questions){
+		if (err){ return res.status(500).send(err.message); }
+		res.json(questions);
 	});
 });
 

@@ -44,6 +44,32 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: answers; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+CREATE TABLE answers (
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
+    question_id uuid NOT NULL,
+    text text
+);
+
+
+ALTER TABLE answers OWNER TO associations_dbuser;
+
+--
+-- Name: answers_users; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+CREATE TABLE answers_users (
+    user_id uuid NOT NULL,
+    question_id uuid NOT NULL,
+    answer_id uuid NOT NULL
+);
+
+
+ALTER TABLE answers_users OWNER TO associations_dbuser;
+
+--
 -- Name: colors; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
 --
 
@@ -126,6 +152,18 @@ CREATE TABLE picks (
 ALTER TABLE picks OWNER TO associations_dbuser;
 
 --
+-- Name: questions; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+CREATE TABLE questions (
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
+    text text
+);
+
+
+ALTER TABLE questions OWNER TO associations_dbuser;
+
+--
 -- Name: session; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
 --
 
@@ -167,6 +205,22 @@ CREATE TABLE words (
 ALTER TABLE words OWNER TO associations_dbuser;
 
 --
+-- Name: answers_pkey; Type: CONSTRAINT; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+ALTER TABLE ONLY answers
+    ADD CONSTRAINT answers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: answers_users_pkey; Type: CONSTRAINT; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+ALTER TABLE ONLY answers_users
+    ADD CONSTRAINT answers_users_pkey PRIMARY KEY (user_id, question_id);
+
+
+--
 -- Name: colors_pkey; Type: CONSTRAINT; Schema: public; Owner: associations_dbuser; Tablespace: 
 --
 
@@ -188,6 +242,14 @@ ALTER TABLE ONLY games
 
 ALTER TABLE ONLY picks
     ADD CONSTRAINT picks_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: questions_pkey; Type: CONSTRAINT; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+ALTER TABLE ONLY questions
+    ADD CONSTRAINT questions_pkey PRIMARY KEY (id);
 
 
 --
@@ -241,6 +303,38 @@ CREATE INDEX cov2 ON picks USING btree ("to");
 --
 
 CREATE INDEX cov3 ON usf_norms USING btree ("to");
+
+
+--
+-- Name: answers_question_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: associations_dbuser
+--
+
+ALTER TABLE ONLY answers
+    ADD CONSTRAINT answers_question_id_fkey FOREIGN KEY (question_id) REFERENCES questions(id);
+
+
+--
+-- Name: answers_users_answer_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: associations_dbuser
+--
+
+ALTER TABLE ONLY answers_users
+    ADD CONSTRAINT answers_users_answer_id_fkey FOREIGN KEY (answer_id) REFERENCES answers(id);
+
+
+--
+-- Name: answers_users_question_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: associations_dbuser
+--
+
+ALTER TABLE ONLY answers_users
+    ADD CONSTRAINT answers_users_question_id_fkey FOREIGN KEY (question_id) REFERENCES questions(id);
+
+
+--
+-- Name: answers_users_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: associations_dbuser
+--
+
+ALTER TABLE ONLY answers_users
+    ADD CONSTRAINT answers_users_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id);
 
 
 --

@@ -42,7 +42,7 @@
 											Color
 										</label>
 										<div class="col-sm-9">
-											<button ng-repeat="color in colors" class="col-xs-4 btn btn-sm {{color.css_class}}" ng-class="{'active':user.colorId==color.id}" ng-click="user.colorId=color.id">{{color.name}}</button>
+											<button ng-repeat="color in colors" class="col-xs-6 col-sm-4 col-md-6 col-lg-4 btn btn-sm {{color.css_class}}" ng-class="{'active':user.colorId==color.id}" ng-click="user.colorId=color.id">{{color.name}}</button>
 										</div>
 									</div>
 								</form>
@@ -111,7 +111,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-12">
-						<button ng-click="save()" ng-disabled="forms.local.$invalid || forms.display.$invalid" class="btn btn-primary pull-right">Save Changes</button>
+						<button ng-click="saveProfile()" ng-disabled="forms.local.$invalid || forms.display.$invalid" class="btn btn-primary pull-right">Save Changes</button>
 					</div>
 				</div>
 			</div>
@@ -120,7 +120,29 @@
 					<h1 class="col-sm-12">
 						Player Survey
 					</h1>
-				</div></div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<form class="form-horizontal" name="forms.survey">
+									<div ng-repeat="question in questions" class="form-group">
+										<label class="control-label col-sm-6 col-xs-12">{{question.text}}</label>
+										<div class="btn-group col-sm-6 col-xs-12" role="group">
+											<button ng-repeat="answer in question.answers" type="button" class="btn btn-default">{{answer.text}}</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<button ng-click="saveSurvey()" class="btn btn-primary pull-right">Save Changes</button>
+					</div>
+				</div>
+			</div>
 			<div ng-if="activePage=='Statistics'" class="col-md-10 col-sm-9 col-xs-9">
 				<div class="row">
 					<h1 class="col-sm-12">
