@@ -129,7 +129,7 @@
 									<div ng-repeat="question in questions" class="form-group">
 										<label class="control-label col-sm-6 col-xs-12">{{question.text}}</label>
 										<div class="btn-group col-sm-6 col-xs-12" role="group">
-											<button ng-repeat="answer in question.answers" type="button" class="btn btn-default">{{answer.text}}</button>
+											<button ng-repeat="answer in question.answers" type="button" ng-class="{active:answer.selected}" ng-click="selectAnswer(question, answer)" class="btn btn-default">{{answer.text}}</button>
 										</div>
 									</div>
 								</form>

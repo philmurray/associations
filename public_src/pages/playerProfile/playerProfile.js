@@ -28,7 +28,17 @@ angular.module('associations.pages.playerProfile',[
 		});
 	};
 
-	$scope.saveSurvey = function(){
+	$scope.selectAnswer = function(question, answer){
+		angular.forEach(question.answers, function(a){
+			a.selected = (a === answer);
+		});
+	};
 
+	$scope.saveSurvey = function(){
+		QuestionService.saveQuestionList($scope.questions).then(function(){
+			$scope.addAlert({type: "success", msg: "Player survey saved!"});
+		}).catch(function(err){
+			$scope.addAlert({type: "danger", msg: "Player survey could not be saved!"});
+		});
 	};
 }]);

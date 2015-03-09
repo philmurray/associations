@@ -23,9 +23,16 @@ router.post('/user', isAuthenticated, function(req, res){
 });
 
 router.get('/questions', isAuthenticated, function(req,res){
-	models.Question.getAllQuestions(function(err, questions){
+	models.Question.getAllQuestions(req.user, function(err, questions){
 		if (err){ return res.status(500).send(err.message); }
 		res.json(questions);
+	});
+});
+
+router.post('/questions', isAuthenticated, function(req,res){
+	models.Question.saveUserAnswers(req.user, req.body, function(err){
+		if (err){ return res.status(500).send(err.message); }
+		res.send(true);
 	});
 });
 

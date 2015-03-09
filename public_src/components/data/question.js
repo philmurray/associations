@@ -10,6 +10,14 @@ angular.module('associations.components.data.question', [])
 					url: url,
 					cache: true
 				});
+			},
+			saveQuestionList: function(questions){
+				var url = "/rpc/questions";
+				return $http({
+					method: 'POST',
+					url: url,
+					data: questions
+				});
 			}
 		};
 	}]);
