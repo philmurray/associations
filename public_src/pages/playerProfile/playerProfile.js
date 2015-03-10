@@ -34,6 +34,20 @@ angular.module('associations.pages.playerProfile',[
 		});
 	};
 
+	$scope.unansweredQuestions = function(){
+		var num = 0;
+		angular.forEach($scope.questions, function(question){
+			var answered = false;
+			angular.forEach(question.answers, function(a){
+				answered = answered || a.selected;
+			});
+			if (!answered) {
+				num++;
+			}
+		});
+		return num || "";
+	};
+
 	$scope.saveSurvey = function(){
 		QuestionService.saveQuestionList($scope.questions).then(function(){
 			$scope.addAlert({type: "success", msg: "Player survey saved!"});
