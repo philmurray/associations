@@ -19,18 +19,7 @@ angular.module('associations.pages.playerProfile',[
 
 	QuestionService.getQuestionList().then(function(response){
 		$scope.questionsObj = response.data;
-		$scope.questions = [];
-		angular.forEach($scope.questionsObj, function(question){
-			var hasAnswer = false;
-			angular.forEach(question.answers, function(answer){
-				hasAnswer = hasAnswer || answer.selected;
-			});
-			if (hasAnswer){
-				$scope.questions.push(question);
-			} else {
-				$scope.questions.unshift(question);
-			}
-		});
+		$scope.initQuestions();
 	});
 
 	$scope.saveProfile = function (){
@@ -55,22 +44,26 @@ angular.module('associations.pages.playerProfile',[
 		});
 	};
 
-	$scope.unansweredQuestions = function(){
-		var num = 0;
-		angular.forEach($scope.questions, function(question){
-			var answered = false;
-			angular.forEach(question.answers, function(a){
-				answered = answered || a.selected;
+	$scope.initQuestions = function(){
+		$scope.questions = [];
+		$scope.unansweredQuestions = 0;
+		angular.forEach($scope.questionsObj, function(question){
+			var hasAnswer = false;
+			angular.forEach(question.answers, function(answer){
+				hasAnswer = hasAnswer || answer.selected;
 			});
-			if (!answered) {
-				num++;
+			if (hasAnswer){
+				$scope.questions.push(question);
+			} else {
+				$scope.questions.unshift(question);
+				$scope.unansweredQuestions++;
 			}
 		});
-		return num || "";
 	};
 
 	$scope.saveSurvey = function(){
 		QuestionService.saveQuestionList($scope.questionsObj).then(function(){
+			$scope.initQuestions();
 			$scope.addAlert({type: "success", msg: "Player survey saved!"});
 		}).catch(function(err){
 			$scope.addAlert({type: "danger", msg: "Player survey could not be saved!"});
