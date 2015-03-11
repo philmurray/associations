@@ -9,10 +9,11 @@
 	<div class="container">
 		<div class="row hidden-sm hidden-md hidden-lg">
 			<div class="col-xs-12">
-				<div class="panel panel-default">
+				<div class="panel">
 					<div class="panel-body">
 						<ul class="nav nav-pills nav">
 							<li role="presentation" ng-class="{active:activePage=='Profile'}"><a ng-click="activePage='Profile'">Profile</a></li>
+							<li role="presentation" ng-class="{active:activePage=='Account'}"><a ng-click="activePage='Account'">Account</a></li>
 							<li role="presentation" ng-class="{active:activePage=='Survey'}"><a ng-click="activePage='Survey'">Survey <span class="badge">{{unansweredQuestions()}}</span></a></li>
 							<li role="presentation" ng-class="{active:activePage=='Statistics'}"><a ng-click="activePage='Statistics'">Statistics</a></li>
 						</ul>
@@ -25,6 +26,7 @@
 			<div class="col-md-2 col-sm-3 hidden-xs">
 				<ul class="nav nav-pills nav-stacked">
 					<li role="presentation" ng-class="{active:activePage=='Profile'}"><a ng-click="activePage='Profile'">Profile</a></li>
+					<li role="presentation" ng-class="{active:activePage=='Account'}"><a ng-click="activePage='Account'">Account</a></li>
 					<li role="presentation" ng-class="{active:activePage=='Survey'}"><a ng-click="activePage='Survey'">Survey <span class="badge">{{unansweredQuestions()}}</span></a></li>
 					<li role="presentation" ng-class="{active:activePage=='Statistics'}"><a ng-click="activePage='Statistics'">Statistics</a></li>
 				</ul>
@@ -36,7 +38,7 @@
 					</h1>
 				</div>
 				<div class="row">
-					<div class="col-sm-12 col-md-6">
+					<div class="col-sm-12">
 						<div class="panel panel-default">
 							<div class="panel-body">
 								<form class="form-horizontal" name="forms.display">
@@ -48,7 +50,7 @@
 											</ul>
 										</label>
 										<div class="col-sm-9">
-										<input class="form-control" id="displayName" name="displayName" placeholder="Enter your display name" ng-model="user.alias" required>
+										<input class="form-control" id="displayName" name="displayName" placeholder="Enter your display name" ng-model="profileUser.alias" required>
 										</div>
 									</div>
 									<div class="form-group">
@@ -56,22 +58,35 @@
 											Color
 										</label>
 										<div class="col-sm-9">
-											<button ng-repeat="color in colors" class="col-xs-4 col-sm-4 col-md-6 btn btn-sm {{color.css_class}}" ng-class="{'active':user.colorId==color.id}" ng-click="user.colorId=color.id">{{color.name}}</button>
+											<button ng-repeat="color in colors" class="col-xs-4 btn btn-sm {{color.css_class}}" ng-class="{'active':profileUser.colorId==color.id}" ng-click="profileUser.colorId=color.id">{{color.name}}</button>
 										</div>
 									</div>
 								</form>
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-12 col-md-6">
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<button ng-click="saveProfile()" ng-disabled="forms.display.$invalid" class="btn btn-primary pull-right">Save Changes</button>
+					</div>
+				</div>
+			</div>
+			<div ng-if="activePage=='Account'" class="col-md-10 col-sm-9 col-xs-12">
+				<div class="row">
+					<h1 class="col-sm-12">
+						Account
+					</h1>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
 						<div class="panel panel-default">
-
 							<div class="panel-heading">
 								<h3 class="panel-title">
 									Login information
 								</h3>
 							</div>
-							<div class="panel-body" ng-switch="user.provider">
+							<div class="panel-body" ng-switch="accountUser.provider">
 								<div ng-switch-when="google">
 									You are logged in with <strong class="google-plus">google-plus</strong>
 								</div>
@@ -91,13 +106,13 @@
 											</ul>
 										</label>
 										<div class="col-sm-9">
-											<input type="email" required class="form-control" id="email" name="email" placeholder="Enter your email address" ng-model="user.email">
+											<input type="email" required class="form-control" id="email" name="email" placeholder="Enter your email address" ng-model="accountUser.email">
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="password" class="col-sm-3 control-label">Password</label>
 										<div class="col-sm-9">
-										<input type="password" class="form-control" id="password" name="password" placeholder="{{user.hasPassword?'Enter a new password':'Enter your password (optional)'}}" ng-model="user.password">
+										<input type="password" class="form-control" id="password" name="password" placeholder="{{accountUser.hasPassword?'Enter a new password':'Enter your password (optional)'}}" ng-model="accountUser.password">
 										</div>
 									</div>
 									<div class="form-group" ng-class="{'has-error':forms.local.passwordConfirm.$invalid}">
@@ -109,7 +124,7 @@
 											</ul>
 										</label>
 										<div class="col-sm-9">
-										<input ng-required='user.password' type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" ng-model="confirmPassword" match="user.password">
+										<input ng-required='accountUser.password' type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" ng-model="confirmPassword" match="accountUser.password">
 										</div>
 									</div>
 
@@ -125,7 +140,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-12">
-						<button ng-click="saveProfile()" ng-disabled="forms.local.$invalid || forms.display.$invalid" class="btn btn-primary pull-right">Save Changes</button>
+						<button ng-click="saveAccount()" ng-disabled="forms.local.$invalid" class="btn btn-primary pull-right">Save Changes</button>
 					</div>
 				</div>
 			</div>
