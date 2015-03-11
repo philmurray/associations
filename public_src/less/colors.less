@@ -28,7 +28,11 @@
 
 .user-color(@color) {
 
-	a.list-group-item,
+	@hover-color: lighten(@color, 10%);
+	@active-color: darken(@color, 10%);
+
+	a.color,
+	.btn-color,
 	&.btn {
 		.button-variant(darken(@color, 5%); #111; darken(@color, 5%));
 	}
@@ -38,6 +42,113 @@
 		fill:@color;
 	}
 	
+	.panel-color {
+		.panel-variant(@color; @panel-default-text; @panel-default-heading-bg; @color);
+	}
+	.btn-link {
+		color: @color;
+		&:hover, &:focus {
+			color: @hover-color;
+		}
+	}
+	a {
+		color: @color;
+		&:hover, &:focus {
+			color: @hover-color;
+		}
+	}
+	.nav {
+		// Open dropdowns
+		.open > a {
+			&, &:hover, &:focus {
+				border-color: @color;
+			}
+		}
+	}
+	.nav-pills {
+		> li {
+			&.active > a {
+				&, &:hover, &:focus {
+					background-color: @color;
+				}
+			}
+		}
+	}
+	.dropdown-menu > .active > a {
+		&, &:hover, &:focus {
+			background-color: @color;
+		}
+	}
+	.form-control {
+		.form-control-focus(@color);
+	}
+	.ui-select-bootstrap .ui-select-choices-row.active>a {
+		color: #000;
+		background-color: @color;
+	}
+	.navbar-default {
+		.navbar-brand {
+			color: @color;
+			&:hover, &:focus {
+				color: @hover-color;
+			}
+		}
+		
+		.navbar-nav {
+			> li > a {
+				color: @color;
+				
+				&:hover, &:focus {
+					color: @hover-color;
+				}
+			}
+			> .active > a {
+				&, &:hover, &:focus {
+					color: @active-color;
+				}
+			}
+		}
+		
+		// Dropdown menu items
+		.navbar-nav {
+			// Remove background color from open dropdown
+			> .open > a {
+				&, &:hover, &:focus {
+					color: @color;
+				}
+			}
+			
+			@media (max-width: @grid-float-breakpoint-max) {
+				// Dropdowns get custom display when collapsed
+				.open .dropdown-menu {
+					> li > a {
+						color: @color;
+						&:hover, &:focus {
+							color: @hover-color;
+						}
+					}
+					> .active > a {
+						&, &:hover, &:focus {
+							color: @active-color;
+						}
+					}
+				}
+			}
+		}
+		.navbar-link {
+			color: @color;
+			&:hover {
+				color: @hover-color;
+			}
+		}
+		
+		.btn-link {
+			color: @color;
+			&:hover, &:focus {
+				color: @hover-color;
+			}
+		}
+	}
 }
 
 .google-plus {

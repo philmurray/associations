@@ -15,12 +15,21 @@ angular.module('associations.pages.playerProfile',[
 
 	ColorService.getColorList().then(function(response){
 		$scope.colors = response.data;
+		$scope.setPlayerColor();
 	}).catch($log);
 
 	QuestionService.getQuestionList().then(function(response){
 		$scope.questionsObj = response.data;
 		$scope.initQuestions();
 	});
+	
+	$scope.setPlayerColor = function(){
+		$scope.colors.forEach(function(color){
+			if (color.id === $scope.profileUser.colorId){
+				$scope.color = color;
+			}
+		});
+	};
 
 	$scope.saveProfile = function (){
 		UserService.save($scope.profileUser).then(function(){

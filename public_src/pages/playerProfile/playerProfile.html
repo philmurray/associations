@@ -1,4 +1,4 @@
-<div class="page-player-profile">
+<div class="page-player-profile {{color.css_class}}">
 	<nav class="navbar navbar-default" ng-init="collapse=true">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -57,7 +57,7 @@
 											Color
 										</label>
 										<div class="col-sm-9">
-											<button ng-repeat="color in colors" class="col-xs-6 col-sm-4 btn btn-sm {{color.css_class}}" ng-class="{'active':profileUser.colorId==color.id}" ng-click="profileUser.colorId=color.id">{{color.name}}</button>
+											<button ng-repeat="color in colors" class="col-xs-6 col-sm-4 btn btn-sm {{color.css_class}}" ng-class="{'active':profileUser.colorId==color.id}" ng-click="profileUser.colorId=color.id;setPlayerColor()">{{color.name}}</button>
 										</div>
 									</div>
 								</form>
@@ -67,7 +67,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-12">
-						<button ng-click="saveProfile()" ng-disabled="forms.display.$invalid" class="btn btn-primary">Save Changes</button>
+						<button ng-click="saveProfile()" ng-disabled="forms.display.$invalid" class="btn btn-color">Save Changes</button>
 					</div>
 				</div>
 			</div>
@@ -131,15 +131,15 @@
 							</div>
 							<div class="panel-footer">
 								<div class="pull-right">
-									<a href="/auth/logout" class="btn btn-info btn-xs">Log out</a>
+									<a href="/auth/logout" class="btn btn-color btn-xs">Log out</a>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="row">
+				<div class="row" ng-if="!accountUser.provider">
 					<div class="col-md-12">
-						<button ng-click="saveAccount()" ng-disabled="forms.local.$invalid" class="btn btn-primary">Save Changes</button>
+						<button ng-click="saveAccount()" ng-disabled="forms.local.$invalid" class="btn btn-color">Save Changes</button>
 					</div>
 				</div>
 			</div>
@@ -167,7 +167,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-12">
-						<button ng-click="saveSurvey()" class="btn btn-primary">Save Changes</button>
+						<button ng-click="saveSurvey()" class="btn btn-color">Save Changes</button>
 					</div>
 				</div>
 			</div>

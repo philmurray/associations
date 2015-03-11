@@ -15,13 +15,14 @@ angular.module('associations.pages.exploreWords',[
 		},
 		fixed: true
 	};
+	$scope.color = color;
 	$scope.model = {nodes:{}, links:{}};
 	$scope.diagramConfig = {
 		edges: {
 			style: 'arrow',
 			widthMax: 8,
 			arrowScaleFactor: 0.75,
-			color: color.hex
+			color: $scope.color.hex
 		}
 	};
 

@@ -2,6 +2,7 @@
 
 angular.module('associations.components.login', [
 	'associations.components.data.user',
+	'associations.components.data.color',
 	'ui.bootstrap'
 ])
 .factory('LoginInterceptorService', ['$q', '$location', '$injector', function($q, $location, $injector){
@@ -35,7 +36,11 @@ angular.module('associations.components.login', [
 		}
 	};
 }])
-.controller('LoginController', ['$scope', '$http', '$modalInstance', '$window', '$location', function($scope, $http, $modalInstance, $window, $location){
+.controller('LoginController', ['$scope', '$http', '$modalInstance', '$window', '$location', 'ColorService', function($scope, $http, $modalInstance, $window, $location, ColorService){
+	ColorService.getUserColor().then(function(response){
+		$scope.color = response.data;
+	});
+	
 	$scope.submitEmail = function(){
 		$scope.badPassword = false;
 		$http.post('/auth/local',{

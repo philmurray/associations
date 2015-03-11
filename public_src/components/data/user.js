@@ -6,8 +6,7 @@ angular.module('associations.components.data.user', [])
 			get: function(){
 				return $http({
 					method: 'GET',
-					url: '/rpc/user',
-					cache: true
+					url: '/rpc/user'
 				});
 			},
 			save: function(user){
