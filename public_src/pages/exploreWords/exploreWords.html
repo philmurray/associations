@@ -1,15 +1,23 @@
 <div class='page-explore-words'>
 
-	<nav class="navbar navbar-default">
+	<nav class="navbar navbar-default" ng-init="collapse=true">
 		<div class="container-fluid">
 			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" ng-click="collapse = !collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
 				<a class="navbar-brand" href="#/">Associations</a>
 			</div>
 
-			<ul class="nav navbar-nav navbar-right">
-				<li ng-class="{active:mode == 1}"><a href="" ng-click="mode = 1"><span>One Word</span></a></li>
-				<li ng-class="{active:mode == 2}"><a href="" ng-click="mode = 2"><span>Two Words</span></a></li>
-			</ul>
+			<div class="navbar-collapse" ng-class="{collapse:collapse}">
+				<ul class="nav navbar-nav navbar-right">
+					<li ng-class="{active:mode == 1}"><a href="" ng-click="mode = 1"><span>One Word</span></a></li>
+					<li ng-class="{active:mode == 2}"><a href="" ng-click="mode = 2"><span>Two Words</span></a></li>
+				</ul>
+			</div>
 		</div>
 	</nav>
 
