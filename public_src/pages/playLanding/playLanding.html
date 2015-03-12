@@ -24,11 +24,49 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-6">
 				<a class="btn btn-color btn-lg btn-block" href="#/playMulti">New Multiplayer Game</a>
-				<h4>Recent Games</h4>
+				<h4>Past Games</h4>
+				<div class="panel panel-default">
+					<div class="list-group panel-body">
+						<div ng-repeat="game in multiGames" class="list-group-item">
+							<h4 class="list-group-item-heading">
+								<span><strong>{{game.status}}</strong> <span class="badge">{{game.notifications || ""}}</span></span>
+								<span class="pull-right">{{game.time | date}}
+								</span>
+							</h4>
+							<p class="list-group-item-text clearfix">
+								<span ng-repeat="player in game.players">{{player.alias}} </span>
+								<a ng-if="game.status != 'Pending'" class="btn btn-xs btn-color pull-right" href="#/games/{{game.link}}">View</a>
+								<button ng-if="game.status == 'Completed'" class="btn btn-xs btn-color pull-right" ng-click="newGame(game)">Rematch</button>
+								<a ng-if="game.status == 'Pending'" class="btn btn-xs btn-color pull-right" href="#/games/{{game.link}}">You're Up!</a>
+							</p>
+						</div>
+						<div ng-if="!multiGames.length" class="list-group-item disabled" href="#/">
+							<h5>No games have been played</h5>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="col-xs-12 col-sm-6">
 				<button class="btn btn-color btn-lg btn-block" ng-click="startSingleGame()">New Solo Game</button>
-				<h4>Recent Games</h4>
+				<h4>Past Games</h4>
+				<div class="panel panel-default">
+					<div class="list-group panel-body">
+						<div ng-repeat="game in singleGames" class="list-group-item">
+							<h4 class="list-group-item-heading">
+								<span><strong>{{game.status}}</strong></span>
+								<span class="pull-right">{{game.time | date}}
+								</span>
+							</h4>
+							<p class="list-group-item-text clearfix">
+								<span ng-repeat="player in game.players">{{player.alias}} </span>
+								<a ng-if="game.status != 'Pending'" class="btn btn-xs btn-color pull-right" href="#/games/{{game.link}}">View</a>
+							</p>
+						</div>
+						<div ng-if="!singleGames.length" class="list-group-item disabled" href="#/">
+							<h5>No games have been played</h5>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
