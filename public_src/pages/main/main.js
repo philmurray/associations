@@ -10,7 +10,7 @@ angular.module('associations.pages.main', [
 
 	$scope.links = [
 		{
-			href: "#/play",
+			href: "#/playLanding",
 			text: "Play!",
 			description: "High intesity malarky. Single or multiplayer."
 		},

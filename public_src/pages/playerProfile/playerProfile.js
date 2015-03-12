@@ -22,10 +22,11 @@ angular.module('associations.pages.playerProfile',[
 		$scope.questionsObj = response.data;
 		$scope.initQuestions();
 	});
-	
+
 	$scope.setPlayerColor = function(){
 		$scope.colors.forEach(function(color){
-			if (color.id === $scope.profileUser.colorId){
+			if ((!$scope.color && color.is_default) ||
+				color.id === $scope.profileUser.colorId){
 				$scope.color = color;
 			}
 		});

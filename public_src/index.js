@@ -8,6 +8,8 @@ angular.module('associations',
 		'associations.pages.main',
 		'associations.pages.exploreWords',
 		'associations.pages.playerProfile',
+		'associations.pages.playLanding',
+		'associations.pages.playMulti',
 		'associations.components.login',
 		'associations.components.data.color',
 		'ui.bootstrap.alert'
@@ -37,6 +39,22 @@ angular.module('associations',
 				controller: 'PlayerProfileController',
 				resolve: {
 					user: authenticatedRoute
+				}
+			})
+			.when('/playLanding', {
+				templateUrl: 'pages/playLanding/playLanding.html',
+				controller: 'PlayLandingController',
+				resolve: {
+					user: authenticatedRoute,
+					color: userColor
+				}
+			})
+			.when('/playMulti', {
+				templateUrl: 'pages/playMulti/playMulti.html',
+				controller: 'PlayMultiController',
+				resolve: {
+					user: authenticatedRoute,
+					color: userColor
 				}
 			})
 			.when('/exploreWords', {
