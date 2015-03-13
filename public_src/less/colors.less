@@ -10,49 +10,53 @@
   }
 
   &.active {
-    color: @background;
-    background-color: @border;
-        border-color: @color;
-  }
-
-  &.active:hover,
-  &.active:focus,
-  &.active.focus,
-  &.active:active {
-    color: @background;
-    background-color: darken(@border, 10%);
-        border-color: darken(@color, 12%);
+      border-color: @color;
+      color: @background;
+      background-color: @border;
   }
 
 }
 
 .user-color(@color) {
 
-	@hover-color: lighten(@color, 10%);
-	@active-color: darken(@color, 10%);
+    @nav-color: lighten(@color, 10%);
+	@hover-color: lighten(@nav-color, 10%);
+	@active-color: @color;
 
-	a.color,
+    .text-color {
+      .text-emphasis-variant(@color);
+    }
+    .bg-color {
+      .bg-variant(@color);
+    }
+
 	.btn-color,
 	&.btn {
-		.button-variant(darken(@color, 5%); #111; darken(@color, 5%));
+		.button-variant(lighten(@color, 25%); @body-bg; @color);
+        &.active {
+            .box-shadow(0px 0px 32px 0px @color);
+            border-color: @color;
+            color: @color;
+            background-color: @body-bg;
+        }
 	}
 
 	._jsPlumb_connector * {
 		stroke:@color;
 		fill:@color;
 	}
-	
+
 	.panel-color {
 		.panel-variant(@color; @panel-default-text; @panel-default-heading-bg; @color);
 	}
 	.btn-link {
-		color: @color;
+		color: @nav-color;
 		&:hover, &:focus {
 			color: @hover-color;
 		}
 	}
 	a {
-		color: @color;
+		color: @nav-color;
 		&:hover, &:focus {
 			color: @hover-color;
 		}
@@ -61,7 +65,7 @@
 		// Open dropdowns
 		.open > a {
 			&, &:hover, &:focus {
-				border-color: @color;
+				border-color: @nav-color;
 			}
 		}
 	}
@@ -69,35 +73,35 @@
 		> li {
 			&.active > a {
 				&, &:hover, &:focus {
-					background-color: @color;
+					background-color: @nav-color;
 				}
 			}
 		}
 	}
 	.dropdown-menu > .active > a {
 		&, &:hover, &:focus {
-			background-color: @color;
+			background-color: @nav-color;
 		}
 	}
 	.form-control {
-		.form-control-focus(@color);
+		.form-control-focus(@nav-color);
 	}
 	.ui-select-bootstrap .ui-select-choices-row.active>a {
-		color: #000;
-		background-color: @color;
+		color: @text-color;
+		background-color: @nav-color;
 	}
 	.navbar-default {
 		.navbar-brand {
-			color: @color;
+			color: @nav-color;
 			&:hover, &:focus {
 				color: @hover-color;
 			}
 		}
-		
+
 		.navbar-nav {
 			> li > a {
-				color: @color;
-				
+				color: @nav-color;
+
 				&:hover, &:focus {
 					color: @hover-color;
 				}
@@ -108,21 +112,21 @@
 				}
 			}
 		}
-		
+
 		// Dropdown menu items
 		.navbar-nav {
 			// Remove background color from open dropdown
 			> .open > a {
 				&, &:hover, &:focus {
-					color: @color;
+					color: @nav-color;
 				}
 			}
-			
+
 			@media (max-width: @grid-float-breakpoint-max) {
 				// Dropdowns get custom display when collapsed
 				.open .dropdown-menu {
 					> li > a {
-						color: @color;
+						color: @nav-color;
 						&:hover, &:focus {
 							color: @hover-color;
 						}
@@ -136,14 +140,14 @@
 			}
 		}
 		.navbar-link {
-			color: @color;
+			color: @nav-color;
 			&:hover {
 				color: @hover-color;
 			}
 		}
-		
+
 		.btn-link {
-			color: @color;
+			color: @nav-color;
 			&:hover, &:focus {
 				color: @hover-color;
 			}

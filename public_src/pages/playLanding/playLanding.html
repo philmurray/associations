@@ -27,20 +27,18 @@
 				<h4>Past Games</h4>
 				<div class="panel panel-default">
 					<div class="list-group panel-body">
-						<div ng-repeat="game in multiGames" class="list-group-item">
-							<h4 class="list-group-item-heading">
-								<span><strong>{{game.status}}</strong> <span class="badge">{{game.notifications || ""}}</span></span>
+						<div ng-repeat="game in multiGames" class="list-group-item" ng-click="gotoGame(game)">
+							<h5 class="list-group-item-heading">
+								<span><strong>{{game.statusText || game.status}}</strong> <span class="badge">{{game.notifications || ""}}</span></span>
 								<span class="pull-right">{{game.time | date}}
 								</span>
-							</h4>
+							</h5>
 							<p class="list-group-item-text clearfix">
-								<span ng-repeat="player in game.players">{{player.alias}} </span>
-								<a ng-if="game.status != 'Pending'" class="btn btn-xs btn-color pull-right" href="#/games/{{game.link}}">View</a>
-								<button ng-if="game.status == 'Completed'" class="btn btn-xs btn-color pull-right" ng-click="newGame(game)">Rematch</button>
-								<a ng-if="game.status == 'Pending'" class="btn btn-xs btn-color pull-right" href="#/games/{{game.link}}">You're Up!</a>
+								<span class="text-muted">{{formatPlayerNames(game.players)}}</span>
+								<button ng-if="game.status == 'Completed'" class="btn btn-xs btn-color pull-right" ng-click="rematch(game, $event)">Rematch</button>
 							</p>
 						</div>
-						<div ng-if="!multiGames.length" class="list-group-item disabled" href="#/">
+						<div ng-if="!multiGames.length" class="list-group-item disabled">
 							<h5>No games have been played</h5>
 						</div>
 					</div>
@@ -51,18 +49,14 @@
 				<h4>Past Games</h4>
 				<div class="panel panel-default">
 					<div class="list-group panel-body">
-						<div ng-repeat="game in singleGames" class="list-group-item">
-							<h4 class="list-group-item-heading">
-								<span><strong>{{game.status}}</strong></span>
-								<span class="pull-right">{{game.time | date}}
+						<div ng-repeat="game in singleGames" class="list-group-item" ng-click="gotoGame(game)">
+							<h5 class="list-group-item-heading">
+								<span><strong>{{game.statusText || game.status}}</strong></span>
+								<span class="pull-right">{{game.time | date:'shortDate'}}
 								</span>
-							</h4>
-							<p class="list-group-item-text clearfix">
-								<span ng-repeat="player in game.players">{{player.alias}} </span>
-								<a ng-if="game.status != 'Pending'" class="btn btn-xs btn-color pull-right" href="#/games/{{game.link}}">View</a>
-							</p>
+							</h5>
 						</div>
-						<div ng-if="!singleGames.length" class="list-group-item disabled" href="#/">
+						<div ng-if="!singleGames.length" class="list-group-item disabled">
 							<h5>No games have been played</h5>
 						</div>
 					</div>

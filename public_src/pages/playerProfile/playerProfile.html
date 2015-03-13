@@ -54,10 +54,12 @@
 									</div>
 									<div class="form-group">
 										<label class="col-sm-3 control-label">
-											Color
+											Favorite Color
 										</label>
 										<div class="col-sm-9">
-											<button ng-repeat="color in colors" class="col-xs-6 col-sm-4 btn btn-sm {{color.css_class}}" ng-class="{'active':profileUser.colorId==color.id}" ng-click="profileUser.colorId=color.id;setPlayerColor()">{{color.name}}</button>
+											<div ng-repeat="color in colors" class="col-xs-6 col-sm-4 color-select" >
+												<button class="btn btn-sm {{color.css_class}} col-xs-12" ng-class="{'active':profileUser.colorId==color.id}" ng-click="profileUser.colorId=color.id;setPlayerColor()">{{color.name}}</button>
+											</div>
 										</div>
 									</div>
 								</form>
