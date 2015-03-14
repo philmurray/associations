@@ -1,28 +1,24 @@
-<div class="page-play-landing {{color.css_class}}">
+<div class="page-play-landing {{color.css_class}}" ng-init="activePage='Multi'">
 	<nav class="navbar navbar-default" ng-init="collapse=true">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<!-- <button type="button" class="navbar-toggle collapsed" ng-click="collapse = !collapse">
+				<button type="button" class="navbar-toggle collapsed" ng-click="collapse = !collapse">
 					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button> -->
+					<i class="fa fa-bars"></i>
+				</button>
 				<a class="navbar-brand" href="#/">Associations</a>
 			</div>
 			<div class="navbar-collapse" ng-class="{collapse:collapse}">
 				<ul class="nav navbar-nav">
-					<!-- <li role="presentation" ng-class="{active:activePage=='Profile'}"><a ng-click="activePage='Profile'">Profile</a></li>
-					<li role="presentation" ng-class="{active:activePage=='Account'}"><a ng-click="activePage='Account'">Account</a></li>
-					<li role="presentation" ng-class="{active:activePage=='Survey'}"><a ng-click="activePage='Survey'">Survey <span class="badge">{{unansweredQuestions || ''}}</span></a></li>
-					<li role="presentation" ng-class="{active:activePage=='Statistics'}"><a ng-click="activePage='Statistics'">Statistics</a></li> -->
+					<li role="presentation" ng-class="{active:activePage=='Multi'}"><a ng-click="activePage='Multi'; collapse = true;">Multiplayer Game</a></li>
+					<li role="presentation" ng-class="{active:activePage=='Single'}"><a ng-click="activePage='Single'; collapse = true;">Solo Game</a></li>
 				</ul>
 			</div>
 		</div>
 	</nav>
 	<div class="container">
 		<div class="row">
-			<div class="col-xs-12 col-sm-6">
+			<div class="col-sm-6" ng-class="{'hidden-xs':activePage!='Multi'}">
 				<a class="btn btn-color btn-lg btn-block" href="#/playMulti">New Multiplayer Game</a>
 				<h4>Past Games</h4>
 				<div class="panel panel-default">
@@ -44,7 +40,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-xs-12 col-sm-6">
+			<div class="col-sm-6" ng-class="{'hidden-xs':activePage!='Single'}">
 				<button class="btn btn-color btn-lg btn-block" ng-click="startSingleGame()">New Solo Game</button>
 				<h4>Past Games</h4>
 				<div class="panel panel-default">

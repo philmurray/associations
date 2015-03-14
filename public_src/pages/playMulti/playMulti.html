@@ -2,32 +2,55 @@
 	<nav class="navbar navbar-default" ng-init="collapse=true">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<!-- <button type="button" class="navbar-toggle collapsed" ng-click="collapse = !collapse">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button> -->
 				<a class="navbar-brand" href="#/">Associations</a>
-			</div>
-			<div class="navbar-collapse" ng-class="{collapse:collapse}">
-				<ul class="nav navbar-nav">
-					<!-- <li role="presentation" ng-class="{active:activePage=='Profile'}"><a ng-click="activePage='Profile'">Profile</a></li>
-					<li role="presentation" ng-class="{active:activePage=='Account'}"><a ng-click="activePage='Account'">Account</a></li>
-					<li role="presentation" ng-class="{active:activePage=='Survey'}"><a ng-click="activePage='Survey'">Survey <span class="badge">{{unansweredQuestions || ''}}</span></a></li>
-					<li role="presentation" ng-class="{active:activePage=='Statistics'}"><a ng-click="activePage='Statistics'">Statistics</a></li> -->
-				</ul>
 			</div>
 		</div>
 	</nav>
 	<div class="container">
-			<h3>Choose your opponents</h3>
+		<h3>Choose your opponents</h3>
 		<div class="row">
 			<div class="col-xs-12 col-sm-6">
-
+				<div class="form-group">
+					<input type="text" ng-model="searchPlayers" class="form-control" placeholder="Name or email of player" />
+				</div>
+				<div class="form-group">
+					<div class="panel panel-default">
+						<div class="list-group panel-body">
+							<div ng-repeat="player in foundPlayers" class="list-group-item" ng-click="togglePlayer(player)">
+								<h5 class="list-group-item-heading">
+									<span><strong>{{player.alias}}</strong></span>
+									<i class="fa fa-check-circle-o pull-right text-color" ng-if="playerSelected(player)"></i>
+								</h5>
+							</div>
+							<div ng-if="!foundPlayers.length" class="list-group-item disabled">
+								<h5>No players found</h5>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="col-xs-12 col-sm-6">
-
+				<div class="form-group">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							Recent opponents
+						</div>
+						<div class="list-group panel-body">
+							<div ng-repeat="player in recentPlayers" class="list-group-item" ng-click="togglePlayer(player)">
+								<h5 class="list-group-item-heading">
+									<span><strong>{{player.alias}}</strong></span>
+									<i class="fa fa-check-circle-o pull-right text-color" ng-if="playerSelected(player)"></i>
+								</h5>
+							</div>
+							<div ng-if="!recentPlayers.length" class="list-group-item disabled">
+								<h5>No players found</h5>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<button class="col-xs-12 btn btn-lg btn-color" ng-click="startGame()" ng-disabled="!hasPlayers()">Start Game!</button>
+				</div>
 			</div>
 		</div>
 	</div>

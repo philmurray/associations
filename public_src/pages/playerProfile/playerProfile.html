@@ -4,18 +4,17 @@
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed" ng-click="collapse = !collapse">
 					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
+					<i class="fa fa-bars"></i>
+					<span class="badge">{{unansweredQuestions || ''}}</span>
 				</button>
 				<a class="navbar-brand" href="#/">Associations</a>
 			</div>
 			<div class="navbar-collapse" ng-class="{collapse:collapse}">
 				<ul class="nav navbar-nav">
-					<li role="presentation" ng-class="{active:activePage=='Profile'}"><a ng-click="activePage='Profile'">Profile</a></li>
-					<li role="presentation" ng-class="{active:activePage=='Account'}"><a ng-click="activePage='Account'">Account</a></li>
-					<li role="presentation" ng-class="{active:activePage=='Survey'}"><a ng-click="activePage='Survey'">Survey <span class="badge">{{unansweredQuestions || ''}}</span></a></li>
-					<li role="presentation" ng-class="{active:activePage=='Statistics'}"><a ng-click="activePage='Statistics'">Statistics</a></li>
+					<li role="presentation" ng-class="{active:activePage=='Profile'}"><a ng-click="activePage='Profile'; collapse = true;">Profile</a></li>
+					<li role="presentation" ng-class="{active:activePage=='Account'}"><a ng-click="activePage='Account'; collapse = true;">Account</a></li>
+					<li role="presentation" ng-class="{active:activePage=='Survey'}"><a ng-click="activePage='Survey'; collapse = true;">Survey <span class="badge">{{unansweredQuestions || ''}}</span></a></li>
+					<li role="presentation" ng-class="{active:activePage=='Statistics'}"><a ng-click="activePage='Statistics'; collapse = true;">Statistics</a></li>
 				</ul>
 			</div>
 		</div>

@@ -15,6 +15,14 @@ angular.module('associations.components.data.user', [])
 					url: '/rpc/user',
 					data: user
 				});
+			},
+			search: function(searchTerm){
+				var url = "/rpc/users" + (searchTerm ? "?search=" + searchTerm : "");
+				return $http({
+					method: 'GET',
+					url: url,
+					cache: true
+				});
 			}
 		};
 	}]);
