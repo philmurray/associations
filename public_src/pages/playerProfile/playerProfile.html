@@ -40,10 +40,10 @@
 						<div class="panel panel-default">
 							<div class="panel-body">
 								<form class="form-horizontal" name="forms.display">
-									<div class="form-group" ng-class="{'has-error':forms.display.displayName.$invalid}">
+									<div class="form-group" ng-class="{'has-error':forms.display.showErrors && forms.display.displayName.$invalid}">
 										<label for="displayName" class="col-sm-3 control-label">
 											Name
-											<ul ng-show="forms.display.displayName.$invalid" class="list-unstyled">
+											<ul ng-show="forms.display.showErrors && forms.display.displayName.$invalid" class="list-unstyled">
 												<li ng-show="forms.display.displayName.$error.required">* required</li>
 											</ul>
 										</label>
@@ -68,7 +68,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-12">
-						<button ng-click="saveProfile()" ng-disabled="forms.display.$invalid" class="btn btn-color">Save Changes</button>
+						<button ng-click="saveProfile()" class="btn btn-color">Save Changes</button>
 					</div>
 				</div>
 			</div>
@@ -97,16 +97,16 @@
 									You are logged in with <strong class="twitter">twitter</strong>
 								</div>
 								<form class="form-horizontal" ng-switch-default name="forms.local">
-									<div class="form-group" ng-class="{'has-error':forms.local.email.$invalid}">
+									<div class="form-group" ng-class="{'has-error':forms.local.showErrors && forms.local.email.$invalid}">
 										<label for="email" class="col-sm-3 control-label">
 											Email
-											<ul ng-show="forms.local.email.$invalid" class="list-unstyled">
+											<ul ng-show="forms.local.showErrors && forms.local.email.$invalid" class="list-unstyled">
 												<li ng-show="forms.local.email.$error.required">* required</li>
-												<li ng-show="forms.local.email.$error.email">* invalid</li>
+												<li ng-show="forms.local.email.$error.email || forms.local.email.$error.pattern">* invalid</li>
 											</ul>
 										</label>
 										<div class="col-sm-9">
-											<input type="email" required class="form-control" id="email" name="email" placeholder="Enter your email address" ng-model="accountUser.email">
+											<input type="email" pattern=".{1,}@[_a-z0-9A-Z]+(\.[a-z0-9A-Z]+)+" required class="form-control" id="email" name="email" placeholder="Enter your email address" ng-model="accountUser.email">
 										</div>
 									</div>
 									<div class="form-group">
@@ -115,10 +115,10 @@
 										<input type="password" class="form-control" id="password" name="password" placeholder="{{accountUser.hasPassword?'Enter a new password':'Enter your password (optional)'}}" ng-model="accountUser.password">
 										</div>
 									</div>
-									<div class="form-group" ng-class="{'has-error':forms.local.passwordConfirm.$invalid}">
+									<div class="form-group" ng-class="{'has-error':forms.local.showErrors && forms.local.passwordConfirm.$invalid}">
 										<label for="passwordConfirm" class="col-sm-3 control-label">
 											Confirm
-											<ul ng-show="forms.local.passwordConfirm.$invalid" class="list-unstyled">
+											<ul ng-show="forms.local.showErrors && forms.local.passwordConfirm.$invalid" class="list-unstyled">
 												<li ng-show="forms.local.passwordConfirm.$error.match">* doesn't match</li>
 												<li ng-show="forms.local.passwordConfirm.$error.required">* required</li>
 											</ul>
@@ -140,7 +140,7 @@
 				</div>
 				<div class="row" ng-if="!accountUser.provider">
 					<div class="col-md-12">
-						<button ng-click="saveAccount()" ng-disabled="forms.local.$invalid" class="btn btn-color">Save Changes</button>
+						<button ng-click="saveAccount()" class="btn btn-color">Save Changes</button>
 					</div>
 				</div>
 			</div>

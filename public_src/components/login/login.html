@@ -9,15 +9,15 @@
 		<div class="panel-body">
 			<form name="form">
 				<div class="form-group" ng-class="{'has-error':form.email.$invalid}">
-					<input type="email" class="form-control" id="emailInput" placeholder="Enter email" ng-model="email" required>
+					<input type="email" pattern=".{1,}@[_a-z0-9A-Z]+(\.[a-z0-9A-Z]+)+" class="form-control" id="emailInput" placeholder="Enter email" ng-model="email" required>
 					<ul ng-show="form.email.$invalid" class="list-unstyled">
 						<li ng-show="form.email.$error.required">* required</li>
-						<li ng-show="form.email.$error.email">* invalid</li>
+						<li ng-show="form.email.$error.email || form.email.$error.pattern">* invalid</li>
 					</ul>
 				</div>
 				<div ng-show="passwordRequired" class="form-group" ng-class="{'has-error':badPassword}">
 					<label for="passwordInput">Password</label>
-					<input type="password" class="form-control" id="passwordInput" placeholder="Password" ng-model="password">
+					<input focus-input="passwordRequired" type="password" class="form-control" id="passwordInput" placeholder="Password" ng-model="password">
 				</div>
 				<button ng-disabled="form.$invalid" class="btn btn-color pull-right" ng-click="submitEmail()">OK</button>
 			</form>

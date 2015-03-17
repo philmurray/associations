@@ -33,7 +33,13 @@ angular.module('associations.pages.playerProfile',[
 	};
 
 	$scope.saveProfile = function (){
+		if ($scope.forms.display.$invalid){
+			$scope.forms.display.showErrors = true;
+			return;
+		}
+
 		UserService.save($scope.profileUser).then(function(){
+			$scope.forms.display.showErrors = false;
 			$scope.addAlert({type: "success", msg: "Player profile saved!"});
 		}).catch(function(err){
 			$scope.addAlert({type: "danger", msg: "Player profile could not be saved!"});
@@ -41,7 +47,13 @@ angular.module('associations.pages.playerProfile',[
 	};
 
 	$scope.saveAccount = function (){
+		if ($scope.forms.local.$invalid){
+			$scope.forms.local.showErrors = true;
+			return;
+		}
+
 		UserService.save($scope.accountUser).then(function(){
+			$scope.forms.local.showErrors = false;
 			$scope.addAlert({type: "success", msg: "Player profile saved!"});
 		}).catch(function(err){
 			$scope.addAlert({type: "danger", msg: "Player profile could not be saved!"});

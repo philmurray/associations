@@ -15,6 +15,7 @@
         "bluebird": "*",
         "pg": "*",
         "bcrypt-nodejs": "*",
+        "checkit": "*",
 
         "passport": "*",
         "passport-local": "*",

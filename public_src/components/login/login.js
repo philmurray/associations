@@ -3,6 +3,7 @@
 angular.module('associations.components.login', [
 	'associations.components.data.user',
 	'associations.components.data.color',
+	'associations.components.focus-input',
 	'ui.bootstrap'
 ])
 .factory('LoginInterceptorService', ['$q', '$location', '$injector', function($q, $location, $injector){
@@ -40,7 +41,7 @@ angular.module('associations.components.login', [
 	ColorService.getUserColor().then(function(response){
 		$scope.color = response.data;
 	});
-	
+
 	$scope.submitEmail = function(){
 		$scope.badPassword = false;
 		$http.post('/auth/local',{
