@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#scowl.txt from http://app.aspell.net/create?max_size=50&spelling=US&max_variant=0&diacritic=strip&special=hacker&download=wordlist&encoding=utf-8&format=inline
+#text file is from http://www.wordfrequency.info/intro.asp
 
-grep -hv "'s" wordlists/*
+cat "$1" | tail -n+4 | cut -f 1-4 | sed "s/'/\'\'/g" | awk '{ print "INSERT INTO words(text,lemma,pos,rank) VALUES ('\''" $2 "'\'','\''" $3 "'\'','\''" $4 "'\''," $1 ");" }'
 
-# ./import_words.sh | psql -h 192.168.1.100 -p 5433 -U associations_dbuser -d associations -c "copy words from STDIN DELIMITERS ',' CSV;"
+# ./import_words.sh "the word frequency text file" | psql -h 192.168.1.100 -p 5433 -U associations_dbuser -d associations

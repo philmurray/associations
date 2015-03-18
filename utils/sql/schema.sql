@@ -198,7 +198,10 @@ ALTER TABLE users OWNER TO associations_dbuser;
 --
 
 CREATE TABLE words (
-    text text NOT NULL
+    text text NOT NULL,
+    rank integer NOT NULL,
+    lemma text NOT NULL,
+    pos text NOT NULL
 );
 
 
