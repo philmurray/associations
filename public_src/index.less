@@ -1,10 +1,12 @@
-html,
-body {
-	height: 100%;
+html {
+	position: relative;
+	min-height: 100%;
 }
 
 body {
 	.gradient(#000, #333);
+  	margin-bottom: 32px;
+	min-height: 100%;
 }
 
 .alert-box {
@@ -46,38 +48,14 @@ body {
 	margin-bottom: 0px;
 	padding-left: 20px;
 	z-index: 10;
+	height: 32px;
 
 	a {
 		color: #aaa;
 	}
 }
 .center-container > div {
-	height:100%;
-	padding-bottom: 32px;
-	overflow: auto;
-}
-
-.fade {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	height: 100%;
-	.opacity(1);
-}
-.fade.ng-enter,
-.fade.ng-leave {
-	.transition(all 0.75s ease);
-}
-.fade.ng-enter {
-	.opacity(0);
-}
-.fade.ng-enter-active {
-	.opacity(1);
-}
-.fade.ng-leave {
-	.opacity(1);
-}
-.fade.ng-leave-active {
-	.opacity(0);
+	// height:100%;
+	// padding-bottom: 32px;
+	// overflow: auto;
 }

@@ -158,11 +158,16 @@ angular.module('associations.pages.exploreWords.components.graph', [])
 				});
 			};
 
+			var setGraphSize = function(){
+				$scope.graph.setSize('100%', (w[0].innerHeight-32)+'px');	//todo: make this less stupid
+			};
+
 			var initGraph = function(){
 				$scope.nodes = new vis.DataSet();
 				$scope.edges = new vis.DataSet();
 
 				$scope.graph = new vis.Network(element, {nodes:$scope.nodes, edges:$scope.edges}, $scope.config);
+				setGraphSize();
 				$scope.graph.on('doubleClick', function(event){
 					if (event.nodes.length === 1){
 						$scope.onClick({word:$scope.model.nodes[event.nodes[0]]});
@@ -178,6 +183,7 @@ angular.module('associations.pages.exploreWords.components.graph', [])
 				if (!$scope.graph){
 					initGraph();
 				} else {
+					setGraphSize();
 					$scope.graph.redraw();
 					$scope.graph.moveTo({position:{x:0,y:0}});
 
