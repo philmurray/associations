@@ -89,11 +89,38 @@ ALTER TABLE colors OWNER TO associations_dbuser;
 --
 
 CREATE TABLE games (
-    id uuid DEFAULT uuid_generate_v4() NOT NULL
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
+    start_time timestamp with time zone,
+    status text DEFAULT 'PENDING'::text NOT NULL,
+    create_time timestamp with time zone DEFAULT now() NOT NULL
 );
 
 
 ALTER TABLE games OWNER TO associations_dbuser;
+
+--
+-- Name: games_users; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+CREATE TABLE games_users (
+    game_id uuid NOT NULL,
+    user_id uuid NOT NULL
+);
+
+
+ALTER TABLE games_users OWNER TO associations_dbuser;
+
+--
+-- Name: games_words; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+CREATE TABLE games_words (
+    game_id uuid NOT NULL,
+    word text NOT NULL
+);
+
+
+ALTER TABLE games_words OWNER TO associations_dbuser;
 
 --
 -- Name: usf_norms; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
@@ -240,6 +267,22 @@ ALTER TABLE ONLY games
 
 
 --
+-- Name: games_users_pkey; Type: CONSTRAINT; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+ALTER TABLE ONLY games_users
+    ADD CONSTRAINT games_users_pkey PRIMARY KEY (game_id, user_id);
+
+
+--
+-- Name: games_words_pkey; Type: CONSTRAINT; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+ALTER TABLE ONLY games_words
+    ADD CONSTRAINT games_words_pkey PRIMARY KEY (game_id, word);
+
+
+--
 -- Name: picks_pkey; Type: CONSTRAINT; Schema: public; Owner: associations_dbuser; Tablespace: 
 --
 
@@ -338,6 +381,38 @@ ALTER TABLE ONLY answers_users
 
 ALTER TABLE ONLY answers_users
     ADD CONSTRAINT answers_users_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id);
+
+
+--
+-- Name: games_users_game_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: associations_dbuser
+--
+
+ALTER TABLE ONLY games_users
+    ADD CONSTRAINT games_users_game_id_fkey FOREIGN KEY (game_id) REFERENCES games(id);
+
+
+--
+-- Name: games_users_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: associations_dbuser
+--
+
+ALTER TABLE ONLY games_users
+    ADD CONSTRAINT games_users_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id);
+
+
+--
+-- Name: games_words_game_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: associations_dbuser
+--
+
+ALTER TABLE ONLY games_words
+    ADD CONSTRAINT games_words_game_id_fkey FOREIGN KEY (game_id) REFERENCES games(id);
+
+
+--
+-- Name: games_words_word_fkey; Type: FK CONSTRAINT; Schema: public; Owner: associations_dbuser
+--
+
+ALTER TABLE ONLY games_words
+    ADD CONSTRAINT games_words_word_fkey FOREIGN KEY (word) REFERENCES words(text);
 
 
 --
