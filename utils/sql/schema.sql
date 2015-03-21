@@ -90,8 +90,6 @@ ALTER TABLE colors OWNER TO associations_dbuser;
 
 CREATE TABLE games (
     id uuid DEFAULT uuid_generate_v4() NOT NULL,
-    start_time timestamp with time zone,
-    status text DEFAULT 'PENDING'::text NOT NULL,
     create_time timestamp with time zone DEFAULT now() NOT NULL
 );
 
@@ -104,7 +102,10 @@ ALTER TABLE games OWNER TO associations_dbuser;
 
 CREATE TABLE games_users (
     game_id uuid NOT NULL,
-    user_id uuid NOT NULL
+    user_id uuid NOT NULL,
+    completed boolean DEFAULT false NOT NULL,
+    start_time timestamp with time zone,
+    current_word integer DEFAULT 0 NOT NULL
 );
 
 
@@ -116,7 +117,8 @@ ALTER TABLE games_users OWNER TO associations_dbuser;
 
 CREATE TABLE games_words (
     game_id uuid NOT NULL,
-    word text NOT NULL
+    word text NOT NULL,
+    "order" integer NOT NULL
 );
 
 
@@ -228,7 +230,8 @@ CREATE TABLE words (
     text text NOT NULL,
     rank integer NOT NULL,
     lemma text NOT NULL,
-    pos text NOT NULL
+    pos text NOT NULL,
+    play_order integer
 );
 
 
