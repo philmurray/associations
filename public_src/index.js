@@ -10,51 +10,62 @@ angular.module('associations',
 		'associations.pages.playerProfile',
 		'associations.pages.playLanding',
 		'associations.pages.playMulti',
+		'associations.pages.game',
 		'associations.components.login',
 		'associations.components.data.color',
+		'associations.components.data.user',
+		'associations.components.data.game',
 		'ui.bootstrap.alert'
 	])
 	.config(['$routeProvider', '$httpProvider',
 	function($routeProvider, $httpProvider) {
-		var authenticatedRoute = ["LoginService", function(LoginService){
-				return LoginService.isLoggedIn();
+		var ColorResolver = ['ColorService', function(ColorService){
+				return ColorService.getUserColor().then(function(response){return response.data;});
 			}],
-			userColor = ["ColorService", function(ColorService){
-				return ColorService.getUserColor().then(function(response){
-					return response.data;
-				});
-			}]
-		;
+			UserResolver = ['UserService', function(UserService){
+				return UserService.get().then(function(response){return response.data;});
+			}],
+			GameResolver = ['GameService', '$route', function(GameService, $route){
+				return GameService.get($route.current.params.gameId).then(function(response){return response.data;});
+			}];
 
 		$routeProvider
 			.when('/', {
 				templateUrl: 'pages/main/main.html',
 				controller: 'MainController',
 				resolve: {
-					color: userColor
+					color: ColorResolver
 				}
 			})
 			.when('/playerProfile', {
 				templateUrl: 'pages/playerProfile/playerProfile.html',
 				controller: 'PlayerProfileController',
 				resolve: {
-					user: authenticatedRoute
+					user: UserResolver
 				}
 			})
 			.when('/playLanding', {
 				templateUrl: 'pages/playLanding/playLanding.html',
 				controller: 'PlayLandingController',
 				resolve: {
-					user: authenticatedRoute,
-					color: userColor
+					user: UserResolver,
+					color: ColorResolver
 				}
 			})
 			.when('/playMulti', {
 				templateUrl: 'pages/playMulti/playMulti.html',
 				controller: 'PlayMultiController',
 				resolve: {
-					user: authenticatedRoute,
-					color: userColor
+					user: UserResolver,
+					color: ColorResolver
+				}
+			})
+			.when('/game/:gameId', {
+				templateUrl: 'pages/game/game.html',
+				controller: 'GameController',
+				resolve: {
+					color: ColorResolver,
+					game: GameResolver
 				}
 			})
 			.when('/exploreWords', {
@@ -62,7 +73,7 @@ angular.module('associations',
 				controller: 'ExploreWordsController',
 				reloadOnSearch: false,
 				resolve: {
-					color: userColor
+					color: ColorResolver
 				}
 			})
 			.otherwise({redirectTo: '/'});

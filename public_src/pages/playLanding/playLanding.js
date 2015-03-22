@@ -12,7 +12,7 @@ angular.module('associations.pages.playLanding',['associations.components.data.g
 	$scope.startSingleGame = function(){
 		GameService.createGame()
 			.then(function(response){
-				$location.path("/games/"+response.data.id);
+				$location.path("/game/"+response.data.id);
 			})
 			.catch(function(err){
 				$scope.addAlert({type: "danger", msg: "Game could not be created"});

@@ -58,8 +58,13 @@ router.get('/colorlist', function(req,res){
 });
 
 router.post('/game', isAuthenticated, function(req,res){
-	console.log(req.body);
 	models.Game.createGame(req.user, req.body.players, function(err, game){
+		if (err){ return res.status(500).send(err.message); }
+		res.json(game);
+	});
+});
+router.get('/game/:gameId', function(req,res){
+	models.Game.getGame(req.params.gameId, function(err, game){
 		if (err){ return res.status(500).send(err.message); }
 		res.json(game);
 	});

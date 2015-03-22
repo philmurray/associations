@@ -7,8 +7,8 @@ angular.module('associations.pages.playerProfile',[
 	'associations.components.data.question'])
 
 .controller("PlayerProfileController", ["$scope", "user", "UserService", "ColorService", "$log", "QuestionService", function ($scope, user, UserService, ColorService, $log, QuestionService) {
-	$scope.profileUser = angular.extend({},user.data);
-	$scope.accountUser = angular.extend({},user.data);
+	$scope.profileUser = angular.extend({},user);
+	$scope.accountUser = angular.extend({},user);
 
 	$scope.forms = {};
 	$scope.activePage = "Profile";

@@ -31,9 +31,6 @@ angular.module('associations.components.login', [
 				templateUrl: "components/login/login.html",
 				controller: "LoginController"
 			}).result;
-		},
-		isLoggedIn: function(){
-			return UserService.get();
 		}
 	};
 }])
