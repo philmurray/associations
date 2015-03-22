@@ -4,8 +4,8 @@ angular.module('associations.pages.playMulti',[
 	'associations.components.data.user'
 ])
 
-.controller("PlayMultiController", ["$scope", "user", "color", "UserService", "$q", function ($scope, user, color, UserService, $q) {
-	$scope.color = color;
+.controller("PlayMultiController", ["$scope", "authenticated", "UserService", "$q", function ($scope, authenticated, UserService, $q) {
+	$scope.color = authenticated.color;
 
 	$scope.foundPlayers = [];
 	$scope.recentPlayers = [];

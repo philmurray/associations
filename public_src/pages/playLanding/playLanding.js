@@ -2,8 +2,8 @@
 
 angular.module('associations.pages.playLanding',['associations.components.data.game'])
 
-.controller("PlayLandingController", ["$scope", "user", "color", "GameService", "$location", function ($scope, user, color, GameService, $location) {
-	$scope.color = color;
+.controller("PlayLandingController", ["$scope", "authenticated", "GameService", "$location", function ($scope, authenticated, GameService, $location) {
+	$scope.color = authenticated.color;
 
 	$scope.rematch = function(game, event){
 		event.cancelBubble = true;

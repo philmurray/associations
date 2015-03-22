@@ -6,9 +6,9 @@ angular.module('associations.pages.playerProfile',[
 	'associations.components.data.color',
 	'associations.components.data.question'])
 
-.controller("PlayerProfileController", ["$scope", "user", "UserService", "ColorService", "$log", "QuestionService", function ($scope, user, UserService, ColorService, $log, QuestionService) {
-	$scope.profileUser = angular.extend({},user);
-	$scope.accountUser = angular.extend({},user);
+.controller("PlayerProfileController", ["$scope", "authenticated", "UserService", "ColorService", "$log", "QuestionService", function ($scope, authenticated, UserService, ColorService, $log, QuestionService) {
+	$scope.profileUser = angular.extend({},authenticated.user);
+	$scope.accountUser = angular.extend({},authenticated.user);
 
 	$scope.forms = {};
 	$scope.activePage = "Profile";

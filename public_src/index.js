@@ -22,8 +22,16 @@ angular.module('associations',
 		var ColorResolver = ['ColorService', function(ColorService){
 				return ColorService.getUserColor().then(function(response){return response.data;});
 			}],
-			UserResolver = ['UserService', function(UserService){
-				return UserService.get().then(function(response){return response.data;});
+			AutheticationResolver = ['UserService', 'ColorService', function(UserService, ColorService){
+				var auth = {};
+				return UserService.get()
+					.then(function(response){
+						auth.user = response.data;
+						return ColorService.getUserColor().then(function(response){
+							auth.color = response.data;
+							return auth;
+						});
+					});
 			}],
 			GameResolver = ['GameService', '$route', function(GameService, $route){
 				return GameService.get($route.current.params.gameId).then(function(response){return response.data;});
@@ -41,23 +49,21 @@ angular.module('associations',
 				templateUrl: 'pages/playerProfile/playerProfile.html',
 				controller: 'PlayerProfileController',
 				resolve: {
-					user: UserResolver
+					authenticated: AutheticationResolver
 				}
 			})
 			.when('/playLanding', {
 				templateUrl: 'pages/playLanding/playLanding.html',
 				controller: 'PlayLandingController',
 				resolve: {
-					user: UserResolver,
-					color: ColorResolver
+					authenticated: AutheticationResolver
 				}
 			})
 			.when('/playMulti', {
 				templateUrl: 'pages/playMulti/playMulti.html',
 				controller: 'PlayMultiController',
 				resolve: {
-					user: UserResolver,
-					color: ColorResolver
+					authenticated: AutheticationResolver
 				}
 			})
 			.when('/game/:gameId', {
