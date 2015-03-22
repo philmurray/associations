@@ -1,10 +1,11 @@
 "use strict";
 
 angular.module('associations.pages.playMulti',[
-	'associations.components.data.user'
+	'associations.components.data.user',
+	'associations.components.data.game'
 ])
 
-.controller("PlayMultiController", ["$scope", "authenticated", "UserService", "$q", function ($scope, authenticated, UserService, $q) {
+.controller("PlayMultiController", ["$scope", "authenticated", "UserService", "$q", "GameService", "$location", function ($scope, authenticated, UserService, $q, GameService, $location) {
 	$scope.color = authenticated.color;
 
 	$scope.foundPlayers = [];
@@ -49,7 +50,13 @@ angular.module('associations.pages.playMulti',[
 	};
 
 	$scope.startGame = function() {
-
+		GameService.createGame(Object.keys($scope.selectedPlayers))
+			.then(function(response){
+				$location.path("/game/"+response.data.id);
+			})
+			.catch(function(err){
+				$scope.addAlert({type: "danger", msg: "Game could not be created"});
+			});
 	};
 
 }]);
