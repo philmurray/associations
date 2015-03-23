@@ -64,7 +64,7 @@ router.post('/game', isAuthenticated, function(req,res){
 	});
 });
 router.get('/game/:gameId', function(req,res){
-	models.Game.getGame(req.params.gameId, function(err, game){
+	models.Game.getGame(req.user, req.params.gameId, function(err, game){
 		if (err){ return res.status(500).send(err.message); }
 		res.json(game);
 	});

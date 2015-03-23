@@ -1,6 +1,62 @@
 <div class="page-game {{color.css_class}}">
-
+	<nav ng-if="!playing" class="navbar navbar-default" ng-init="collapse=true">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#/">Associations</a>
+			</div>
+		</div>
+	</nav>
 	<div class="container">
+		<div class="row">
+			<div class="col-sm-4 col-xs-12">
+				<div class="panel panel-default">
+					<div class="panel-body">
 
+					</div>
+				</div>
+			</div>
+			<div class="hidden-xs col-sm-8">
+				<div class="panel panel-default">
+					<div class="panel-body player-list">
+						<ul class="list-inline">
+							<li ng-repeat="player in game.players">
+								<button ng-click="showPlayer(player)" class="btn" ng-class="player.color.css_class">
+									<h4>{{player.alias}}</h4>
+									<p>
+										{{getStatus(player)}}
+									</p>
+								</button>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="panel panel-default">
+					<div class="panel-body">
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div ng-if="!playing" class="row">
+			<div class="col-xs-12">
+				<div class="panel panel-default">
+					<div class="panel-body">
+
+					</div>
+					<div class="panel-footer">
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div ng-if="!playing" class="row">
+			<div class="col-xs-1 col-xs-offset-11">
+				<button class="btn btn-sm btn-color pull-right" ng-click="rematch()">Rematch!</button>
+			</div>
+		</div>
 	</div>
 </div>
