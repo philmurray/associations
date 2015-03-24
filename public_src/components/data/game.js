@@ -17,6 +17,14 @@ angular.module('associations.components.data.game', [])
 					method: 'GET',
 					url: url
 				});
+			},
+			startGame: function(gameId){
+				var url = "/rpc/game/" + gameId;
+				return $http({
+					method: 'POST',
+					url: url,
+					data: {startGame:true}
+				});
 			}
 		};
 	}]);

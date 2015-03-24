@@ -69,6 +69,13 @@ router.get('/game/:gameId', function(req,res){
 		res.json(game);
 	});
 });
+router.post('/game/:gameId', function(req,res){
+
+	models.Game.updateGame(req.user, req.params.gameId, req.body, function(err, ret){
+		if (err){ return res.status(500).send(err.message); }
+		res.json(ret);
+	});
+});
 
 router.get('/word', function(req,res){
 	models.Word.search(req.query.text || "", 10, function(err, words){

@@ -72,7 +72,9 @@ public class App
         Statement createIndex = null;
         PreparedStatement updateNodes = null;
         PreparedStatement updateRels = null;
+        Statement refreshNodes = null;
         Statement getNodes = null;
+        Statement refreshRels = null;
         Statement getRels = null;
         ResultSet nodes = null;
         ResultSet rels = null;
@@ -98,8 +100,14 @@ public class App
             neo4j_connection.setAutoCommit(false);
 
 
+            System.out.println("refreshing nodes");
+            refreshNodes = pg_connection.createStatement();
+            refreshNodes.executeUpdate("REFRESH MATERIALIZED VIEW graph_nodes");
+            refreshNodes.close();
+
             System.out.println("updating nodes");
             updateNodes = neo4j_connection.prepareStatement("MERGE (word:Word { text: {1} })");
+
             getNodes = pg_connection.createStatement();
             nodes = getNodes.executeQuery("SELECT * FROM graph_nodes");
             while (nodes.next())
@@ -110,6 +118,11 @@ public class App
             updateNodes.close();
             nodes.close();
             getNodes.close();
+
+            System.out.println("refreshing relationships");
+            refreshRels = pg_connection.createStatement();
+            refreshRels.executeUpdate("REFRESH MATERIALIZED VIEW graph_rels");
+            refreshRels.close();
 
             System.out.println("updating relationships");
             updateRels = neo4j_connection.prepareStatement("MATCH (from:Word { text: {1} }),(to:Word { text: {2}}) MERGE from-[r:Association {score:{3}}]->to");
@@ -149,8 +162,14 @@ public class App
             if (updateRels != null){
                 updateRels.close();
             }
+            if (refreshNodes != null){
+                refreshNodes.close();
+            }
             if (getNodes != null){
                 getNodes.close();
+            }
+            if (refreshRels != null){
+                refreshRels.close();
             }
             if (getRels != null){
                 getRels.close();

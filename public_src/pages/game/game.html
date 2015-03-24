@@ -20,7 +20,7 @@
 					<div class="panel-body player-list">
 						<ul class="list-inline">
 							<li ng-repeat="player in game.players">
-								<button ng-click="showPlayer(player)" class="btn" ng-class="player.color.css_class">
+								<button ng-disabled="playing" ng-click="showPlayer(player)" class="btn" ng-class="player.color.css_class">
 									<h4>{{player.alias}}</h4>
 									<p>
 										{{getStatus(player)}}
