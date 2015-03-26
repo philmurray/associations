@@ -1,4 +1,4 @@
-<div class="page-player-profile {{color.css_class}}">
+<div class="page-player-profile {{profileUser.color.css_class}}">
 	<nav class="navbar navbar-default" ng-init="collapse=true">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -57,7 +57,7 @@
 										</label>
 										<div class="col-sm-9">
 											<div ng-repeat="color in colors" class="col-xs-6 col-sm-4 color-select" >
-												<button class="btn btn-sm {{color.css_class}} col-xs-12" ng-class="{'active':profileUser.colorId==color.id}" ng-click="profileUser.colorId=color.id;setPlayerColor()">{{color.name}}</button>
+												<button class="btn btn-sm {{color.css_class}} col-xs-12" ng-class="{'active':profileUser.color.id==color.id}" ng-click="profileUser.color=color">{{color.name}}</button>
 											</div>
 										</div>
 									</div>

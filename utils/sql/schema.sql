@@ -74,11 +74,10 @@ ALTER TABLE answers_users OWNER TO associations_dbuser;
 --
 
 CREATE TABLE colors (
-    id uuid DEFAULT uuid_generate_v4() NOT NULL,
     name text,
     hex text,
     css_class text,
-    is_default boolean DEFAULT false
+    id integer NOT NULL
 );
 
 
@@ -139,28 +138,30 @@ CREATE TABLE usf_norms (
 ALTER TABLE usf_norms OWNER TO associations_dbuser;
 
 --
--- Name: graph_nodes; Type: VIEW; Schema: public; Owner: associations_dbuser
+-- Name: graph_nodes; Type: MATERIALIZED VIEW; Schema: public; Owner: associations_dbuser; Tablespace: 
 --
 
-CREATE VIEW graph_nodes AS
+CREATE MATERIALIZED VIEW graph_nodes AS
  SELECT DISTINCT usf_norms."from" AS node
    FROM usf_norms
 UNION
  SELECT DISTINCT usf_norms."to" AS node
-   FROM usf_norms;
+   FROM usf_norms
+  WITH NO DATA;
 
 
 ALTER TABLE graph_nodes OWNER TO associations_dbuser;
 
 --
--- Name: graph_rels; Type: VIEW; Schema: public; Owner: associations_dbuser
+-- Name: graph_rels; Type: MATERIALIZED VIEW; Schema: public; Owner: associations_dbuser; Tablespace: 
 --
 
-CREATE VIEW graph_rels AS
+CREATE MATERIALIZED VIEW graph_rels AS
  SELECT usf_norms."from",
     usf_norms."to",
     ((usf_norms.pick)::double precision / (usf_norms."group")::double precision) AS score
-   FROM usf_norms;
+   FROM usf_norms
+  WITH NO DATA;
 
 
 ALTER TABLE graph_rels OWNER TO associations_dbuser;
@@ -216,7 +217,7 @@ CREATE TABLE users (
     password text,
     oauth_id text,
     oauth_provider text,
-    color_id uuid
+    color_id integer DEFAULT 0 NOT NULL
 );
 
 
@@ -451,11 +452,11 @@ ALTER TABLE ONLY picks
 
 
 --
--- Name: users_color_fkey; Type: FK CONSTRAINT; Schema: public; Owner: associations_dbuser
+-- Name: users_color_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: associations_dbuser
 --
 
 ALTER TABLE ONLY users
-    ADD CONSTRAINT users_color_fkey FOREIGN KEY (color_id) REFERENCES colors(id);
+    ADD CONSTRAINT users_color_id_fkey FOREIGN KEY (color_id) REFERENCES colors(id);
 
 
 --

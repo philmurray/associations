@@ -6,31 +6,21 @@ angular.module('associations.pages.playerProfile',[
 	'associations.components.data.color',
 	'associations.components.data.question'])
 
-.controller("PlayerProfileController", ["$scope", "authenticated", "UserService", "ColorService", "$log", "QuestionService", function ($scope, authenticated, UserService, ColorService, $log, QuestionService) {
-	$scope.profileUser = angular.extend({},authenticated.user);
-	$scope.accountUser = angular.extend({},authenticated.user);
+.controller("PlayerProfileController", ["$scope", "user", "UserService", "ColorService", "$log", "QuestionService", function ($scope, user, UserService, ColorService, $log, QuestionService) {
+	$scope.profileUser = angular.extend({},user);
+	$scope.accountUser = angular.extend({},user);
 
 	$scope.forms = {};
 	$scope.activePage = "Profile";
 
 	ColorService.getColorList().then(function(response){
 		$scope.colors = response.data;
-		$scope.setPlayerColor();
 	}).catch($log);
 
 	QuestionService.getQuestionList().then(function(response){
 		$scope.questionsObj = response.data;
 		$scope.initQuestions();
 	});
-
-	$scope.setPlayerColor = function(){
-		$scope.colors.forEach(function(color){
-			if ((!$scope.color && color.is_default) ||
-				color.id === $scope.profileUser.colorId){
-				$scope.color = color;
-			}
-		});
-	};
 
 	$scope.saveProfile = function (){
 		if ($scope.forms.display.$invalid){
