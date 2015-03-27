@@ -69,9 +69,23 @@ router.get('/game/:gameId', function(req,res){
 		res.json(game);
 	});
 });
-router.post('/game/:gameId', function(req,res){
+router.post('/game/:gameId/start', isAuthenticated, function(req,res){
 
-	models.Game.updateGame(req.user, req.params.gameId, req.body, function(err, ret){
+	models.GameUser.startGame(req.user, req.params.gameId, function(err, ret){
+		if (err){ return res.status(500).send(err.message); }
+		res.json(ret);
+	});
+});
+router.post('/game/:gameId/stop', isAuthenticated, function(req,res){
+
+	models.GameUser.stopGame(req.user, req.params.gameId, function(err, ret){
+		if (err){ return res.status(500).send(err.message); }
+		res.json(ret);
+	});
+});
+router.get('/game/:gameId/current', isAuthenticated, function(req,res){
+
+	models.GameUser.currentWord(req.user, req.params.gameId, function(err, ret){
 		if (err){ return res.status(500).send(err.message); }
 		res.json(ret);
 	});
