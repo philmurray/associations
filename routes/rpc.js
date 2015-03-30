@@ -90,6 +90,13 @@ router.get('/game/:gameId/current', isAuthenticated, function(req,res){
 		res.json(ret);
 	});
 });
+router.post('/game/:gameId/submitWord', isAuthenticated, function(req,res){
+
+	models.GameUser.submitWord(req.user, req.params.gameId, req.body, function(err, ret){
+		if (err){ return res.status(500).send(err.message); }
+		res.json(ret);
+	});
+});
 
 router.get('/word', function(req,res){
 	models.Word.search(req.query.text || "", 10, function(err, words){

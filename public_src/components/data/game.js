@@ -38,6 +38,14 @@ angular.module('associations.components.data.game', [])
 					method: 'GET',
 					url: url
 				});
+			},
+			sumbitWord: function(gameId, wordData){
+				var url = "/rpc/game/" + gameId + "/submitWord";
+				return $http({
+					method: 'POST',
+					url: url,
+					data: wordData
+				});
 			}
 		};
 	}]);

@@ -11,6 +11,26 @@ angular.module('associations.pages.game', [
 	$scope.game = game;
 	$scope.player = $scope.game.players[$scope.game.player];
 
+	$scope.chosenWord = {
+		word: "",
+		placeholderText:"What do you think?"
+	};
+
+	$scope.$watch("currentWord", function(){
+		$scope.wordStart = new Date();
+	});
+	$scope.$watch("chosenWord.word", function(word){
+		if (word && $scope.playing){
+			var wordData = {word: word, timeTaken: new Date() - $scope.wordStart};
+			GameService.submitWord($scope.game.id, wordData).then(function(response){
+				$scope.chosenWord.word = "";
+				$scope.currentWord = response.data.next;
+			}).catch(function(){
+				$scope.addAlert({type: "danger", msg: "Word could not be submitted."});
+			});
+		}
+	});
+
 	$scope.continueGame = function(){
 		$scope.playing = true;
 
