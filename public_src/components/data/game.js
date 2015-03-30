@@ -39,7 +39,7 @@ angular.module('associations.components.data.game', [])
 					url: url
 				});
 			},
-			sumbitWord: function(gameId, wordData){
+			submitWord: function(gameId, wordData){
 				var url = "/rpc/game/" + gameId + "/submitWord";
 				return $http({
 					method: 'POST',

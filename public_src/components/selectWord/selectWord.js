@@ -17,11 +17,15 @@ angular.module('associations.components.selectWord', [
 
 			$scope.wordOptions = [];
 			$scope.refreshWords = function(searchTerm){
-				WordService.search(searchTerm)
-					.then(function(response){
-						$scope.wordOptions = response.data || [];
-					})
-					.catch($log);
+				if (searchTerm) {
+					WordService.search(searchTerm)
+						.then(function(response){
+							$scope.wordOptions = response.data || [];
+						})
+						.catch($log);
+				} else {
+					$scope.wordOptions = [];
+				}
 			};
 		}
 	};

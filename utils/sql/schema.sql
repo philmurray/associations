@@ -175,7 +175,8 @@ CREATE TABLE picks (
     "from" text NOT NULL,
     "to" text NOT NULL,
     user_id uuid NOT NULL,
-    game_id uuid NOT NULL
+    game_id uuid NOT NULL,
+    time_taken integer
 );
 
 
