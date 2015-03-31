@@ -76,9 +76,9 @@ angular.module('associations.pages.game', [
 	};
 
 	$scope.getStatus = function(player){
+		if ($scope.playing) return "...";
 		if (!player.completed) return "Waiting...";
-		return 0;
-		//else get their score, etc.
+		return player.score;
 	};
 
 	if ($scope.player !== undefined){
