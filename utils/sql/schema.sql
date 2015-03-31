@@ -111,6 +111,22 @@ CREATE TABLE games_users (
 ALTER TABLE games_users OWNER TO associations_dbuser;
 
 --
+-- Name: games_users_scored; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+CREATE TABLE games_users_scored (
+    game_id uuid,
+    user_id uuid,
+    completed boolean,
+    start_time timestamp with time zone,
+    word text,
+    score bigint
+);
+
+
+ALTER TABLE games_users_scored OWNER TO associations_dbuser;
+
+--
 -- Name: games_words; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
 --
 
@@ -173,7 +189,7 @@ ALTER TABLE graph_rels OWNER TO associations_dbuser;
 CREATE TABLE picks (
     id uuid DEFAULT uuid_generate_v4() NOT NULL,
     "from" text NOT NULL,
-    "to" text NOT NULL,
+    "to" text,
     user_id uuid NOT NULL,
     game_id uuid NOT NULL,
     time_taken integer
@@ -181,6 +197,32 @@ CREATE TABLE picks (
 
 
 ALTER TABLE picks OWNER TO associations_dbuser;
+
+--
+-- Name: picks_scored; Type: VIEW; Schema: public; Owner: associations_dbuser
+--
+
+CREATE VIEW picks_scored AS
+ SELECT p.id,
+    p."from",
+    p."to",
+    p.user_id,
+    p.game_id,
+    p.time_taken,
+        CASE
+            WHEN (p."to" IN ( SELECT rs."to"
+               FROM graph_rels rs
+              WHERE (rs."from" = p."from")
+              ORDER BY rs.score DESC
+             LIMIT 1)) THEN 2
+            WHEN (r.score IS NOT NULL) THEN 1
+            ELSE 0
+        END AS score
+   FROM (picks p
+     LEFT JOIN graph_rels r ON (((p."from" = r."from") AND (p."to" = r."to"))));
+
+
+ALTER TABLE picks_scored OWNER TO associations_dbuser;
 
 --
 -- Name: questions; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
@@ -354,6 +396,29 @@ CREATE INDEX cov2 ON picks USING btree ("to");
 --
 
 CREATE INDEX cov3 ON usf_norms USING btree ("to");
+
+
+--
+-- Name: _RETURN; Type: RULE; Schema: public; Owner: associations_dbuser
+--
+
+CREATE RULE "_RETURN" AS
+    ON SELECT TO games_users_scored DO INSTEAD  SELECT gus.game_id,
+    gus.user_id,
+    gus.completed,
+    gus.start_time,
+    gw.word,
+    gus.score
+   FROM (( SELECT gu.game_id,
+            gu.user_id,
+            gu.completed,
+            gu.start_time,
+            gu.current_word,
+            COALESCE(sum(ps.score), (0)::bigint) AS score
+           FROM (games_users gu
+             LEFT JOIN picks_scored ps ON (((gu.game_id = ps.game_id) AND (gu.user_id = ps.user_id))))
+          GROUP BY gu.game_id, gu.user_id) gus
+     LEFT JOIN games_words gw ON (((gus.current_word = gw."order") AND (gus.game_id = gw.game_id))));
 
 
 --
