@@ -120,7 +120,8 @@ CREATE TABLE games_users_scored (
     completed boolean,
     start_time timestamp with time zone,
     word text,
-    score bigint
+    score bigint,
+    normal double precision
 );
 
 
@@ -215,9 +216,19 @@ CREATE VIEW picks_scored AS
               WHERE (rs."from" = p."from")
               ORDER BY rs.score DESC
              LIMIT 1)) THEN 2
+            WHEN (( SELECT count(*) AS count
+               FROM graph_rels rs1
+              WHERE (rs1."from" = p."from")) = 0) THEN 1
             WHEN (r.score IS NOT NULL) THEN 1
             ELSE 0
-        END AS score
+        END AS score,
+        CASE
+            WHEN (( SELECT count(*) AS count
+               FROM graph_rels rs1
+              WHERE (rs1."from" = p."from")) = 0) THEN NULL::double precision
+            WHEN (r.score IS NOT NULL) THEN r.score
+            ELSE (0)::double precision
+        END AS normal
    FROM (picks p
      LEFT JOIN graph_rels r ON (((p."from" = r."from") AND (p."to" = r."to"))));
 
@@ -408,13 +419,15 @@ CREATE RULE "_RETURN" AS
     gus.completed,
     gus.start_time,
     gw.word,
-    gus.score
+    gus.score,
+    gus.normal
    FROM (( SELECT gu.game_id,
             gu.user_id,
             gu.completed,
             gu.start_time,
             gu.current_word,
-            COALESCE(sum(ps.score), (0)::bigint) AS score
+            COALESCE(sum(ps.score), (0)::bigint) AS score,
+            avg(ps.normal) AS normal
            FROM (games_users gu
              LEFT JOIN picks_scored ps ON (((gu.game_id = ps.game_id) AND (gu.user_id = ps.user_id))))
           GROUP BY gu.game_id, gu.user_id) gus
