@@ -32,8 +32,8 @@ angular.module('associations.components.data.game', [])
 					url: url
 				});
 			},
-			getCurrentWord: function(gameId){
-				var url = "/rpc/game/" + gameId + "/current";
+			resumeGame: function(gameId){
+				var url = "/rpc/game/" + gameId + "/resume";
 				return $http({
 					method: 'GET',
 					url: url

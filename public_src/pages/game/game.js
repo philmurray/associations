@@ -16,7 +16,7 @@ angular.module('associations.pages.game', [
 		placeholderText:"What do you think?"
 	};
 
-	$scope.$watch("currentWord", function(){
+	$scope.$watch("playing.word", function(){
 		$scope.wordStart = new Date();
 	});
 	$scope.$watch("chosenWord.word", function(word){
@@ -24,7 +24,7 @@ angular.module('associations.pages.game', [
 			var wordData = {word: word, timeTaken: new Date() - $scope.wordStart};
 			GameService.submitWord($scope.game.id, wordData).then(function(response){
 				$scope.chosenWord.word = "";
-				$scope.currentWord = response.data.next;
+				$scope.playing = response.data;
 			}).catch(function(){
 				$scope.addAlert({type: "danger", msg: "Word could not be submitted."});
 			});
@@ -38,8 +38,8 @@ angular.module('associations.pages.game', [
 
 		if ($scope.timeLeft < 0) $scope.stopGame();
 
-		GameService.getCurrentWord($scope.game.id).then(function(response){
-			$scope.currentWord = response.data.next;
+		GameService.resumeGame($scope.game.id).then(function(response){
+			$scope.playing = response.data;
 			$interval(function(){$scope.timeLeft--;},1000,$scope.timeLeft)
 				.then($scope.stopGame);
 		}).catch(function(){
@@ -61,7 +61,7 @@ angular.module('associations.pages.game', [
 		}).result.then(function(){
 			return GameService.startGame($scope.game.id);
 		}).then(function(response){
-			$scope.currentWord = response.data.next;
+			$scope.playing = response.data;
 			$scope.timeLeft = 30;
 			$interval(function(){$scope.timeLeft--;},1000,$scope.timeLeft)
 				.then($scope.stopGame);
@@ -71,12 +71,19 @@ angular.module('associations.pages.game', [
 	};
 
 	$scope.stopGame = function(){
-		$scope.playing = false;
-		GameService.stopGame($scope.game.id);
+		GameService.stopGame($scope.game.id).then(function(response){
+			$scope.playing = false;
+			$scope.game = response.data;
+		});
 	};
 
 	$scope.getStatus = function(player){
-		if ($scope.playing) return "...";
+		if ($scope.playing){
+			if (player === $scope.player){
+				return $scope.playing.score;
+			}
+			return "...";
+		}
 		if (!player.completed) return "Waiting...";
 		return player.score;
 	};
