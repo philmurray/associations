@@ -10,6 +10,7 @@ angular.module('associations.pages.game', [
 	$scope.color = color;
 	$scope.game = game;
 	$scope.player = $scope.game.players[$scope.game.player];
+	$scope.activePlayer = $scope.game.players[0];
 
 	$scope.chosenWord = {
 		word: "",
@@ -24,6 +25,7 @@ angular.module('associations.pages.game', [
 			var wordData = {word: word, timeTaken: new Date() - $scope.wordStart};
 			GameService.submitWord($scope.game.id, wordData).then(function(response){
 				$scope.chosenWord.word = "";
+				$scope.player.picks.push({from:$scope.playing.word, to:word});
 				$scope.playing = response.data;
 			}).catch(function(){
 				$scope.addAlert({type: "danger", msg: "Word could not be submitted."});
@@ -74,6 +76,7 @@ angular.module('associations.pages.game', [
 		GameService.stopGame($scope.game.id).then(function(response){
 			$scope.playing = false;
 			$scope.game = response.data;
+			$scope.player = $scope.activePlayer = $scope.game.players[$scope.game.player];
 		});
 	};
 
@@ -89,6 +92,7 @@ angular.module('associations.pages.game', [
 	};
 
 	if ($scope.player !== undefined){
+		$scope.activePlayer = $scope.player;
 		if (!$scope.player.completed){
 			if (!$scope.player.startTime){
 				$scope.startGame();
