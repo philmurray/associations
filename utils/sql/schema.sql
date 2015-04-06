@@ -213,24 +213,27 @@ CREATE VIEW picks_scored AS
     p.game_id,
     p.time_taken,
         CASE
-            WHEN (p."to" = r_top."to") THEN 2
-            WHEN (r_top."to" IS NULL) THEN 1
+            WHEN (p."to" IN ( SELECT rs."to"
+               FROM graph_rels rs
+              WHERE (rs."from" = p."from")
+              ORDER BY rs.score DESC
+             LIMIT 1)) THEN 2
+            WHEN (( SELECT count(*) AS count
+               FROM graph_rels rs1
+              WHERE (rs1."from" = p."from")) = 0) THEN 1
             WHEN (r.score IS NOT NULL) THEN 1
             ELSE 0
         END AS score,
         CASE
-            WHEN (r_top."to" IS NULL) THEN NULL::double precision
+            WHEN (( SELECT count(*) AS count
+               FROM graph_rels rs1
+              WHERE (rs1."from" = p."from")) = 0) THEN NULL::double precision
             WHEN (r.score IS NOT NULL) THEN r.score
             ELSE (0)::double precision
         END AS normal,
     p.create_time
-   FROM ((picks p
-     LEFT JOIN graph_rels r ON (((p."from" = r."from") AND (p."to" = r."to"))))
-     LEFT JOIN ( SELECT DISTINCT ON (graph_rels."from") graph_rels."from",
-            graph_rels.score,
-            graph_rels."to"
-           FROM graph_rels
-          ORDER BY graph_rels."from", graph_rels.score DESC, graph_rels."to") r_top ON ((p."from" = r_top."from")));
+   FROM (picks p
+     LEFT JOIN graph_rels r ON (((p."from" = r."from") AND (p."to" = r."to"))));
 
 
 ALTER TABLE picks_scored OWNER TO associations_dbuser;

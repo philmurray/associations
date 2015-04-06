@@ -29,17 +29,13 @@
 			<div class="col-xs-12">
 				<div class="panel panel-default">
 					<div class="panel-body">
-						<div ng-if="playing" class="input-group list-group-item">
+						<pick-graph graph-model="activePlayer.picks"></pick-graph>
+					</div>
+					<div ng-if="playing" class="panel-footer">
+						<div class="input-group">
 							<span class="input-group-addon">{{playing.word}}</span>
 							<select-word selected="chosenWord" class='select-word'></select-word>
 							<span class="input-group-addon">{{timeLeft}}</span>
-						</div>
-						<div ng-repeat="pick in activePlayer.picks" class="list-group-item">
-							<h5 class="list-group-item-heading">
-								<span>{{pick.from}}</span>
-							</h5>
-							<p>{{pick.to}}</p>
-							<p>{{pick.normal}}</p>
 						</div>
 					</div>
 				</div>

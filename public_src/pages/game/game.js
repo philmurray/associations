@@ -3,7 +3,8 @@
 angular.module('associations.pages.game', [
 	'associations.components.data.game',
 	'ui.bootstrap',
-	'associations.pages.game.components.startModal'
+	'associations.pages.game.components.startModal',
+	'associations.pages.game.components.pickGraph'
 ])
 
 .controller("GameController", ["$scope", "color", "game", "$modal", "GameService", "$interval", function($scope, color, game, $modal, GameService, $interval) {
