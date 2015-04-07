@@ -11,7 +11,6 @@ angular.module('associations.pages.game', [
 	$scope.color = color;
 	$scope.game = game;
 	$scope.player = $scope.game.players[$scope.game.player];
-	$scope.activePlayer = $scope.game.players[0];
 
 	$scope.chosenWord = {
 		word: "",
@@ -73,11 +72,18 @@ angular.module('associations.pages.game', [
 		});
 	};
 
+	$scope.activatePlayer = function(player){
+		$scope.game.players.forEach(function(p){
+			p.active = (player === p);
+		});
+
+	};
+
 	$scope.stopGame = function(){
 		GameService.stopGame($scope.game.id).then(function(response){
 			$scope.playing = false;
 			$scope.game = response.data;
-			$scope.player = $scope.activePlayer = $scope.game.players[$scope.game.player];
+			$scope.player = $scope.game.players[$scope.game.player];
 		});
 	};
 
@@ -93,7 +99,7 @@ angular.module('associations.pages.game', [
 	};
 
 	if ($scope.player !== undefined){
-		$scope.activePlayer = $scope.player;
+		$scope.activatePlayer($scope.player);
 		if (!$scope.player.completed){
 			if (!$scope.player.startTime){
 				$scope.startGame();
@@ -101,5 +107,7 @@ angular.module('associations.pages.game', [
 				$scope.continueGame();
 			}
 		}
+	} else {
+		$scope.activatePlayer($scope.game.players[0]);
 	}
 }]);

@@ -13,7 +13,7 @@
 					<div class="panel-body player-list">
 						<ul class="list-inline">
 							<li ng-repeat="p in game.players">
-								<button ng-disabled="playing || !p.completed" ng-click="$parent.activePlayer = p" class="btn {{p.color.css_class}}" ng-class="{active: $parent.activePlayer == p}">
+								<button ng-disabled="playing || !p.completed" ng-click="activatePlayer(p)" class="btn {{p.color.css_class}}" ng-class="{active: p.active}">
 									<h4>{{p.alias}}</h4>
 									<p>
 										{{getStatus(p)}}
@@ -28,8 +28,8 @@
 		<div class="row">
 			<div class="col-xs-12">
 				<div class="panel panel-default">
-					<div class="panel-body">
-						<pick-graph graph-model="activePlayer.picks"></pick-graph>
+					<div class="panel-body picks">
+						<div pick-graph graph-model="game.players"></div>
 					</div>
 					<div ng-if="playing" class="panel-footer">
 						<div class="input-group">
