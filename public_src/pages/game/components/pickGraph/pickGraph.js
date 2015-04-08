@@ -44,17 +44,19 @@ angular.module('associations.pages.game.components.pickGraph', [])
 
 			var viewModel,
 				createViewModel = function(){
-					viewModel = {
-						picks: {},
+					var vm = {
 						picksArray: []
 					};
-					var biggest = [];
+					var picks = {},
+						biggest = [];
 					$scope.model.forEach(function(player){
+						if (player.active) vm.active = player;
+						if (!player.picks) return;
+
 						if (player.picks.length > biggest.length) biggest = player.picks;
-						if (player.active) viewModel.active = player;
 						player.picks.forEach(function (pick){
-							if (!viewModel.picks[pick.from]) viewModel.picks[pick.from] = [];
-							viewModel.picks[pick.from].push({
+							if (!picks[pick.from]) picks[pick.from] = [];
+							picks[pick.from].push({
 								to: pick.to,
 								normal: pick.normal,
 								player: player
@@ -62,11 +64,12 @@ angular.module('associations.pages.game.components.pickGraph', [])
 						});
 					});
 					biggest.forEach(function(pick){
-						viewModel.picksArray.push({
+						vm.picksArray.push({
 							from: pick.from,
-							value: viewModel.picks[pick.from]
+							value: picks[pick.from]
 						});
 					});
+					return vm;
 				};
 
 			var render = function(){
@@ -76,12 +79,19 @@ angular.module('associations.pages.game.components.pickGraph', [])
 
 			var updateModel = function(){
 				if (!$scope.model) return;
-				if (!viewModel){
-					createViewModel();
-				} else {
-					//handle changing active player
-					//handle adding pick
+
+				var newViewModel = createViewModel();
+				if (viewModel) {
+					if (newViewModel.picksArray.length > viewModel.picksArray.length){
+						for (var i = viewModel.picksArray.length; i < newViewModel.picksArray.length; i++){
+							//do some kind of animation
+						}
+					}
+					if (viewModel.active !== newViewModel.active){
+
+					}
 				}
+				viewModel = newViewModel;
 			};
 
 			var renderModel = function(ctx){
