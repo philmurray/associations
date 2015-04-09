@@ -21,6 +21,7 @@ angular.module('associations.pages.game.components.pickGraph', [])
 		},
 		link: function($scope, $element, attrs) {
 			var canvas = $element.find('canvas')[0],
+				canvasWrapper = $element.find('div')[0],
 				canvasContext = canvas.getContext('2d');
 
 			var w = angular.element($window),
@@ -38,7 +39,7 @@ angular.module('associations.pages.game.components.pickGraph', [])
 					height: w[0].innerHeight
 				};
 			}, function() {
-				canvas.width = $element[0].clientWidth;
+				canvas.width = canvasWrapper.clientWidth;
 				render();
 			},true);
 
@@ -102,6 +103,7 @@ angular.module('associations.pages.game.components.pickGraph', [])
 					height += rowHeight(ctx, pick);
 				});
 				canvas.height = height;
+				element.scrollTop = element.scrollHeight;
 
 				viewModel.picksArray.forEach(drawRow.bind(null,ctx));
 				ctx.restore();
@@ -121,7 +123,6 @@ angular.module('associations.pages.game.components.pickGraph', [])
 					if (value.player === viewModel.active){
 						var toMetrics = ctx.measureText(value.to),
 							toBox = textBox(ctx, canvas.width - (toMetrics.width + pickGraphSettings.wordBoxPadding*2 + pickGraphSettings.rowPadding*2),pickGraphSettings.rowPadding, value.to, toMetrics);
-
 
 						ctx.save();
 						ctx.strokeStyle = ctx.fillStyle = value.player.color.hex;

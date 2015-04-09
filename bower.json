@@ -13,7 +13,6 @@
     "angular-ui-select": "*",
     "angular-input-match": "*",
     "springy": "*",
-    "jsplumb": "*",
     "vis": "*",
     "fontawesome": "*"
   },
