@@ -120,7 +120,7 @@ angular.module('associations.pages.game.components.pickGraph', [])
 				var fromBox = textBox(ctx, pickGraphSettings.rowPadding*2,pickGraphSettings.rowPadding, pick.from, ctx.measureText(pick.from));
 
 				pick.value.forEach(function(value){
-					if (value.player === viewModel.active){
+					if (value.player === viewModel.active && value.to){
 						var toMetrics = ctx.measureText(value.to),
 							toBox = textBox(ctx, canvas.width - (toMetrics.width + pickGraphSettings.wordBoxPadding*2 + pickGraphSettings.rowPadding*2),pickGraphSettings.rowPadding, value.to, toMetrics);
 

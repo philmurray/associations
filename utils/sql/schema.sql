@@ -213,6 +213,7 @@ CREATE VIEW picks_scored AS
     p.game_id,
     p.time_taken,
         CASE
+            WHEN (p."to" IS NULL) THEN 0
             WHEN (p."to" IN ( SELECT rs."to"
                FROM graph_rels rs
               WHERE (rs."from" = p."from")
@@ -225,6 +226,7 @@ CREATE VIEW picks_scored AS
             ELSE 0
         END AS score,
         CASE
+            WHEN (p."to" IS NULL) THEN NULL::double precision
             WHEN (( SELECT count(*) AS count
                FROM graph_rels rs1
               WHERE (rs1."from" = p."from")) = 0) THEN NULL::double precision

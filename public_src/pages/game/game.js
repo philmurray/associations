@@ -21,8 +21,13 @@ angular.module('associations.pages.game', [
 		$scope.wordStart = new Date();
 	});
 	$scope.$watch("chosenWord.word", function(word){
-		if (word && $scope.playing){
-			var wordData = {word: word, timeTaken: new Date() - $scope.wordStart};
+		if (word){
+			$scope.submitWord({word: word, timeTaken: new Date() - $scope.wordStart});
+		}
+	});
+
+	$scope.submitWord = function(wordData){
+		if ($scope.playing){
 			GameService.submitWord($scope.game.id, wordData).then(function(response){
 				$scope.chosenWord.word = "";
 				$scope.player.picks.push(response.data.word);
@@ -31,7 +36,11 @@ angular.module('associations.pages.game', [
 				$scope.addAlert({type: "danger", msg: "Word could not be submitted."});
 			});
 		}
-	});
+	};
+
+	$scope.skipWord = function(){
+		$scope.submitWord({word: null, timeTaken: 0});
+	};
 
 	$scope.continueGame = function(){
 		$scope.playing = true;

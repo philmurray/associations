@@ -31,10 +31,21 @@
 					<div class="panel-body picks" pick-graph graph-model="game.players">
 					</div>
 					<div ng-if="playing" class="panel-footer">
-						<div class="input-group">
-							<span class="input-group-addon">{{playing.word}}</span>
-							<select-word selected="chosenWord" class='select-word'></select-word>
-							<span class="input-group-addon">{{timeLeft}}</span>
+						<div class="row">
+							<div class="col-xs-4">
+								<h4>Time Left: {{timeLeft}}</h4>
+							</div>
+							<div class="col-xs-4">
+								<h2 class="text-center">{{playing.word}}</h4>
+							</div>
+							<div class="col-xs-4">
+								<h4 class="pull-right"><a ng-click="skipWord()">Skip...</a></h4>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12">
+								<select-word selected="chosenWord" class='select-word'></select-word>
+							</div>
 						</div>
 					</div>
 				</div>
