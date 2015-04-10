@@ -39,7 +39,7 @@ angular.module('associations.pages.game', [
 	};
 
 	$scope.skipWord = function(){
-		$scope.submitWord({word: null, timeTaken: 0});
+		$scope.submitWord({word: null, timeTaken: new Date() - $scope.wordStart});
 	};
 
 	$scope.continueGame = function(){
