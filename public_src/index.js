@@ -27,6 +27,9 @@ angular.module('associations',
 			}],
 			GameResolver = ['GameService', '$route', function(GameService, $route){
 				return GameService.get($route.current.params.gameId).then(function(response){return response.data;});
+			}],
+			GamesResolver = ['GameService', '$route', function(GameService, $route){
+				return GameService.getGames().then(function(response){return response.data;});
 			}];
 
 		$routeProvider
@@ -48,7 +51,8 @@ angular.module('associations',
 				templateUrl: 'pages/playLanding/playLanding.html',
 				controller: 'PlayLandingController',
 				resolve: {
-					user: UserResolver
+					user: UserResolver,
+					games: GamesResolver
 				}
 			})
 			.when('/playMulti', {

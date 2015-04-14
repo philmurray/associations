@@ -3,6 +3,13 @@
 angular.module('associations.components.data.game', [])
 	.factory('GameService', ['$http', function($http){
 		return {
+			getGames: function(gameId){
+				var url = "/rpc/games";
+				return $http({
+					method: 'GET',
+					url: url
+				});
+			},
 			createGame: function(players){
 				var url = "/rpc/game";
 				return $http({

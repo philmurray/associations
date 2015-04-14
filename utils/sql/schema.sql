@@ -416,6 +416,13 @@ CREATE INDEX cov3 ON usf_norms USING btree ("to");
 
 
 --
+-- Name: graph_rels_index; Type: INDEX; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+CREATE UNIQUE INDEX graph_rels_index ON graph_rels USING btree ("from", "to");
+
+
+--
 -- Name: _RETURN; Type: RULE; Schema: public; Owner: associations_dbuser
 --
 
