@@ -22,8 +22,8 @@ router.post('/user', isAuthenticated, function(req, res){
 	});
 });
 
-router.get('/users', function(req,res){
-	models.User.search(req.query.search || "", 15, function(err, users){
+router.get('/users', isAuthenticated, function(req,res){
+	models.User.search(req.user, req.query.search || "", 15, function(err, users){
 		if (err){ return res.status(500).send(err.message); }
 		res.json(users);
 	});
