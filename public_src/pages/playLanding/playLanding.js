@@ -35,19 +35,12 @@ angular.module('associations.pages.playLanding',['associations.components.data.g
 		return new Date(game.time) * game.status;
 	};
 
-	$scope.getStatusText = function(game){
-		switch(game.status){
-			case 1:
-				var winners = game.players.filter(function(player){return player.winner;});
-				if (winners.length === 1){
-					if (winners[0].id === user.id) return "You Won!";
-					else return winners[0].alias + " Won!";
-				} else {
-					return "Tie!";
-				}
-				return "Completed.";
-			case 2: return "Waiting...";
-			case 3: return "You're up!";
+	$scope.getViewButtonText = function(game){
+		for (var i = 0, l = game.players.length; i<l; i++){
+			if (game.players[i].id === user.id){
+				return game.players[i].completed ? "View": "Play!";
+			}
 		}
+		return "View";
 	};
 }]);

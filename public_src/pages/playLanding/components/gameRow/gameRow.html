@@ -1,0 +1,18 @@
+<div class="row">
+	<div class="col-xs-9 vcenter">
+		<div class="row" ng-repeat="player in game.players | orderBy : 'alias'">
+			<div class="col-xs-9 player-name">
+				<span ng-if="player.winner"><strong>{{player.alias}}</strong></span>
+				<span ng-if="!player.winner" class="text-muted">{{player.alias}}</span>
+			</div>
+			<div class="col-xs-3">
+				<span ng-if="player.winner"><strong>{{player.score}}</strong></span>
+				<span ng-if="!player.winner && player.completed" class="text-muted">{{player.score}}</span>
+				<span ng-if="!player.completed" class="text-muted">...</span>
+			</div>
+		</div>
+	</div><!--
+--><div class="col-xs-3 vcenter">
+		<button class="btn btn-xs btn-color pull-right" ng-click="gotoGame(game)">{{getViewButtonText(game)}}</button>
+	</div>
+</div>

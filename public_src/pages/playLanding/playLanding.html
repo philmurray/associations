@@ -20,19 +20,20 @@
 		<div class="row">
 			<div class="col-sm-6" ng-class="{'hidden-xs':activePage!='Multi'}">
 				<a class="btn btn-color btn-lg btn-block" href="#/playMulti">New Multiplayer Game</a>
+				<h4>Pending Games</h4>
+				<div class="panel panel-default">
+					<div class="list-group panel-body">
+						<div ng-repeat="game in games.multiGames | orderBy : sortGames : true | filter : {status:'3'}" class="list-group-item"  ng-include="'pages/playLanding/components/gameRow/gameRow.html'">
+						</div>
+						<div ng-if="!games.multiGames.length" class="list-group-item disabled">
+							<h5>No games have been played</h5>
+						</div>
+					</div>
+				</div>
 				<h4>Past Games</h4>
 				<div class="panel panel-default">
 					<div class="list-group panel-body">
-						<div ng-repeat="game in games.multiGames | orderBy : sortGames : true" class="list-group-item" ng-click="gotoGame(game)">
-							<h5 class="list-group-item-heading">
-								<span><strong>{{getStatusText(game)}}</strong> <span class="badge">{{game.notifications || ""}}</span></span>
-								<span class="pull-right">{{game.time | date}}
-								</span>
-							</h5>
-							<p class="list-group-item-text clearfix">
-								<span ng-repeat="player in game.players" ng-class="{'text-muted':!player.winner, 'text-color':player.winner}">{{player.alias}}{{$last ? '' : ', '}}</span>
-								<button ng-if="game.status == 1" class="btn btn-xs btn-color pull-right" ng-click="rematch(game, $event)">Rematch</button>
-							</p>
+						<div ng-repeat="game in games.multiGames | orderBy : sortGames : true | filter : {status:'!3'}" class="list-group-item"  ng-include="'pages/playLanding/components/gameRow/gameRow.html'">
 						</div>
 						<div ng-if="!games.multiGames.length" class="list-group-item disabled">
 							<h5>No games have been played</h5>
@@ -45,14 +46,7 @@
 				<h4>Past Games</h4>
 				<div class="panel panel-default">
 					<div class="list-group panel-body">
-						<div ng-repeat="game in games.singleGames | orderBy : sortGames : true" class="list-group-item" ng-click="gotoGame(game)">
-							<h5 class="list-group-item-heading">
-								<span ng-if="game.status == 1"><strong>Score: </strong><span class="text-color">{{game.player.score}}</span></span>
-								<span ng-if="game.status == 3"><strong>{{getStatusText(game)}}</strong></span>
-
-								<span class="pull-right">{{game.time | date:'shortDate'}}
-								</span>
-							</h5>
+						<div ng-repeat="game in games.singleGames | orderBy : sortGames : true" class="list-group-item"  ng-include="'pages/playLanding/components/gameRow/gameRow.html'">
 						</div>
 						<div ng-if="!games.singleGames.length" class="list-group-item disabled">
 							<h5>No games have been played</h5>
