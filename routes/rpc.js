@@ -28,7 +28,12 @@ router.get('/users', isAuthenticated, function(req,res){
 		res.json(users);
 	});
 });
-
+router.get('/recentUsers', isAuthenticated, function(req,res){
+	models.User.recentPlayers(req.user, function(err, users){
+		if (err){ return res.status(500).send(err.message); }
+		res.json(users);
+	});
+});
 router.get('/questions', isAuthenticated, function(req,res){
 	models.Question.getAllQuestions(req.user, function(err, questions){
 		if (err){ return res.status(500).send(err.message); }

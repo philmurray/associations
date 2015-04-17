@@ -23,6 +23,14 @@ angular.module('associations.components.data.user', [])
 					url: url,
 					cache: true
 				});
+			},
+			recentPlayers: function(){
+				var url = "/rpc/recentUsers";
+				return $http({
+					method: 'GET',
+					url: url,
+					cache: true
+				});
 			}
 		};
 	}]);

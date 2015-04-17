@@ -25,6 +25,9 @@ angular.module('associations',
 			UserResolver = ['UserService', function(UserService){
 				return UserService.get().then(function(response){return response.data;});
 			}],
+			RecentPlayersResolver = ['UserService', function(UserService){
+				return UserService.recentPlayers().then(function(response){return response.data;});
+			}],
 			GameResolver = ['GameService', '$route', function(GameService, $route){
 				return GameService.get($route.current.params.gameId).then(function(response){return response.data;});
 			}],
@@ -59,7 +62,8 @@ angular.module('associations',
 				templateUrl: 'pages/playMulti/playMulti.html',
 				controller: 'PlayMultiController',
 				resolve: {
-					user: UserResolver
+					user: UserResolver,
+					recentPlayers: RecentPlayersResolver
 				}
 			})
 			.when('/game/:gameId', {

@@ -5,11 +5,11 @@ angular.module('associations.pages.playMulti',[
 	'associations.components.data.game'
 ])
 
-.controller("PlayMultiController", ["$scope", "user", "UserService", "$q", "GameService", "$location", function ($scope, user, UserService, $q, GameService, $location) {
+.controller("PlayMultiController", ["$scope", "user", "UserService", "$q", "GameService", "$location", "recentPlayers", function ($scope, user, UserService, $q, GameService, $location, recentPlayers) {
 	$scope.color = user.color;
 
+	$scope.recentPlayers = recentPlayers;
 	$scope.foundPlayers = [];
-	$scope.recentPlayers = [];
 
 	$scope.selectedPlayers = {};
 	$scope.searchPlayers = "";
