@@ -86,6 +86,16 @@ angular.module('associations',
 
 		$httpProvider.interceptors.push('LoginInterceptorService');
 	}])
+	.run(['$rootScope', '$modalStack',
+		function($rootScope, $modalStack) {
+			$rootScope.$on('$locationChangeSuccess', function() {
+				var top = $modalStack.getTop();
+				if (top) {
+					$modalStack.dismiss(top.key);
+				}
+			});
+		}
+	])
 	.controller("AppController", ["$scope", "$timeout", function($scope, $timeout){
 		$scope.alerts = [];
 

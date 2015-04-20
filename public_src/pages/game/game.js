@@ -76,8 +76,10 @@ angular.module('associations.pages.game', [
 			$scope.timeLeft = 30;
 			$interval(function(){$scope.timeLeft--;},1000,$scope.timeLeft)
 				.then($scope.stopGame);
-		}).catch(function(){
-			$scope.addAlert({type: "danger", msg: "Game could not be started"});
+		}).catch(function(err){
+			if (err) {
+				$scope.addAlert({type: "danger", msg: "Game could not be started"});
+			}
 		});
 	};
 
