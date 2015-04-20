@@ -28,8 +28,7 @@ angular.module('associations.components.data.user', [])
 				var url = "/rpc/recentUsers";
 				return $http({
 					method: 'GET',
-					url: url,
-					cache: true
+					url: url
 				});
 			}
 		};

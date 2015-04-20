@@ -16,12 +16,7 @@
 				<div class="form-group">
 					<div class="panel panel-default">
 						<div class="list-group panel-body">
-							<div ng-repeat="player in foundPlayers" class="list-group-item" ng-click="togglePlayer(player)">
-								<h5 class="list-group-item-heading">
-									<span><strong>{{player.alias}}</strong></span>
-									<i class="fa fa-check-circle-o pull-right text-color" ng-if="playerSelected(player)"></i>
-								</h5>
-							</div>
+							<div ng-repeat="player in foundPlayers" class="list-group-item" ng-include="'pages/playMulti/components/userRow/userRow.html'"></div>
 							<div ng-if="!foundPlayers.length" class="list-group-item disabled">
 								<h5>No players found</h5>
 							</div>
@@ -36,12 +31,7 @@
 							Recent opponents
 						</div>
 						<div class="list-group panel-body">
-							<div ng-repeat="player in recentPlayers" class="list-group-item" ng-click="togglePlayer(player)">
-								<h5 class="list-group-item-heading">
-									<span><strong>{{player.alias}}</strong></span>
-									<i class="fa fa-check-circle-o pull-right text-color" ng-if="playerSelected(player)"></i>
-								</h5>
-							</div>
+							<div ng-repeat="player in recentPlayers" class="list-group-item" ng-include="'pages/playMulti/components/userRow/userRow.html'"></div>
 							<div ng-if="!recentPlayers.length" class="list-group-item disabled">
 								<h5>No players found</h5>
 							</div>
