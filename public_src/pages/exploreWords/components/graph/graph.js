@@ -24,7 +24,6 @@ angular.module('associations.pages.exploreWords.components.graph', [])
 		},
 		fontColor: 'white',
 		fontSize: 18
-
 	}
 })
 .directive("wordGraph", ["$window", "GraphDefaults", "$timeout", "$document", function ($window, GraphDefaults, $timeout, $document) {
@@ -67,7 +66,7 @@ angular.module('associations.pages.exploreWords.components.graph', [])
 					y:ele.offsetTop + ele.offsetHeight/2}
 				);
 				node.x = pos.x;
-				node.y = pos.y;
+				node.y = 0;//we want the center of the screen
 			};
 
 			var styleAnchorNode = function(node, ele){
@@ -160,6 +159,8 @@ angular.module('associations.pages.exploreWords.components.graph', [])
 
 			var setGraphSize = function(){
 				$scope.graph.setSize('100%', (w[0].innerHeight-32)+'px');	//todo: make this less stupid
+				$scope.graph.redraw();
+				$scope.graph.moveTo({position:{x:0,y:0}});
 			};
 
 			var initGraph = function(){
@@ -184,8 +185,6 @@ angular.module('associations.pages.exploreWords.components.graph', [])
 					initGraph();
 				} else {
 					setGraphSize();
-					$scope.graph.redraw();
-					$scope.graph.moveTo({position:{x:0,y:0}});
 
 					var node;
 					if ($scope.model.word) {
