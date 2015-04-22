@@ -1,14 +1,29 @@
 .page-game {
-	.player-list {
-		white-space: nowrap;
-		overflow-x: auto;
-		ul {
-			margin:0;
-		}
+	.navbar-brand {
+		position: absolute;
+		z-index: 20;
 	}
-	.picks {
-		height: 300px;
-		width: 100%;
-		overflow-y: auto;
+	.panel {
+		position: absolute;
+		z-index: 20;
+		left: 50%;
+
+		width: 300px;
+		margin-left: -150px;
+
+		@media (min-width: @screen-sm-min) {
+			width: 460px;
+			margin-left: -230px;
+		}
+
+		@media (min-width: @screen-md-min) {
+			width: 690px;
+			margin-left: -345px;
+		}
+
+		@media (min-width: @screen-lg-min) {
+			width: 900px;
+			margin-left: -450px;
+		}
 	}
 }

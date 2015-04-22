@@ -1,8 +1,6 @@
 "use strict";
 
-angular.module('associations.pages.main', [
-	"associations.components.diagram"
-])
+angular.module('associations.pages.main', [])
 
 .controller("MainController", ["$scope", "color", function($scope, color) {
 

@@ -1,32 +1,13 @@
 "use strict";
 
-angular.module('associations.pages.exploreWords.components.graph', [])
-
-.constant("GraphDefaults",{
+angular.module('associations.pages.exploreWords.components.graph', [
+	'associations.components.graph.defaults'
+])
+.constant("WordGraphDefaults", {
 	dragNetwork: false,
-	zoomable: false,
-	edges: {
-		style: 'arrow',
-		widthMax: 8,
-		arrowScaleFactor: 0.75,
-		color: 'blueviolet'
-	},
-	nodes: {
-		shape: 'box',
-		borderWidth: 2,
-		borderWidthSelected: 2,
-		color: {
-			border: 'white',
-			background: 'black',
-			highlight: {
-				background: "#222"
-			}
-		},
-		fontColor: 'white',
-		fontSize: 18
-	}
+	zoomable: false
 })
-.directive("wordGraph", ["$window", "GraphDefaults", "$timeout", "$document", function ($window, GraphDefaults, $timeout, $document) {
+.directive("wordGraph", ["$window", "GraphDefaults", "WordGraphDefaults", "$timeout", "$document", function ($window, GraphDefaults, WordGraphDefaults, $timeout, $document) {
 	return {
 		restrict: 'EA',
 		scope: {
@@ -55,7 +36,7 @@ angular.module('associations.pages.exploreWords.components.graph', [])
 				$scope.render();
 			},true);
 
-			$scope.config = angular.extend(angular.copy(GraphDefaults), $scope.config || {});
+			$scope.config = angular.extend({}, WordGraphDefaults, GraphDefaults, $scope.config || {});
 
 			var wordElement = $document[0].getElementById($scope.wordId),
 				otherWordElement = $document[0].getElementById($scope.otherWordId);

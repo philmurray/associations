@@ -2,7 +2,6 @@
 
 angular.module('associations.pages.exploreWords',[
 	"associations.components.selectWord",
-	"associations.components.diagram",
 	"associations.components.data.word",
 	"associations.pages.exploreWords.components.graph"
 	])

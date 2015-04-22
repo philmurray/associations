@@ -1,72 +1,24 @@
-<div class="page-game {{color.css_class}}">
-	<nav ng-if="!playing" class="navbar navbar-default" ng-init="collapse=true">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#/">Associations</a>
-			</div>
-		</div>
-	</nav>
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="panel">
-					<div class="panel-body player-list">
-						<ul class="list-inline">
-							<li ng-repeat="p in game.players">
-								<button ng-disabled="playing || !p.completed" ng-click="activatePlayer(p)" class="btn {{p.color.css_class}}" ng-class="{active: p.active}">
-									<h4>{{p.alias}}</h4>
-									<p>
-										{{getStatus(p)}}
-									</p>
-								</button>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-12">
-				<div class="panel panel-default">
-					<div class="panel-body picks" pick-graph graph-model="game.players">
-					</div>
-					<div ng-if="playing" class="panel-footer">
-						<div class="row">
-							<div class="col-xs-4">
-								<h4>Time Left: {{timeLeft}}</h4>
-							</div>
-							<div class="col-xs-4">
-								<h2 class="text-center">{{playing.word}}</h4>
-							</div>
-							<div class="col-xs-4">
-								<h4 class="pull-right"><a ng-click="skipWord()">Skip...</a></h4>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-xs-12">
-								<select-word selected="chosenWord" class='select-word'></select-word>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div ng-if="!playing" class="row">
-			<div class="col-xs-12">
-				<div class="panel panel-default">
-					<div class="panel-body">
+<div class='page-game {{color.css_class}}'>
 
-					</div>
-					<div class="panel-footer">
+	<a ng-if="!playing" class="navbar-brand" href="#/">Associations</a>
 
-					</div>
-				</div>
-			</div>
+	<div ng-if="playing" class="panel panel-default">
+		<div class="panel-heading">
+			<h4>
+				<span>Time Left: {{timeLeft}}</span>
+				<span class="pull-right"><a ng-click="skipWord()">Skip...</a></span>
+			</h4>
 		</div>
-		<div ng-if="!playing" class="row">
-			<div class="col-xs-1 col-xs-offset-11">
-				<button class="btn btn-sm btn-color pull-right" ng-click="rematch()">Rematch!</button>
-			</div>
+		<div class="panel-body">
+			<h2 class="text-center">{{playing.word}}</h2>
+		</div>
+		<div class="panel-footer">
+			<select-word selected="chosenWord" class='select-word'></select-word>
 		</div>
 	</div>
+
+	<div game-graph
+		graph-model="game.players"
+		graph-config="graphConfig"
+		style="width: 100%; height: 100%;"></div>
 </div>

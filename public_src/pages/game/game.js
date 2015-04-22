@@ -4,14 +4,14 @@ angular.module('associations.pages.game', [
 	'associations.components.data.game',
 	'ui.bootstrap',
 	'associations.pages.game.components.startModal',
-	'associations.pages.game.components.pickGraph'
+	'associations.pages.game.components.graph'
 ])
 
 .controller("GameController", ["$scope", "color", "game", "$modal", "GameService", "$interval", function($scope, color, game, $modal, GameService, $interval) {
 	$scope.color = color;
 	$scope.game = game;
 	$scope.player = $scope.game.players[$scope.game.player];
-
+	$scope.graphConfig = {};
 	$scope.chosenWord = {
 		word: "",
 		placeholderText:"What do you think?"
