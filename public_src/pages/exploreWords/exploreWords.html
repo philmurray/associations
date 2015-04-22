@@ -1,12 +1,6 @@
 <div class='page-explore-words {{color.css_class}}'>
 
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#/">Associations</a>
-			</div>
-		</div>
-	</nav>
+	<a class="navbar-brand" href="#/">Associations</a>
 
 	<div id="enterSingleWord" class="node-enter-word" ng-class="{source:mode == 2}">
 		<select-word selected="selectedWord" class='select-word' placeholderText="'Enter a word'"></select-word>
@@ -30,9 +24,13 @@
 	</div>
 
 
-	<div class="btn-group-vertical mode" role="group" >
-		<button href="" ng-class="{active:mode == 1}" ng-click="mode = 1; collapse = true;" class="btn btn-color">One</button>
-		<button href="" ng-class="{active:mode == 2}" ng-click="mode = 2; collapse = true;" class="btn btn-color">Two</button>
+	<ul class="mode" >
+		<li>
+			<button href="" ng-class="{active:mode == 1}" ng-click="mode = 1; collapse = true;" class="btn btn-color">One</button>
+		</li>
+		<li>
+			<button href="" ng-class="{active:mode == 2}" ng-click="mode = 2; collapse = true;" class="btn btn-color">Two</button>
+		</li>
 	</div>
 
 	<div word-graph

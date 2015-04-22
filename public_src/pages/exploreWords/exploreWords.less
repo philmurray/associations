@@ -1,8 +1,6 @@
 .page-explore-words {
-	nav {
+	.navbar-brand {
 		position: absolute;
-		z-index: 100;
-		width: 100%;
 	}
 
 	.node-enter-word {
@@ -29,11 +27,15 @@
 	}
 
 	.mode {
+		.list-unstyled;
 		bottom: @footer-height+@padding-base-horizontal;
 		right:@padding-base-horizontal;
 
 		position: absolute;
 		z-index:20;
+		li {
+			padding-bottom: 5px;
+		}
 	}
 
 	.no-data {
