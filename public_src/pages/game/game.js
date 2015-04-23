@@ -16,6 +16,7 @@ angular.module('associations.pages.game', [
 		word: "",
 		placeholderText:"What do you think?"
 	};
+	$scope.playersExpanded = true;
 
 	$scope.$watch("playing.word", function(){
 		$scope.wordStart = new Date();
@@ -26,12 +27,17 @@ angular.module('associations.pages.game', [
 		}
 	});
 
+	$scope.updatePlaying = function(newVal){
+		$scope.playersExpanded = !Boolean(newVal);
+		$scope.playing = newVal;
+	};
+
 	$scope.submitWord = function(wordData){
 		if ($scope.playing){
 			GameService.submitWord($scope.game.id, wordData).then(function(response){
 				$scope.chosenWord.word = "";
 				$scope.player.picks.push(response.data.word);
-				$scope.playing = response.data.game;
+				$scope.updatePlaying(response.data.game);
 			}).catch(function(){
 				$scope.addAlert({type: "danger", msg: "Word could not be submitted."});
 			});
@@ -43,14 +49,14 @@ angular.module('associations.pages.game', [
 	};
 
 	$scope.continueGame = function(){
-		$scope.playing = true;
+		$scope.updatePlaying(true);
 
 		$scope.timeLeft = 30 - Math.floor((new Date() - new Date($scope.player.startTime))/1000);
 
 		if ($scope.timeLeft < 0) $scope.stopGame();
 
 		GameService.resumeGame($scope.game.id).then(function(response){
-			$scope.playing = response.data;
+			$scope.updatePlaying(response.data);
 			$interval(function(){$scope.timeLeft--;},1000,$scope.timeLeft)
 				.then($scope.stopGame);
 		}).catch(function(){
@@ -59,7 +65,7 @@ angular.module('associations.pages.game', [
 	};
 
 	$scope.startGame = function(){
-		$scope.playing = true;
+		$scope.updatePlaying(true);
 
 		$modal.open({
 			templateUrl: "pages/game/components/startModal/startModal.html",
@@ -72,7 +78,7 @@ angular.module('associations.pages.game', [
 		}).result.then(function(){
 			return GameService.startGame($scope.game.id);
 		}).then(function(response){
-			$scope.playing = response.data;
+			$scope.updatePlaying(response.data);
 			$scope.timeLeft = 30;
 			$interval(function(){$scope.timeLeft--;},1000,$scope.timeLeft)
 				.then($scope.stopGame);
@@ -92,7 +98,7 @@ angular.module('associations.pages.game', [
 
 	$scope.stopGame = function(){
 		GameService.stopGame($scope.game.id).then(function(response){
-			$scope.playing = false;
+			$scope.updatePlaying(false);
 			$scope.game = response.data;
 			$scope.player = $scope.game.players[$scope.game.player];
 			$scope.activatePlayer($scope.player);

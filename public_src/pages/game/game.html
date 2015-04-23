@@ -2,7 +2,7 @@
 
 	<a ng-if="!playing" class="navbar-brand" href="#/">Associations</a>
 
-	<div ng-if="playing" class="panel panel-default">
+	<div ng-if="playing" class="word-entry panel panel-default">
 		<div class="panel-heading">
 			<h4>
 				<span>Time Left: {{timeLeft}}</span>
@@ -17,8 +17,29 @@
 		</div>
 	</div>
 
+	<div class="players btn-group-vertical"  ng-class="{collapsed:!playersExpanded}">
+		<button
+			ng-repeat="p in game.players"
+			ng-disabled="playing || !p.completed"
+			ng-click="activatePlayer(p)"
+			class="player btn {{p.color.css_class}}"
+			ng-class="{active: p.active, 'btn-sm':!playersExpanded, winner:p.winner}">
+			<div ng-if="playersExpanded">
+				<h4>{{p.alias}}</h4>
+				<p>
+					{{getStatus(p)}}
+				</p>
+			</div>
+			<div ng-if="!playersExpanded">
+				{{p.alias | limitTo:1}}
+			</div>
+		</button>
+		<button class="btn btn-default" ng-disabled="playing" ng-click="playersExpanded=!playersExpanded" ng-class="{'btn-sm':!playersExpanded}">Expand</button>
+	</div>
+
 	<div game-graph
 		graph-model="game.players"
 		graph-config="graphConfig"
+		graph-playing="playing"
 		style="width: 100%; height: 100%;"></div>
 </div>

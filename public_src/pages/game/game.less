@@ -1,12 +1,37 @@
 .page-game {
-	.navbar-brand {
+	.tool() {
 		position: absolute;
 		z-index: 20;
 	}
-	.panel {
-		position: absolute;
-		z-index: 20;
+
+	.navbar-brand {
+		.tool;
+	}
+	.players {
+		.tool;
+		top: @padding-base-horizontal;
+		right: @padding-base-horizontal;
+
+		.btn {
+			&,* {
+				.text-overflow();
+			}
+			max-width: 200px;
+
+			&.winner {
+				border-width: 5px;
+			}
+		}
+		&.collapsed .btn {
+			max-width: 50px;
+			max-height: 50px;
+		}
+	}
+	.word-entry {
+		.tool;
+
 		left: 50%;
+		background: @body-bg;
 
 		width: 300px;
 		margin-left: -150px;

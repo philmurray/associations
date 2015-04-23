@@ -11,7 +11,8 @@ angular.module('associations.pages.game.components.graph', [
 		restrict: 'EA',
 		scope: {
 			model:'=graphModel',
-			config:'=graphConfig'
+			config:'=graphConfig',
+			playing:'=graphPlaying'
 		},
 		link: function($scope, $element, attrs) {
 			var w = angular.element($window),
@@ -156,6 +157,18 @@ angular.module('associations.pages.game.components.graph', [
 			};
 
 			$scope.$watch('model', updateModel, true);
+			$scope.$watch('playing', function(n, o){
+				if ($scope.graph){
+					$scope.graph.setOptions({
+						dragNodes: !Boolean(n),
+						dragNetwork: !Boolean(n),
+						zoomable: !Boolean(n)
+					});
+					if (!n && o){
+						$scope.graph.zoomExtent();
+					}
+				}
+			}, true);
 
 			$scope.render = function() {
 				if (!$scope.graph){
