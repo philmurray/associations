@@ -4,7 +4,6 @@ angular.module('associations.pages.game.components.graph', [
 	'associations.components.graph.defaults'
 ])
 .constant("GameGraphDefaults", {
-
 })
 .directive("gameGraph", ["$window", "GraphDefaults", "GameGraphDefaults", "$timeout", "$document", function ($window, GraphDefaults, GameGraphDefaults, $timeout, $document) {
 	return {
@@ -33,7 +32,12 @@ angular.module('associations.pages.game.components.graph', [
 				$scope.render();
 			},true);
 
-			$scope.config = angular.extend({}, GameGraphDefaults, GraphDefaults, $scope.config || {});
+			$scope.config = angular.extend({}, GraphDefaults, GameGraphDefaults, $scope.config || {});
+
+			var shadeColor = function (color, percent) {
+			    var f=parseInt(color.slice(1),16),t=percent<0?0:255,p=percent<0?percent*-1:percent,R=f>>16,G=f>>8&0x00FF,B=f&0x0000FF;
+			    return "#"+(0x1000000+(Math.round((t-R)*p)+R)*0x10000+(Math.round((t-G)*p)+G)*0x100+(Math.round((t-B)*p)+B)).toString(16).slice(1);
+			};
 
 			var viewModel,
 				nodes,
@@ -103,6 +107,7 @@ angular.module('associations.pages.game.components.graph', [
 							addConnectedValue(pick, value);
 						} else if (value && to && edge) {
 							to.label = value.to;
+							to.fontColor = shadeColor(value.player.color.hex, 0.50);
 							edge.value = value.normal;
 							edge.color = value.player.color.hex;
 							edge.style = value.normal === 0 ? 'dash-line' : 'arrow';
@@ -126,7 +131,8 @@ angular.module('associations.pages.game.components.graph', [
 				addConnectedValue = function(pick, value) {
 					nodes.add({
 						id: "to_" + pick.from,
-						label: value.to
+						label: value.to,
+						fontColor: shadeColor(value.player.color.hex, 0.50)
 					});
 					edges.add({
 						id: "edge_" + pick.from,
@@ -162,7 +168,8 @@ angular.module('associations.pages.game.components.graph', [
 					$scope.graph.setOptions({
 						dragNodes: !Boolean(n),
 						dragNetwork: !Boolean(n),
-						zoomable: !Boolean(n)
+						zoomable: !Boolean(n),
+						keyboard: !Boolean(n),
 					});
 					if (!n && o){
 						$scope.graph.zoomExtent();

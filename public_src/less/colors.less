@@ -35,8 +35,8 @@
 		.button-variant(lighten(@color, 25%); @body-bg; @color);
         &.active {
             .box-shadow(0px 0px 32px 0px @color);
-            border-color: @color;
-            color: @color;
+            border-color: lighten(@color,15%);
+            color: lighten(@color, 35%);
             background-color: @body-bg;
         }
 	}

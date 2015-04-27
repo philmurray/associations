@@ -11,13 +11,9 @@ angular.module('associations.components.graph.defaults', [])
 	nodes: {
 		shape: 'box',
 		borderWidth: 2,
-		borderWidthSelected: 2,
 		color: {
 			border: 'white',
-			background: 'black',
-			highlight: {
-				background: "#222"
-			}
+			background: 'black'
 		},
 		fontColor: 'white',
 		fontSize: 18

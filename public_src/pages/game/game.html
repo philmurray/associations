@@ -22,7 +22,7 @@
 			ng-repeat="p in game.players"
 			ng-disabled="playing || !p.completed"
 			ng-click="activatePlayer(p)"
-			class="player btn {{p.color.css_class}}"
+			class="player btn {{((p.completed || playing) && p.color.css_class) || 'btn-default'}}"
 			ng-class="{active: p.active, 'btn-sm':!playersExpanded, winner:p.winner}">
 			<div ng-if="playersExpanded">
 				<h4>{{p.alias}}</h4>
