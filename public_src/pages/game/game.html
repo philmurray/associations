@@ -17,24 +17,47 @@
 		</div>
 	</div>
 
-	<div class="players btn-group-vertical"  ng-class="{collapsed:!playersExpanded}">
-		<button
-			ng-repeat="p in game.players"
-			ng-disabled="playing || !p.completed"
-			ng-click="activatePlayer(p)"
-			class="player btn {{((p.completed || playing) && p.color.css_class) || 'btn-default'}}"
-			ng-class="{active: p.active, 'btn-sm':!playersExpanded, winner:p.winner}">
-			<div ng-if="playersExpanded">
-				<h4>{{p.alias}}</h4>
-				<p>
-					{{getStatus(p)}}
-				</p>
-			</div>
-			<div ng-if="!playersExpanded">
-				{{p.alias | limitTo:1}}
-			</div>
-		</button>
-		<button class="btn btn-default" ng-disabled="playing" ng-click="playersExpanded=!playersExpanded" ng-class="{'btn-sm':!playersExpanded}">Expand</button>
+	<div class="players"  ng-class="{collapsed:!playersExpanded}">
+		<div class="btn-group-vertical">
+			<!-- TODO: split this out into templates or something... -->
+			<button
+				ng-repeat="p in game.players | filter:{winner:'true'}"
+				ng-disabled="playing || !p.completed"
+				ng-click="activatePlayer(p)"
+				class="player btn btn-sm {{((p.completed || playing) && p.color.css_class) || 'btn-default'}}"
+				ng-class="{active: p.active, 'btn-xs':!playersExpanded, 'btn-sm':playersExpanded, winner:p.winner}">
+				<div ng-if="playersExpanded">
+					<h5>{{p.alias}}</h5>
+					<p>
+						{{getStatus(p)}}
+					</p>
+				</div>
+				<div ng-if="!playersExpanded">
+					{{p.alias | limitTo:1}}
+				</div>
+			</button>
+		</div>
+
+		<div class="btn-group-vertical">
+			<!-- TODO: split this out into templates or something... -->
+			<button
+				ng-repeat="p in game.players | filter:{winner:'!true'} | orderBy:'score':true"
+				ng-disabled="playing || !p.completed"
+				ng-click="activatePlayer(p)"
+				class="player btn btn-sm {{((p.completed || playing) && p.color.css_class) || 'btn-default'}}"
+				ng-class="{active: p.active, 'btn-xs':!playersExpanded, 'btn-sm':playersExpanded, winner:p.winner}">
+				<div ng-if="playersExpanded">
+					<h5>{{p.alias}}</h5>
+					<p>
+						{{getStatus(p)}}
+					</p>
+				</div>
+				<div ng-if="!playersExpanded">
+					{{p.alias | limitTo:1}}
+				</div>
+			</button>
+		</div>
+		<button class="btn btn-default" ng-disabled="playing" ng-click="playersExpanded=!playersExpanded" ng-class="{'btn-xs':!playersExpanded, 'btn-sm':playersExpanded}">Expand</button>
 	</div>
 
 	<div game-graph
