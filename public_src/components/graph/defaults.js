@@ -16,6 +16,7 @@ angular.module('associations.components.graph.defaults', [])
 			background: 'black'
 		},
 		fontColor: 'white',
-		fontSize: 18
+		fontSize: 18,
+		scaleFontWithValue: true
 	}
 });

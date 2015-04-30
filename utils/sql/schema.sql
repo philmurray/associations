@@ -85,6 +85,76 @@ CREATE TABLE colors (
 ALTER TABLE colors OWNER TO associations_dbuser;
 
 --
+-- Name: usf_norms; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+CREATE TABLE usf_norms (
+    "from" text NOT NULL,
+    "to" text NOT NULL,
+    "group" integer DEFAULT 0 NOT NULL,
+    pick integer DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE usf_norms OWNER TO associations_dbuser;
+
+--
+-- Name: graph_rels; Type: MATERIALIZED VIEW; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+CREATE MATERIALIZED VIEW graph_rels AS
+ SELECT usf_norms."from",
+    usf_norms."to",
+    ((usf_norms.pick)::double precision / (usf_norms."group")::double precision) AS score
+   FROM usf_norms
+  WITH NO DATA;
+
+
+ALTER TABLE graph_rels OWNER TO associations_dbuser;
+
+--
+-- Name: picks; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+CREATE TABLE picks (
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
+    "from" text NOT NULL,
+    "to" text,
+    user_id uuid NOT NULL,
+    game_id uuid NOT NULL,
+    time_taken integer,
+    create_time timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE picks OWNER TO associations_dbuser;
+
+--
+-- Name: game_top_words; Type: VIEW; Schema: public; Owner: associations_dbuser
+--
+
+CREATE VIEW game_top_words AS
+ SELECT t.game_id,
+    t."from",
+    t."to",
+    t.score,
+    t.rank
+   FROM ( SELECT p.game_id,
+            g."from",
+            g."to",
+            g.score,
+            rank() OVER (PARTITION BY g."from" ORDER BY g.score DESC) AS rank
+           FROM (( SELECT DISTINCT picks."from",
+                    picks.game_id
+                   FROM picks
+                  WHERE (picks."to" IS NOT NULL)) p
+             JOIN graph_rels g ON ((p."from" = g."from")))) t
+  WHERE (t.rank <= 5);
+
+
+ALTER TABLE game_top_words OWNER TO associations_dbuser;
+
+--
 -- Name: games; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
 --
 
@@ -142,20 +212,6 @@ CREATE TABLE games_words (
 ALTER TABLE games_words OWNER TO associations_dbuser;
 
 --
--- Name: usf_norms; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
---
-
-CREATE TABLE usf_norms (
-    "from" text NOT NULL,
-    "to" text NOT NULL,
-    "group" integer DEFAULT 0 NOT NULL,
-    pick integer DEFAULT 0 NOT NULL
-);
-
-
-ALTER TABLE usf_norms OWNER TO associations_dbuser;
-
---
 -- Name: graph_nodes; Type: MATERIALIZED VIEW; Schema: public; Owner: associations_dbuser; Tablespace: 
 --
 
@@ -169,37 +225,6 @@ UNION
 
 
 ALTER TABLE graph_nodes OWNER TO associations_dbuser;
-
---
--- Name: graph_rels; Type: MATERIALIZED VIEW; Schema: public; Owner: associations_dbuser; Tablespace: 
---
-
-CREATE MATERIALIZED VIEW graph_rels AS
- SELECT usf_norms."from",
-    usf_norms."to",
-    ((usf_norms.pick)::double precision / (usf_norms."group")::double precision) AS score
-   FROM usf_norms
-  WITH NO DATA;
-
-
-ALTER TABLE graph_rels OWNER TO associations_dbuser;
-
---
--- Name: picks; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
---
-
-CREATE TABLE picks (
-    id uuid DEFAULT uuid_generate_v4() NOT NULL,
-    "from" text NOT NULL,
-    "to" text,
-    user_id uuid NOT NULL,
-    game_id uuid NOT NULL,
-    time_taken integer,
-    create_time timestamp with time zone DEFAULT now() NOT NULL
-);
-
-
-ALTER TABLE picks OWNER TO associations_dbuser;
 
 --
 -- Name: picks_scored; Type: VIEW; Schema: public; Owner: associations_dbuser
@@ -218,11 +243,11 @@ CREATE VIEW picks_scored AS
                FROM graph_rels rs
               WHERE (rs."from" = p."from")
               ORDER BY rs.score DESC
-             LIMIT 1)) THEN 2
+             LIMIT 1)) THEN 200
             WHEN (( SELECT count(*) AS count
                FROM graph_rels rs1
-              WHERE (rs1."from" = p."from")) = 0) THEN 1
-            WHEN (r.score IS NOT NULL) THEN 1
+              WHERE (rs1."from" = p."from")) = 0) THEN 100
+            WHEN (r.score IS NOT NULL) THEN 100
             ELSE 0
         END AS score,
         CASE

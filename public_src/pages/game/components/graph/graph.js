@@ -5,7 +5,7 @@ angular.module('associations.pages.game.components.graph', [
 ])
 .constant("GameGraphDefaults", {
 })
-.directive("gameGraph", ["$window", "GraphDefaults", "GameGraphDefaults", "$timeout", "$document", function ($window, GraphDefaults, GameGraphDefaults, $timeout, $document) {
+.directive("gameGraph", ["$window", "GraphDefaults", "GameGraphDefaults", "$timeout", "$document", "$location", function ($window, GraphDefaults, GameGraphDefaults, $timeout, $document, $location) {
 	return {
 		restrict: 'EA',
 		scope: {
@@ -34,6 +34,7 @@ angular.module('associations.pages.game.components.graph', [
 
 			$scope.config = angular.extend({}, GraphDefaults, GameGraphDefaults, $scope.config || {});
 
+			//TODO: put somewhere common
 			var shadeColor = function (color, percent) {
 			    var f=parseInt(color.slice(1),16),t=percent<0?0:255,p=percent<0?percent*-1:percent,R=f>>16,G=f>>8&0x00FF,B=f&0x0000FF;
 			    return "#"+(0x1000000+(Math.round((t-R)*p)+R)*0x10000+(Math.round((t-G)*p)+G)*0x100+(Math.round((t-B)*p)+B)).toString(16).slice(1);
@@ -48,7 +49,7 @@ angular.module('associations.pages.game.components.graph', [
 					};
 					var picks = {},
 						biggest = [];
-					$scope.model.forEach(function(player){
+					$scope.model.players.forEach(function(player){
 						if (player.active) vm.active = player;
 						if (!player.picks) return;
 
@@ -59,6 +60,7 @@ angular.module('associations.pages.game.components.graph', [
 								picks[pick.from].push({
 									to: pick.to,
 									normal: pick.normal,
+									score: pick.score,
 									player: player
 								});
 							}
@@ -106,11 +108,7 @@ angular.module('associations.pages.game.components.graph', [
 						} else if (value && !to && !edge) {
 							addConnectedValue(pick, value);
 						} else if (value && to && edge) {
-							to.label = value.to;
-							to.fontColor = shadeColor(value.player.color.hex, 0.50);
-							edge.value = value.normal;
-							edge.color = value.player.color.hex;
-							edge.style = value.normal === 0 ? 'dash-line' : 'arrow';
+							setConnectedValueStyle(to, edge, value);
 							nodes.update(to);
 							edges.update(edge);
 						}
@@ -129,19 +127,41 @@ angular.module('associations.pages.game.components.graph', [
 					});
 				},
 				addConnectedValue = function(pick, value) {
-					nodes.add({
-						id: "to_" + pick.from,
-						label: value.to,
-						fontColor: shadeColor(value.player.color.hex, 0.50)
-					});
-					edges.add({
-						id: "edge_" + pick.from,
-						from: "from_" + pick.from,
-						to: "to_" + pick.from,
-						value: value.normal,
-						color: value.player.color.hex,
-						style: value.normal === 0 ? 'dash-line' : 'arrow'
-					});
+					var to = {
+							id: "to_" + pick.from
+						},
+						edge = {
+							id: "edge_" + pick.from,
+							from: "from_" + pick.from,
+							to: "to_" + pick.from
+						};
+
+					setConnectedValueStyle(to, edge, value);
+					nodes.add(to);
+					edges.add(edge);
+				},
+				setConnectedValueStyle = function(to, edge, value){
+					to.label = value.to;
+					to.fontColor = shadeColor(value.player.color.hex, 0.50);
+					to.value = value.score;
+
+					edge.value = value.normal;
+					edge.color = value.player.color.hex;
+					edge.style = value.normal === 0 ? 'dash-line' : 'arrow';
+				},
+				onClick = function(selected){
+					if (selected.nodes && selected.nodes.length) {
+						var node = nodes.get(selected.nodes[0]);
+						//expand node, collapse others
+					} else {
+						//collapse all nodes
+					}
+				},
+				onDoubleClick = function(selected){
+					if (selected.nodes && selected.nodes.length) {
+						var node = nodes.get(selected.nodes[0]);
+						//navigate to explore page for node
+					}
 				};
 
 			var setGraphSize = function(){
@@ -156,6 +176,9 @@ angular.module('associations.pages.game.components.graph', [
 				updateModel($scope.model);
 
 				$scope.graph = new vis.Network(element, {nodes:nodes, edges:edges}, $scope.config);
+				$scope.graph.on('click', onClick);
+				$scope.graph.on('doubleClick', onDoubleClick);
+
 				setGraphSize();
 				$scope.graph.zoomExtent({
 					duration: 0
