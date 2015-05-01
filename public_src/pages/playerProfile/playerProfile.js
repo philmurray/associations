@@ -7,6 +7,7 @@ angular.module('associations.pages.playerProfile',[
 	'associations.components.data.question'])
 
 .controller("PlayerProfileController", ["$scope", "user", "UserService", "ColorService", "$log", "QuestionService", function ($scope, user, UserService, ColorService, $log, QuestionService) {
+	$scope.footer.visible = true;
 	$scope.profileUser = angular.extend({},user);
 	$scope.accountUser = angular.extend({},user);
 

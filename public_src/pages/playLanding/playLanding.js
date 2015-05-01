@@ -3,6 +3,7 @@
 angular.module('associations.pages.playLanding',['associations.components.data.game'])
 
 .controller("PlayLandingController", ["$scope", "user", "GameService", "$location", "games", function ($scope, user, GameService, $location, games) {
+	$scope.footer.visible = true;
 	$scope.color = user.color;
 	$scope.games = games;
 

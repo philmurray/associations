@@ -139,7 +139,7 @@ angular.module('associations.pages.exploreWords.components.graph', [
 			};
 
 			var setGraphSize = function(){
-				$scope.graph.setSize('100%', (w[0].innerHeight-32)+'px');	//todo: make this less stupid
+				$scope.graph.setSize('100%', w[0].innerHeight+'px');
 				$scope.graph.redraw();
 				$scope.graph.moveTo({position:{x:0,y:0}});
 			};

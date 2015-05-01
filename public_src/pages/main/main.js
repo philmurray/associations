@@ -3,6 +3,7 @@
 angular.module('associations.pages.main', [])
 
 .controller("MainController", ["$scope", "color", function($scope, color) {
+	$scope.footer.visible = true;
 
 	$scope.color = color;
 

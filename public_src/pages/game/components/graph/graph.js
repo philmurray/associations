@@ -11,7 +11,8 @@ angular.module('associations.pages.game.components.graph', [
 		scope: {
 			model:'=graphModel',
 			config:'=graphConfig',
-			playing:'=graphPlaying'
+			playing:'=graphPlaying',
+			selectedWord: '=graphSelected'
 		},
 		link: function($scope, $element, attrs) {
 			var w = angular.element($window),
@@ -118,7 +119,8 @@ angular.module('associations.pages.game.components.graph', [
 				addNode = function (pick){
 					nodes.add({
 						id: "from_" + pick.from,
-						label: pick.from
+						label: pick.from,
+						shape: 'circle'
 					});
 					pick.value.forEach(function(value){
 						if (value.player.active && value.to){
@@ -143,29 +145,25 @@ angular.module('associations.pages.game.components.graph', [
 				setConnectedValueStyle = function(to, edge, value){
 					to.label = value.to;
 					to.fontColor = shadeColor(value.player.color.hex, 0.50);
-					to.value = value.score;
+					//to.value = value.score;
 
 					edge.value = value.normal;
 					edge.color = value.player.color.hex;
 					edge.style = value.normal === 0 ? 'dash-line' : 'arrow';
 				},
-				onClick = function(selected){
-					if (selected.nodes && selected.nodes.length) {
-						var node = nodes.get(selected.nodes[0]);
-						//expand node, collapse others
-					} else {
-						//collapse all nodes
-					}
+				onSelect = function (selected) {
+					$scope.selectedWord = selected && selected.nodes && selected.nodes.length && nodes.get(selected.nodes[0]);
+					$scope.$apply();
 				},
-				onDoubleClick = function(selected){
-					if (selected.nodes && selected.nodes.length) {
-						var node = nodes.get(selected.nodes[0]);
-						//navigate to explore page for node
-					}
+				expand = function(node){
+					console.log('expanding ' + node.label);
+				},
+				collapse = function(node){
+					console.log('collapsing ' + node.label);
 				};
 
 			var setGraphSize = function(){
-				$scope.graph.setSize('100%', (w[0].innerHeight-32)+'px');	//todo: make this less stupid
+				$scope.graph.setSize('100%', w[0].innerHeight+'px');
 				$scope.graph.redraw();
 			};
 
@@ -176,8 +174,7 @@ angular.module('associations.pages.game.components.graph', [
 				updateModel($scope.model);
 
 				$scope.graph = new vis.Network(element, {nodes:nodes, edges:edges}, $scope.config);
-				$scope.graph.on('click', onClick);
-				$scope.graph.on('doubleClick', onDoubleClick);
+				$scope.graph.on('select', onSelect);
 
 				setGraphSize();
 				$scope.graph.zoomExtent({
@@ -199,6 +196,18 @@ angular.module('associations.pages.game.components.graph', [
 					}
 				}
 			}, true);
+
+			$scope.$watch('selectedWord', function(n, o){
+				if (o && o.expanded) {
+					collapse(o);
+				}
+			});
+			$scope.$watch('selectedWord.expanded', function(expanded){
+				if ($scope.selectedWord) {
+					if ($scope.selectedWord.expanded) expand($scope.selectedWord);
+					else collapse($scope.selectedWord);
+				}
+			});
 
 			$scope.render = function() {
 				if (!$scope.graph){

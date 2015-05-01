@@ -8,6 +8,7 @@ angular.module('associations.pages.game', [
 ])
 
 .controller("GameController", ["$scope", "color", "game", "$modal", "GameService", "$interval", function($scope, color, game, $modal, GameService, $interval) {
+	$scope.footer.visible = false;
 	$scope.color = color;
 	$scope.game = game;
 	$scope.player = $scope.game.players[$scope.game.player];
@@ -16,7 +17,7 @@ angular.module('associations.pages.game', [
 		word: "",
 		placeholderText:"What do you think?"
 	};
-	$scope.playersExpanded = true;
+	$scope.playersExpanded = false;
 
 	$scope.$watch("playing.word", function(){
 		$scope.wordStart = new Date();

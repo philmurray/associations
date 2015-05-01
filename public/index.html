@@ -11,7 +11,7 @@
 
 	<link rel="stylesheet" href="app.css">
 </head>
-<body ng-controller="AppController">
+<body ng-controller="AppController" ng-class="{'footer': footer.visible}">
 
 	<div class="alert-box">
 		<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
@@ -21,7 +21,7 @@
 
 	</ng-view>
 
-	<ul id="footer" class="list-inline">
+	<ul ng-if="footer.visible" id="footer" class="list-inline">
 		<li><small>Associations</small></li>
 		<li><a href="#/"><small>privacy policy</small></a></li>
 		<li><a href="#/"><small>about</small></a></li>

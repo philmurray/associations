@@ -7,6 +7,8 @@ angular.module('associations.pages.exploreWords',[
 	])
 
 .controller("ExploreWordsController", ["$scope", "$location", "WordService", "$log", "color", function ($scope, $location, WordService, $log, color) {
+	$scope.footer.visible = false;
+
 	var searchWord = {
 		initial: {
 			x: 0,

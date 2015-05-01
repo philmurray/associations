@@ -97,6 +97,8 @@ angular.module('associations',
 		}
 	])
 	.controller("AppController", ["$scope", "$timeout", function($scope, $timeout){
+		$scope.footer = {visible: true};
+
 		$scope.alerts = [];
 
 		$scope.addAlert = function(alert) {

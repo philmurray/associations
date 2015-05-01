@@ -17,14 +17,14 @@
 		</div>
 	</div>
 
-	<div class="players"  ng-class="{collapsed:!playersExpanded}">
+	<div class="players" ng-if="!playing" ng-class="{collapsed:!playersExpanded}">
 		<div class="btn-group-vertical">
 			<!-- TODO: split this out into templates or something... -->
 			<button
 				ng-repeat="p in game.players | orderBy:'score':true"
-				ng-disabled="playing || !p.completed"
+				ng-disabled="!p.completed"
 				ng-click="activatePlayer(p)"
-				class="player btn btn-sm {{((p.completed || playing) && p.color.css_class) || 'btn-default'}}"
+				class="player btn btn-sm {{(p.completed && p.color.css_class) || 'btn-default'}}"
 				ng-class="{active: p.active, 'btn-xs':!playersExpanded, 'btn-sm':playersExpanded, winner:p.winner}">
 				<div ng-if="playersExpanded">
 					<h5>{{p.alias}}</h5>
@@ -36,7 +36,22 @@
 					{{p.alias | limitTo:1}}
 				</div>
 			</button>
-			<button class="btn btn-default" ng-disabled="playing" ng-click="playersExpanded=!playersExpanded" ng-class="{'btn-xs':!playersExpanded, 'btn-sm':playersExpanded}">Expand</button>
+			<button class="btn btn-default" ng-click="playersExpanded=!playersExpanded" ng-class="{'btn-xs':!playersExpanded, 'btn-sm':playersExpanded}">Expand</button>
+		</div>
+	</div>
+
+	<div class="nav-controls" ng-if="!playing">
+		<button class="btn btn-default zoomExtent" ng-click="zoomExtent()">Zoom Extent</button>
+		<div class="btn-group-vertical">
+			<button class="btn btn-default" ng-click="zoomIn()">Zoom In</button>
+			<button class="btn btn-default" ng-click="zoomOut()">Zoom Out</button>
+		</div>
+	</div>
+
+	<div class="context-controls" ng-if="!playing && selected">
+		<div class="btn-group">
+			<button class="btn btn-default" ng-click="selected.expanded = !selected.expanded">Expand</button>
+			<button class="btn btn-default" ng-click="navigateToSelected()">Explore</button>
 		</div>
 	</div>
 
@@ -44,5 +59,6 @@
 		graph-model="game"
 		graph-config="graphConfig"
 		graph-playing="playing"
+		graph-selected="selected"
 		style="width: 100%; height: 100%;"></div>
 </div>

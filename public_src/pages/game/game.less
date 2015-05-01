@@ -3,6 +3,7 @@
 		position: absolute;
 		z-index: 20;
 	}
+	@toolSizeMin: 50px;
 
 	.navbar-brand {
 		.tool;
@@ -10,7 +11,7 @@
 	.players {
 		.tool;
 		top: @padding-base-horizontal;
-		right: @padding-base-horizontal;
+		right: 0;
 
 		width: 125px;
 
@@ -20,15 +21,15 @@
 			}
 			width: 125px;
 
-			&.winner {
-				border-width: 5px;
-			}
+			border-top-right-radius: 0 !important;
+			border-bottom-right-radius: 0 !important;
+			border-right-width: 0px !important;
 		}
 		&.collapsed {
-			width: 50px;
+			width: @toolSizeMin;
 			.btn {
-				width: 50px;
-				height: 50px;
+				width: @toolSizeMin;
+				height: @toolSizeMin;
 			}
 		}
 	}
@@ -40,6 +41,10 @@
 
 		width: 300px;
 		margin-left: -150px;
+
+		border-top-right-radius: 0 !important;
+		border-top-left-radius: 0 !important;
+		border-top-width: 0px !important;
 
 		@media (min-width: @screen-sm-min) {
 			width: 460px;
@@ -54,6 +59,39 @@
 		@media (min-width: @screen-lg-min) {
 			width: 900px;
 			margin-left: -450px;
+		}
+	}
+
+	.nav-controls {
+		.tool;
+
+		bottom: @padding-base-horizontal;
+		right: @padding-base-horizontal;
+
+		width: @toolSizeMin;
+
+		.btn {
+			&,* {
+				.text-overflow();
+			}
+			&.zoomExtent {
+				margin-bottom: @padding-base-horizontal;
+			}
+			width: @toolSizeMin;
+		}
+	}
+
+	.context-controls {
+		.tool;
+
+		bottom: @padding-base-horizontal;
+		right: @padding-base-horizontal*2+@toolSizeMin;
+
+		.btn {
+			&,* {
+				.text-overflow();
+			}
+			width: @toolSizeMin;
 		}
 	}
 }
