@@ -62,28 +62,10 @@
 		}
 	}
 
-	.nav-controls {
-		.tool;
-
-		bottom: @padding-base-horizontal;
-		right: @padding-base-horizontal;
-
-		width: @toolSizeMin;
-
-		.btn {
-			&,* {
-				.text-overflow();
-			}
-			&.zoomExtent {
-				margin-bottom: @padding-base-horizontal;
-			}
-			width: @toolSizeMin;
-		}
-	}
-
 	.context-controls {
 		.tool;
 
+		margin-bottom: 0;
 		bottom: @padding-base-horizontal;
 		right: @padding-base-horizontal*2+@toolSizeMin;
 
@@ -94,4 +76,5 @@
 			width: @toolSizeMin;
 		}
 	}
+
 }

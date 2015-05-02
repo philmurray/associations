@@ -40,18 +40,13 @@
 		</div>
 	</div>
 
-	<div class="nav-controls" ng-if="!playing">
-		<button class="btn btn-default zoomExtent" ng-click="zoomExtent()">Zoom Extent</button>
-		<div class="btn-group-vertical">
-			<button class="btn btn-default" ng-click="zoomIn()">Zoom In</button>
-			<button class="btn btn-default" ng-click="zoomOut()">Zoom Out</button>
+	<div class="context-controls panel panel-default" ng-if="!playing && selected">
+		<div class="panel-heading">
+			{{selected.label}}
 		</div>
-	</div>
-
-	<div class="context-controls" ng-if="!playing && selected">
-		<div class="btn-group">
-			<button class="btn btn-default" ng-click="selected.expanded = !selected.expanded">Expand</button>
-			<button class="btn btn-default" ng-click="navigateToSelected()">Explore</button>
+		<div class="panel-body">
+			<a ng-click="selected.expanded = !selected.expanded">Expand</a>
+			<a href="#/exploreWords?word={{selected.label}}=&otherWord=">Explore</a>
 		</div>
 	</div>
 

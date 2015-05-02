@@ -5,7 +5,7 @@ angular.module('associations.pages.game.components.graph', [
 ])
 .constant("GameGraphDefaults", {
 })
-.directive("gameGraph", ["$window", "GraphDefaults", "GameGraphDefaults", "$timeout", "$document", "$location", function ($window, GraphDefaults, GameGraphDefaults, $timeout, $document, $location) {
+.directive("gameGraph", ["$window", "GraphDefaults", "GameGraphDefaults", function ($window, GraphDefaults, GameGraphDefaults) {
 	return {
 		restrict: 'EA',
 		scope: {
@@ -190,6 +190,7 @@ angular.module('associations.pages.game.components.graph', [
 						dragNetwork: !Boolean(n),
 						zoomable: !Boolean(n),
 						keyboard: !Boolean(n),
+						navigation: !Boolean(n),
 					});
 					if (!n && o){
 						$scope.graph.zoomExtent();
