@@ -46,19 +46,19 @@ angular.module('associations.pages.game.components.graph', [
 				edges,
 				createViewModel = function(){
 					var vm = {
-						picksArray: []
+						picksArray: [],
+						picks: {}
 					};
-					var picks = {},
-						biggest = [];
+					var biggest = [];
 					$scope.model.players.forEach(function(player){
 						if (player.active) vm.active = player;
 						if (!player.picks) return;
 
 						if (player.picks.length > biggest.length) biggest = player.picks;
 						player.picks.forEach(function (pick){
-							if (!picks[pick.from]) picks[pick.from] = [];
+							if (!vm.picks[pick.from]) vm.picks[pick.from] = [];
 							if (pick.to) {
-								picks[pick.from].push({
+								vm.picks[pick.from].push({
 									to: pick.to,
 									normal: pick.normal,
 									score: pick.score,
@@ -67,11 +67,19 @@ angular.module('associations.pages.game.components.graph', [
 							}
 						});
 					});
+					$scope.model.topWords.forEach(function(pick){
+						if (!vm.picks[pick.from]) vm.picks[pick.from] = [];
+
+						vm.picks[pick.from].push({
+							to: pick.to,
+							score: pick.score,
+						});
+					});
 					biggest.forEach(function(pick){
-						if (picks[pick.from].length){
+						if (vm.picks[pick.from].length){
 							vm.picksArray.push({
 								from: pick.from,
-								value: picks[pick.from]
+								value: vm.picks[pick.from]
 							});
 						}
 					});
@@ -101,17 +109,19 @@ angular.module('associations.pages.game.components.graph', [
 					picks.forEach(function(pick){
 						var to = nodes.get("to_" + pick.from),
 							edge = edges.get("edge_" + pick.from),
-							value = pick.value.filter(function(value){ return value.player.active && value.to; })[0];
+							from = nodes.get("from_" + pick.from),
+							value = pick.value.filter(function(value){ return value.player && value.player.active && value.to; })[0];
 
+						if (from.expanded) {
+							collapse(from);
+						}
 						if (!value && to && edge) {
 							nodes.remove(to.id);
 							edges.remove(edge.id);
 						} else if (value && !to && !edge) {
-							addConnectedValue(pick, value);
+							addValue(pick.from, value);
 						} else if (value && to && edge) {
-							setConnectedValueStyle(to, edge, value);
-							nodes.update(to);
-							edges.update(edge);
+							updateValue(to, edge, value);
 						}
 
 					});
@@ -120,46 +130,95 @@ angular.module('associations.pages.game.components.graph', [
 					nodes.add({
 						id: "from_" + pick.from,
 						label: pick.from,
-						shape: 'circle'
+						shape: 'circle',
+						from: true
 					});
 					pick.value.forEach(function(value){
-						if (value.player.active && value.to){
-							addConnectedValue(pick, value);
+						if (value.player && value.player.active && value.to){
+							addValue(pick.from, value);
 						}
 					});
 				},
-				addConnectedValue = function(pick, value) {
-					var to = {
-							id: "to_" + pick.from
+				addValue = function(from, value, expanded) {
+					var toId = expanded ? Math.random() : "to_" + from,
+						edgeId = "edge_" + (expanded ? toId : from),
+						fromId = "from_" + from,
+						position = $scope.graph && $scope.graph.getPositions(fromId)[fromId],
+						to = {
+							id: toId
 						},
 						edge = {
-							id: "edge_" + pick.from,
-							from: "from_" + pick.from,
-							to: "to_" + pick.from
+							id: edgeId,
+							from: "from_" + from,
+							to: toId
 						};
+					if (position) {
+						to.x = position.x + (Math.random() * 100 - 50);
+						to.y = position.y + (Math.random() * 100 - 50);
 
-					setConnectedValueStyle(to, edge, value);
+						to.allowedToMoveX = true;
+						to.allowedToMoveY = true;
+					}
+
+					setConnectedValueStyle(to, edge, value, expanded);
+
 					nodes.add(to);
 					edges.add(edge);
 				},
-				setConnectedValueStyle = function(to, edge, value){
-					to.label = value.to;
-					to.fontColor = shadeColor(value.player.color.hex, 0.50);
-					//to.value = value.score;
+				updateValue = function (to, edge, value, expanded) {
+					setConnectedValueStyle(to, edge, value, expanded);
 
-					edge.value = value.normal;
-					edge.color = value.player.color.hex;
+					nodes.update(to);
+					edges.update(edge);
+				},
+				setConnectedValueStyle = function(to, edge, value, label){
+
+					edge.value = value.player ? value.normal : value.score;
+					edge.color = value.player ? value.player.color.hex: 'grey';
 					edge.style = value.normal === 0 ? 'dash-line' : 'arrow';
+					edge.fontColor = edge.color;
+					edge.label = label && value.player ? value.player.alias: '';
+
+					to.label = value.to;
+					to.fontColor = shadeColor(edge.color, 0.50);
 				},
 				onSelect = function (selected) {
 					$scope.selectedWord = selected && selected.nodes && selected.nodes.length && nodes.get(selected.nodes[0]);
 					$scope.$apply();
 				},
 				expand = function(node){
-					console.log('expanding ' + node.label);
+					if (node.from) {
+						node.expanded = true;
+						nodes.update(node);
+						var fromValue = node.label;
+						viewModel.picks[fromValue].forEach(function(value){
+							if (value.player && value.player.active) {
+								var to = nodes.get("to_" + fromValue),
+									edge = edges.get("edge_" + fromValue);
+								if (to && edge) {
+									updateValue(to, edge, value, true);
+								}
+							} else {
+								addValue(fromValue, value, true);
+							}
+						});
+					}
 				},
 				collapse = function(node){
-					console.log('collapsing ' + node.label);
+					if (node.from) {
+						node.expanded = false;
+						nodes.update(node);
+						$scope.graph.getConnectedNodes(node.id).forEach(function(nodeId){
+							if (nodeId !== "to_" + node.label){
+								edges.remove("edge_" + nodeId);
+								nodes.remove(nodeId);
+							} else {
+								var e = edges.get("edge_" + node.label);
+								e.label = '';
+								edges.update(e);
+							}
+						});
+					}
 				};
 
 			var setGraphSize = function(){

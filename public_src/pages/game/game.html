@@ -45,7 +45,7 @@
 			{{selected.label}}
 		</div>
 		<div class="panel-body">
-			<a ng-click="selected.expanded = !selected.expanded">Expand</a>
+			<a ng-if="selected.from" ng-click="selected.expanded = !selected.expanded">Expand</a>
 			<a href="#/exploreWords?word={{selected.label}}=&otherWord=">Explore</a>
 		</div>
 	</div>

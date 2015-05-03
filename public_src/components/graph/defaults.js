@@ -6,7 +6,9 @@ angular.module('associations.components.graph.defaults', [])
 		style: 'arrow',
 		widthMax: 8,
 		arrowScaleFactor: 0.75,
-		color: 'blueviolet'
+		color: 'blueviolet',
+		fontFill: 'rgba(0, 0, 0, 0.75)',
+		fontSize: 18,
 	},
 	nodes: {
 		shape: 'box',
