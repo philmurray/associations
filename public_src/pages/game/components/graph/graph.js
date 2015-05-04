@@ -257,17 +257,19 @@ angular.module('associations.pages.game.components.graph', [
 				}
 			}, true);
 
-			$scope.$watch('selectedWord', function(n, o){
-				if (o && o.expanded) {
-					collapse(o);
-				}
-			});
-			$scope.$watch('selectedWord.expanded', function(expanded){
-				if ($scope.selectedWord) {
-					if ($scope.selectedWord.expanded) expand($scope.selectedWord);
+			$scope.$watch('{id: selectedWord.id, expanded: selectedWord.expanded}', function(n, o){
+				if (n.id === o.id && n.expanded !== o.expanded){
+					if ($scope.selectedWord.expanded) {
+						nodes.forEach(function(node){
+							if (node !== $scope.selectedWord && node.expanded){
+								collapse(node);
+							}
+						});
+						expand($scope.selectedWord);
+					}
 					else collapse($scope.selectedWord);
 				}
-			});
+			}, true);
 
 			$scope.render = function() {
 				if (!$scope.graph){

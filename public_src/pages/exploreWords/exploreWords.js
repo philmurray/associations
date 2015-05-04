@@ -18,14 +18,7 @@ angular.module('associations.pages.exploreWords',[
 	};
 	$scope.color = color;
 	$scope.model = {nodes:{}, links:{}};
-	$scope.diagramConfig = {
-		edges: {
-			style: 'arrow',
-			widthMax: 8,
-			arrowScaleFactor: 0.75,
-			color: $scope.color.hex
-		}
-	};
+	$scope.diagramConfig = {};
 
 	$scope.loading = false;
 	$scope.selectedWord = {
