@@ -2,7 +2,7 @@
 	<div class="col-xs-9 vcenter">
 		<div class="row" ng-repeat="player in game.players | orderBy : 'alias'">
 			<div class="col-xs-9 player-name">
-				<span ng-if="player.winner"><strong>{{player.alias}}</strong></span>
+				<span ng-if="player.winner"><strong><i class="fa fa-star"></i> {{player.alias}}</strong></span>
 				<span ng-if="!player.winner" class="text-muted">{{player.alias}}</span>
 			</div>
 			<div class="col-xs-3">
@@ -13,6 +13,6 @@
 		</div>
 	</div><!--
 --><div class="col-xs-3 vcenter">
-		<button class="btn btn-xs btn-color pull-right" ng-click="gotoGame(game)">{{getViewButtonText(game)}}</button>
+		<button class="btn btn-xs btn-color pull-right" ng-click="gotoGame(game)"><i class="fa {{getViewButtonClass(game)}}"></i></button>
 	</div>
 </div>

@@ -6,7 +6,7 @@ angular.module('associations.components.graph.defaults', [])
 		style: 'arrow',
 		widthMax: 8,
 		arrowScaleFactor: 0.75,
-		color: 'grey',
+		color: 'white',
 		fontFill: 'rgba(0, 0, 0, 0.75)',
 		fontSize: 18,
 	},

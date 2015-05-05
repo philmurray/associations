@@ -5,7 +5,7 @@ angular.module('associations.pages.game.components.graph', [
 ])
 .constant("GameGraphDefaults", {
 })
-.directive("gameGraph", ["$window", "GraphDefaults", "GameGraphDefaults", function ($window, GraphDefaults, GameGraphDefaults) {
+.directive("gameGraph", ["$window", "GraphDefaults", "GameGraphDefaults", "$timeout", function ($window, GraphDefaults, GameGraphDefaults, $timeout) {
 	return {
 		restrict: 'EA',
 		scope: {
@@ -107,14 +107,13 @@ angular.module('associations.pages.game.components.graph', [
 				},
 				updateNodes = function(picks){
 					picks.forEach(function(pick){
+						var from = nodes.get("from_" + pick.from);
+						if (from.expanded) return;
+
 						var to = nodes.get("to_" + pick.from),
 							edge = edges.get("edge_" + pick.from),
-							from = nodes.get("from_" + pick.from),
 							value = pick.value.filter(function(value){ return value.player && value.player.active && value.to; })[0];
 
-						if (from.expanded) {
-							collapse(from);
-						}
 						if (!value && to && edge) {
 							nodes.remove(to.id);
 							edges.remove(edge.id);
@@ -140,33 +139,42 @@ angular.module('associations.pages.game.components.graph', [
 					});
 				},
 				addValue = function(from, value, expanded) {
-					var toId = expanded ? Math.random() : "to_" + from,
-						edgeId = "edge_" + (expanded ? toId : from),
-						fromId = "from_" + from,
-						position = $scope.graph && $scope.graph.getPositions(fromId)[fromId],
-						to = {
+					var toId = expanded ? "expanded_" + value.to : "to_" + from,
+						to = nodes.get(toId) ? null : {
 							id: toId
-						},
+						};
+					if (to) {
+						var fromId = "from_" + from,
+							position = $scope.graph && $scope.graph.getPositions(fromId)[fromId];
+						if (position) {
+							to.x = position.x + (Math.random() * 200 - 100);
+							to.y = position.y + (Math.random() * 200 - 100);
+
+							to.allowedToMoveX = true;
+							to.allowedToMoveY = true;
+						}
+					} else if (!value.player) {
+						return;
+					}
+
+					var edgeId = "edge_" + (expanded ? (value.player && value.player.id) + value.to : from),
 						edge = {
 							id: edgeId,
 							from: "from_" + from,
 							to: toId
 						};
-					if (position) {
-						to.x = position.x + (Math.random() * 100 - 50);
-						to.y = position.y + (Math.random() * 100 - 50);
-
-						to.allowedToMoveX = true;
-						to.allowedToMoveY = true;
-					}
 
 					setConnectedValueStyle(to, edge, value, expanded);
 
-					nodes.add(to);
+					if (to) {
+						nodes.add(to);
+					}
 					edges.add(edge);
 				},
 				updateValue = function (to, edge, value, expanded) {
 					setConnectedValueStyle(to, edge, value, expanded);
+					to.x = undefined;
+					to.y = undefined;
 
 					nodes.update(to);
 					edges.update(edge);
@@ -179,8 +187,12 @@ angular.module('associations.pages.game.components.graph', [
 					edge.fontColor = edge.color;
 					edge.label = label && value.player ? value.player.alias: '';
 
-					to.label = value.to;
-					to.fontColor = shadeColor(edge.color, 0.50);
+					if (edge.label) edge.length = 200;
+
+					if (to) {
+						to.label = value.to;
+						to.fontColor = edge.label ? 'white' : shadeColor(edge.color, 0.50);
+					}
 				},
 				onSelect = function (selected) {
 					$scope.selectedWord = selected && selected.nodes && selected.nodes.length && nodes.get(selected.nodes[0]);
@@ -190,17 +202,19 @@ angular.module('associations.pages.game.components.graph', [
 					if (node.from) {
 						node.expanded = true;
 						nodes.update(node);
+
 						var fromValue = node.label;
+						nodes.remove("to_" + fromValue);
+						edges.remove("edge_" + fromValue);
+
+
+						var timeoutDelay = 0,
+							timeoutInterval = 75;
+
 						viewModel.picks[fromValue].forEach(function(value){
-							if (value.player && value.player.active) {
-								var to = nodes.get("to_" + fromValue),
-									edge = edges.get("edge_" + fromValue);
-								if (to && edge) {
-									updateValue(to, edge, value, true);
-								}
-							} else {
+							$timeout(function(){
 								addValue(fromValue, value, true);
-							}
+							}, (timeoutDelay += timeoutInterval));
 						});
 					}
 				},
@@ -208,14 +222,15 @@ angular.module('associations.pages.game.components.graph', [
 					if (node.from) {
 						node.expanded = false;
 						nodes.update(node);
+						var fromValue = node.label;
+
 						$scope.graph.getConnectedNodes(node.id).forEach(function(nodeId){
-							if (nodeId !== "to_" + node.label){
-								edges.remove("edge_" + nodeId);
-								nodes.remove(nodeId);
-							} else {
-								var e = edges.get("edge_" + node.label);
-								e.label = '';
-								edges.update(e);
+							nodes.remove(nodeId);
+						});
+						viewModel.picks[fromValue].forEach(function(value){
+							edges.remove("edge_" + (value.player && value.player.id) + value.to);
+							if (value.player && value.player.active) {
+								addValue(fromValue, value);
 							}
 						});
 					}

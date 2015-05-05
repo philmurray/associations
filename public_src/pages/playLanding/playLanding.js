@@ -36,12 +36,12 @@ angular.module('associations.pages.playLanding',['associations.components.data.g
 		return new Date(game.time) * game.status;
 	};
 
-	$scope.getViewButtonText = function(game){
+	$scope.getViewButtonClass = function(game){
 		for (var i = 0, l = game.players.length; i<l; i++){
 			if (game.players[i].id === user.id){
-				return game.players[i].completed ? "View": "Play!";
+				return game.players[i].completed ? "fa-search": "fa-play";
 			}
 		}
-		return "View";
+		return "fa-search";
 	};
 }]);
