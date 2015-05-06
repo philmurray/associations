@@ -10,9 +10,9 @@
 		</div>
 	</div><!--
 --><div class="col-xs-3 vcenter">
-		<button class="btn btn-xs btn-color pull-right" ng-click="togglePlayer(player)">
-			<span ng-if="!playerSelected(player)">Add</span>
-			<span ng-if="playerSelected(player)">Remove</span>
+		<button class="checkbox btn btn-xs btn-color pull-right" ng-click="togglePlayer(player)">
+			<span ng-if="!playerSelected(player)">&nbsp;</span>
+			<span ng-if="playerSelected(player)"><i class="fa fa-check"></i></span>
 		</button>
 	</div>
 </div>

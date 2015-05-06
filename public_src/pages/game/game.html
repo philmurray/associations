@@ -36,7 +36,9 @@
 					{{p.alias | limitTo:1}}
 				</div>
 			</button>
-			<button class="btn btn-default" ng-click="playersExpanded=!playersExpanded" ng-class="{'btn-xs':!playersExpanded, 'btn-sm':playersExpanded}">Expand</button>
+			<button class="btn btn-default" ng-click="playersExpanded=!playersExpanded" ng-class="{'btn-xs':!playersExpanded, 'btn-sm':playersExpanded}">
+				<i class="fa" ng-class="{'fa-chevron-right': playersExpanded, 'fa-chevron-left': !playersExpanded}"></i>
+			</button>
 		</div>
 	</div>
 
