@@ -82,11 +82,14 @@
 	-ms-animation:     @name @duration @delay @ease;
 }
 
-.transition (@transition) {
-	-webkit-transition: @transition;
-	-moz-transition:    @transition;
-	-ms-transition:     @transition;
-	-o-transition:      @transition;
+.transition (...){
+    @value: ~`"@{arguments}".replace(/[\[\]]|\,\sX/g, '')`;
+
+    -webkit-transition: @value;
+    -moz-transition: @value;
+    -ms-transition: @value;
+    -o-transition: @value;
+    transition: @value;
 }
 .transform (@string){
 	-webkit-transform: @string;

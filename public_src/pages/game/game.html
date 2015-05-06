@@ -17,7 +17,7 @@
 		</div>
 	</div>
 
-	<div class="players" ng-if="!playing" ng-class="{collapsed:!playersExpanded}">
+	<div class="players" ng-if="!playing" ng-class="{expanded:playersExpanded}">
 		<div class="btn-group-vertical">
 			<!-- TODO: split this out into templates or something... -->
 			<button
@@ -26,17 +26,18 @@
 				ng-click="activatePlayer(p)"
 				class="player btn btn-sm {{(p.completed && p.color.css_class) || 'btn-default'}}"
 				ng-class="{active: p.active, 'btn-xs':!playersExpanded, 'btn-sm':playersExpanded, winner:p.winner}">
-				<div ng-if="playersExpanded">
-					<h5>{{p.alias}}</h5>
+				<div>
+					<h5>
+						<i ng-if="p.winner" class="fa fa-star"></i>
+						<span ng-if="playersExpanded">{{p.alias}}</span>
+						<span ng-if="!playersExpanded">{{p.alias | limitTo:1}}</span>
+					</h5>
 					<p>
 						{{getStatus(p)}}
 					</p>
 				</div>
-				<div ng-if="!playersExpanded">
-					{{p.alias | limitTo:1}}
-				</div>
 			</button>
-			<button class="btn btn-default" ng-click="playersExpanded=!playersExpanded" ng-class="{'btn-xs':!playersExpanded, 'btn-sm':playersExpanded}">
+			<button class="btn btn-default expander" ng-click="playersExpanded=!playersExpanded" ng-class="{'btn-xs':!playersExpanded, 'btn-sm':playersExpanded}">
 				<i class="fa" ng-class="{'fa-chevron-right': playersExpanded, 'fa-chevron-left': !playersExpanded}"></i>
 			</button>
 		</div>
