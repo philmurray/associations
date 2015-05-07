@@ -30,7 +30,7 @@
 					<h5>
 						<i ng-if="p.winner" class="fa fa-star"></i>
 						<span ng-if="playersExpanded">{{p.alias}}</span>
-						<span ng-if="!playersExpanded">{{p.alias | limitTo:1}}</span>
+						<span ng-if="!playersExpanded"><strong>{{p.alias | limitTo:1}}</strong></span>
 					</h5>
 					<p>
 						{{getStatus(p)}}
