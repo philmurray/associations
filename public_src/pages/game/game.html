@@ -24,7 +24,7 @@
 				ng-repeat="p in game.players | orderBy:'score':true"
 				ng-disabled="!p.completed"
 				ng-click="activatePlayer(p)"
-				class="player btn btn-sm {{(p.completed && p.color.css_class) || 'btn-default'}}"
+				class="player btn {{(p.completed && p.color.css_class) || 'btn-default'}}"
 				ng-class="{active: p.active, 'btn-xs':!playersExpanded, 'btn-sm':playersExpanded, winner:p.winner}">
 				<div>
 					<h5>
@@ -43,14 +43,11 @@
 		</div>
 	</div>
 
-	<div class="context-controls panel panel-default" ng-if="!playing && selected">
-		<div class="panel-heading">
-			{{selected.label}}
-		</div>
-		<div class="panel-body">
-			<a ng-if="selected.from" ng-click="selected.expanded = !selected.expanded">{{selected.expanded ? 'Collapse' : 'Expand'}}</a>
-			<a href="#/exploreWords?word={{selected.label}}=&otherWord=">Explore</a>
-		</div>
+	<div class="context-controls well" ng-if="!playing && selected">
+		{{selected.label}}
+		<a href="" ng-if="selected.from" ng-click="selected.expanded = !selected.expanded">
+			<i ng-class="{'fa-expand':!selected.expanded, 'fa-compress':selected.expanded}" class="fa"></i></a>
+		<a href="#/exploreWords?word={{selected.label}}=&otherWord="><i class="fa fa-search"></i></a>
 	</div>
 
 	<div game-graph

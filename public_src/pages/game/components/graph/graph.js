@@ -263,8 +263,7 @@ angular.module('associations.pages.game.components.graph', [
 						dragNodes: !Boolean(n),
 						dragNetwork: !Boolean(n),
 						zoomable: !Boolean(n),
-						keyboard: !Boolean(n),
-						navigation: !Boolean(n),
+						keyboard: !Boolean(n)
 					});
 					if (!n && o){
 						$scope.graph.zoomExtent();

@@ -1,8 +1,12 @@
 div.network-navigation {
 
-	@button-size: 30px;
+	@button-size: 36px;
 
 	.text-overflow();
+
+	.fa;
+	font-size: 24px;
+	padding: 6px;
 
     width:@button-size;
     height:@button-size;
@@ -22,21 +26,21 @@ div.network-navigation {
 	}
 	&.zoomIn {
 		&::before {
-			content: "Zoom In";
+			content: @fa-var-search-plus;
 		}
 	    bottom:@padding-base-horizontal + @button-size;
 	    right:@padding-base-horizontal;
 	}
 	&.zoomOut {
 		&::before {
-			content: "Zoom Out";
+			content: @fa-var-search-minus;
 		}
 	    bottom:@padding-base-horizontal;
 	    right:@padding-base-horizontal;
 	}
 	&.zoomExtends {
 		&::before {
-			content: "Zoom Extent";
+			content: @fa-var-crosshairs;
 		}
 	    bottom:(@padding-base-horizontal + @button-size)*2;
 	    right:@padding-base-horizontal;

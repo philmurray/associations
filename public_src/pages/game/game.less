@@ -5,14 +5,14 @@
 	}
 	@toolSizeMin: 57px;
 	@toolSizeMax: 125px;
+	@animation-duration: 0.4s;
 
 	.navbar-brand {
 		.tool;
 	}
 	.players {
 		.tool;
-
-		@animation-duration: 0.5s;
+		background: @body-bg;
 		.transition(width @animation-duration, max-height @animation-duration, padding @animation-duration);
 
 		top: @padding-base-horizontal;
@@ -48,9 +48,9 @@
 	}
 	.word-entry {
 		.tool;
+		background: @body-bg;
 
 		left: 50%;
-		background: @body-bg;
 
 		width: 300px;
 		margin-left: -150px;
@@ -80,13 +80,11 @@
 
 		margin-bottom: 0;
 		bottom: @padding-base-horizontal;
-		right: @padding-base-horizontal*2+@toolSizeMin;
+		right: @padding-base-horizontal;
 
-		.btn {
-			&,* {
-				.text-overflow();
-			}
-			width: @toolSizeMin;
+		font-size: 24px;
+		a {
+			margin-left: 10px;
 		}
 	}
 
