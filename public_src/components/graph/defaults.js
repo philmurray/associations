@@ -9,6 +9,7 @@ angular.module('associations.components.graph.defaults', [])
 		color: 'white',
 		fontFill: 'rgba(0, 0, 0, 0.75)',
 		fontSize: 18,
+		widthSelectionMultiplier: 1,
 	},
 	nodes: {
 		shape: 'box',

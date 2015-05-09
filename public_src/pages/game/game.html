@@ -30,24 +30,32 @@
 					<h5>
 						<i ng-if="p.winner" class="fa fa-star"></i>
 						<span ng-if="playersExpanded">{{p.alias}}</span>
-						<span ng-if="!playersExpanded"><strong>{{p.alias | limitTo:1}}</strong></span>
+						<span ng-if="!playersExpanded"><strong>{{p.alias | limitTo:1 | uppercase}}</strong></span>
 					</h5>
-					<p>
-						{{getStatus(p)}}
+					<p ng-if="p.completed">
+						<span class="pull-left">score: </span>
+						<span class="pull-right">{{p.score}}</span>
+						<br/>
+						<span class="pull-left">weirdo: </span>
+						<span class="pull-right">{{getNormal(p)}}</span>
+					</p>
+					<p ng-if="!p.completed">
+						Waiting...
 					</p>
 				</div>
-			</button>
-			<button class="btn btn-default expander" ng-click="playersExpanded=!playersExpanded" ng-class="{'btn-xs':!playersExpanded, 'btn-sm':playersExpanded}">
-				<i class="fa" ng-class="{'fa-chevron-right': playersExpanded, 'fa-chevron-left': !playersExpanded}"></i>
 			</button>
 		</div>
 	</div>
 
 	<div class="context-controls well" ng-if="!playing && selected">
-		{{selected.label}}
-		<a href="" ng-if="selected.from" ng-click="selected.expanded = !selected.expanded">
-			<i ng-class="{'fa-expand':!selected.expanded, 'fa-compress':selected.expanded}" class="fa"></i></a>
-		<a href="#/exploreWords?word={{selected.label}}=&otherWord="><i class="fa fa-search"></i></a>
+		<h5>
+			<strong>
+				{{selected.label}}
+				<a href="" ng-if="selected.from" ng-click="selected.expanded = !selected.expanded">
+					<i ng-class="{'fa-expand':!selected.expanded, 'fa-compress':selected.expanded}" class="fa"></i></a>
+				<a href="#/exploreWords?word={{selected.label}}=&otherWord="><i class="fa fa-search"></i></a>
+			</strong>
+		</h5>
 	</div>
 
 	<div game-graph

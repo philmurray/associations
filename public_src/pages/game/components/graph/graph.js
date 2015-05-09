@@ -182,7 +182,7 @@ angular.module('associations.pages.game.components.graph', [
 				setConnectedValueStyle = function(to, edge, value, label){
 
 					edge.value = value.player ? value.normal : value.score;
-					edge.color = value.player ? value.player.color.hex: 'grey';
+					edge.color = value.player ? value.player.color.hex: '#888888';
 					edge.style = value.normal === 0 ? 'dash-line' : 'arrow';
 					edge.fontColor = edge.color;
 					edge.label = label && value.player ? value.player.alias: '';
@@ -191,7 +191,7 @@ angular.module('associations.pages.game.components.graph', [
 
 					if (to) {
 						to.label = value.to;
-						to.fontColor = edge.label ? 'white' : shadeColor(edge.color, 0.50);
+						to.fontColor = shadeColor(edge.color, 0.50);
 					}
 				},
 				onSelect = function (selected) {

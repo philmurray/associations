@@ -4,7 +4,7 @@
 		z-index: 20;
 	}
 	@toolSizeMin: 57px;
-	@toolSizeMax: 125px;
+	@toolSizeMax: 150px;
 	@animation-duration: 0.4s;
 
 	.navbar-brand {
@@ -12,10 +12,9 @@
 	}
 	.players {
 		.tool;
-		background: @body-bg;
 		.transition(width @animation-duration, max-height @animation-duration, padding @animation-duration);
 
-		top: @padding-base-horizontal;
+		top: 0;
 		right: 0;
 
 		width: @toolSizeMin;
@@ -31,11 +30,14 @@
 			border-top-right-radius: 0 !important;
 			border-bottom-right-radius: 0 !important;
 			border-right-width: 0px !important;
+			border-top-left-radius: 0 !important;
 
 			&.expander {
 				i {
 					padding-top: 7px;
 				}
+				background: transparent;
+				border: none;
 			}
 		}
 		&.expanded {
@@ -81,8 +83,9 @@
 		margin-bottom: 0;
 		bottom: @padding-base-horizontal;
 		right: @padding-base-horizontal;
-
-		font-size: 24px;
+		h5 {
+			margin: 0;
+		}
 		a {
 			margin-left: 10px;
 		}

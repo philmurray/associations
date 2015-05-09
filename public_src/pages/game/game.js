@@ -91,10 +91,18 @@ angular.module('associations.pages.game', [
 	};
 
 	$scope.activatePlayer = function(player){
+		if (player.active) {
+			$scope.playersExpanded = !$scope.playersExpanded;
+		}
+
 		$scope.game.players.forEach(function(p){
 			p.active = (player === p);
 		});
 
+	};
+
+	$scope.getNormal = function (player){
+		return Math.floor((1 - player.normal) * 100) + "%";
 	};
 
 	$scope.stopGame = function(){
@@ -104,17 +112,6 @@ angular.module('associations.pages.game', [
 			$scope.player = $scope.game.players[$scope.game.player];
 			$scope.activatePlayer($scope.player);
 		});
-	};
-
-	$scope.getStatus = function(player){
-		if ($scope.playing){
-			if (player === $scope.player){
-				return $scope.playing.score;
-			}
-			return "...";
-		}
-		if (!player.completed) return "Waiting...";
-		return player.score;
 	};
 
 	if ($scope.player !== undefined){
