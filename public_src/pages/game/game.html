@@ -13,38 +13,38 @@
 			<h2 class="text-center">{{playing.word}}</h2>
 		</div>
 		<div class="panel-footer">
-			<select-word selected="chosenWord" class='select-word'></select-word>
+			<select-word selected="chosenWord" class='select-word' focus-input="playing.word"></select-word>
 		</div>
 	</div>
 
 	<div class="players" ng-if="!playing" ng-class="{expanded:playersExpanded}">
-		<div class="btn-group-vertical">
-			<!-- TODO: split this out into templates or something... -->
-			<button
-				ng-repeat="p in game.players | orderBy:'score':true"
-				ng-disabled="!p.completed"
-				ng-click="activatePlayer(p)"
-				class="player btn {{(p.completed && p.color.css_class) || 'btn-default'}}"
-				ng-class="{active: p.active, 'btn-xs':!playersExpanded, 'btn-sm':playersExpanded, winner:p.winner}">
-				<div>
-					<h5>
-						<i ng-if="p.winner" class="fa fa-star"></i>
-						<span ng-if="playersExpanded">{{p.alias}}</span>
-						<span ng-if="!playersExpanded"><strong>{{p.alias | limitTo:1 | uppercase}}</strong></span>
-					</h5>
-					<p ng-if="p.completed">
-						<span class="pull-left">score: </span>
-						<span class="pull-right">{{p.score}}</span>
-						<br/>
-						<span class="pull-left">weirdo: </span>
-						<span class="pull-right">{{getNormal(p)}}</span>
-					</p>
-					<p ng-if="!p.completed">
-						Waiting...
-					</p>
-				</div>
-			</button>
-		</div>
+		<!-- TODO: split this out into templates or something... -->
+		<button
+			ng-repeat="p in game.players | orderBy:'score':true"
+			ng-disabled="!p.completed"
+			ng-click="activatePlayer(p)"
+			class="player btn {{(p.completed && p.color.css_class) || 'btn-default'}}"
+			ng-class="{active: p.active, 'btn-xs':!playersExpanded, 'btn-sm':playersExpanded, winner:p.winner}">
+			<div>
+				<h5>
+					<i ng-if="p.winner" class="fa fa-star"></i>
+					<span ng-if="playersExpanded">{{p.alias}}</span>
+					<span ng-if="!playersExpanded"><strong>{{p.alias | limitTo:1 | uppercase}}</strong></span>
+				</h5>
+				<p ng-if="p.completed">
+					<span class="pull-left">score: </span>
+					<span class="pull-right">{{p.score}}</span>
+					<br/>
+					<span class="pull-left">weirdo: </span>
+					<span class="pull-right">{{getNormal(p)}}</span>
+				</p>
+				<p ng-if="!p.completed">
+					Waiting...
+					<br/>
+					<br/>
+				</p>
+			</div>
+		</button>
 	</div>
 
 	<div class="context-controls well" ng-if="!playing && selected">

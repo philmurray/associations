@@ -17,7 +17,33 @@
 		top: 0;
 		right: 0;
 
-		width: @toolSizeMin;
+
+		@media all and (orientation:portrait) {
+			width: @toolSizeMin;
+
+			.btn {
+				border-top-right-radius: 0;
+				border-top-left-radius: 0;
+				border-bottom-right-radius: 0;
+			}
+
+			& > .btn:not(:last-child) {
+				border-bottom-left-radius: 0;
+			}
+		}
+		@media all and (orientation:landscape) {
+			height: @toolSizeMin;
+
+			.btn {
+				border-top-right-radius: 0;
+				border-top-left-radius: 0;
+				border-bottom-right-radius: 0;
+			}
+
+			& > .btn:not(:first-child) {
+				border-bottom-left-radius: 0;
+			}
+		}
 
 		.btn {
 			.transition(width @animation-duration, max-height @animation-duration, padding @animation-duration);
@@ -26,11 +52,6 @@
 			}
 			width: @toolSizeMin;
 			max-height: @toolSizeMin;
-
-			border-top-right-radius: 0 !important;
-			border-bottom-right-radius: 0 !important;
-			border-right-width: 0px !important;
-			border-top-left-radius: 0 !important;
 
 			&.expander {
 				i {
@@ -41,7 +62,12 @@
 			}
 		}
 		&.expanded {
-			width: @toolSizeMax;
+			@media all and (orientation:portrait) {
+				width: @toolSizeMax;
+			}
+			@media all and (orientation:landscape) {
+				height: @toolSizeMax;
+			}
 			.btn {
 				width: @toolSizeMax;
 				max-height: @toolSizeMax;

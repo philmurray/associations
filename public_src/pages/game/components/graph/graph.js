@@ -72,7 +72,8 @@ angular.module('associations.pages.game.components.graph', [
 
 						vm.picks[pick.from].push({
 							to: pick.to,
-							score: pick.score,
+							normal: pick.score,
+							score: pick.rank == 1 ? 200 : 100
 						});
 					});
 					biggest.forEach(function(pick){
@@ -181,7 +182,7 @@ angular.module('associations.pages.game.components.graph', [
 				},
 				setConnectedValueStyle = function(to, edge, value, label){
 
-					edge.value = value.player ? value.normal : value.score;
+					edge.value = value.normal;
 					edge.color = value.player ? value.player.color.hex: '#888888';
 					edge.style = value.normal === 0 ? 'dash-line' : 'arrow';
 					edge.fontColor = edge.color;
@@ -191,7 +192,20 @@ angular.module('associations.pages.game.components.graph', [
 
 					if (to) {
 						to.label = value.to;
-						to.fontColor = shadeColor(edge.color, 0.50);
+
+						if (value.score === 200) {
+							to.color = {
+								border: "white",
+								background: "white"
+							};
+							to.fontColor = 'black';
+						} else {
+							to.color = {
+								border: edge.label ? "white" : shadeColor(edge.color, 0.50),
+								background: "black"
+							};
+							to.fontColor = edge.label ? "white" : shadeColor(edge.color, 0.50);
+						}
 					}
 				},
 				onSelect = function (selected) {

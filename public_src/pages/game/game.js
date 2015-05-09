@@ -4,7 +4,8 @@ angular.module('associations.pages.game', [
 	'associations.components.data.game',
 	'ui.bootstrap',
 	'associations.pages.game.components.startModal',
-	'associations.pages.game.components.graph'
+	'associations.pages.game.components.graph',
+	'associations.components.focus-input'
 ])
 
 .controller("GameController", ["$scope", "color", "game", "$modal", "GameService", "$interval", function($scope, color, game, $modal, GameService, $interval) {
