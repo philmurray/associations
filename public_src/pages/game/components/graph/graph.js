@@ -67,15 +67,17 @@ angular.module('associations.pages.game.components.graph', [
 							}
 						});
 					});
-					$scope.model.topWords.forEach(function(pick){
-						if (!vm.picks[pick.from]) vm.picks[pick.from] = [];
+					if ($scope.model.topWords) {
+						$scope.model.topWords.forEach(function(pick){
+							if (!vm.picks[pick.from]) vm.picks[pick.from] = [];
 
-						vm.picks[pick.from].push({
-							to: pick.to,
-							normal: pick.score,
-							score: pick.rank == 1 ? 200 : 100
+							vm.picks[pick.from].push({
+								to: pick.to,
+								normal: pick.score,
+								score: pick.rank == 1 ? 200 : 100
+							});
 						});
-					});
+					}
 					biggest.forEach(function(pick){
 						if (vm.picks[pick.from].length){
 							vm.picksArray.push({
