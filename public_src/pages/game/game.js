@@ -8,9 +8,8 @@ angular.module('associations.pages.game', [
 	'associations.components.focus-input'
 ])
 
-.controller("GameController", ["$scope", "color", "game", "$modal", "GameService", "$interval", function($scope, color, game, $modal, GameService, $interval) {
+.controller("GameController", ["$scope", "game", "$modal", "GameService", "$interval", function($scope, game, $modal, GameService, $interval) {
 	$scope.footer.visible = false;
-	$scope.color = color;
 	$scope.game = game;
 	$scope.player = $scope.game.players[$scope.game.player];
 	$scope.graphConfig = {};
@@ -73,10 +72,7 @@ angular.module('associations.pages.game', [
 			templateUrl: "pages/game/components/startModal/startModal.html",
 			controller: "StartModalController",
 			size: "sm",
-			backdrop: "static",
-			resolve: {
-				color: function(){ return color;}
-			}
+			backdrop: "static"
 		}).result.then(function(){
 			return GameService.startGame($scope.game.id);
 		}).then(function(response){

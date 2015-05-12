@@ -29,12 +29,15 @@ angular.module('associations.pages.playerProfile',[
 			return;
 		}
 
-		UserService.save($scope.profileUser).then(function(){
-			$scope.forms.display.showErrors = false;
-			$scope.addAlert({type: "success", msg: "Player profile saved!"});
-		}).catch(function(err){
-			$scope.addAlert({type: "danger", msg: "Player profile could not be saved!"});
-		});
+		UserService.save($scope.profileUser)
+			.then(ColorService.setUserColor)
+			.then(function(){
+				$scope.forms.display.showErrors = false;
+				$scope.addAlert({type: "success", msg: "Player profile saved!"});
+			})
+			.catch(function(err){
+				$scope.addAlert({type: "danger", msg: "Player profile could not be saved!"});
+			});
 	};
 
 	$scope.saveAccount = function (){

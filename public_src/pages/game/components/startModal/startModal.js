@@ -4,7 +4,6 @@ angular.module('associations.pages.game.components.startModal', [
 	'ui.bootstrap'
 ])
 
-.controller("StartModalController", ["$scope", "color", "$modalInstance", function($scope, color, $modalInstance) {
-	$scope.color = color;
+.controller("StartModalController", ["$scope", "$modalInstance", function($scope, $modalInstance) {
 	$scope.close = $modalInstance.close;
 }]);

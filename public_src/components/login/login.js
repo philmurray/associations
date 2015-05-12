@@ -35,10 +35,6 @@ angular.module('associations.components.login', [
 	};
 }])
 .controller('LoginController', ['$scope', '$http', '$modalInstance', '$window', '$location', 'ColorService', function($scope, $http, $modalInstance, $window, $location, ColorService){
-	ColorService.getUserColor().then(function(response){
-		$scope.color = response.data;
-	});
-
 	$scope.submitEmail = function(){
 		$scope.badPassword = false;
 		$http.post('/auth/local',{
@@ -46,7 +42,7 @@ angular.module('associations.components.login', [
 				password: $scope.password || '-'
 			})
 			.then(function(){
-				$modalInstance.close();
+				ColorService.setUserColor().then($modalInstance.close);
 			})
 			.catch(function(response){
 				if (response.status === 401){

@@ -6,7 +6,7 @@ angular.module('associations.pages.exploreWords',[
 	"associations.pages.exploreWords.components.graph"
 	])
 
-.controller("ExploreWordsController", ["$scope", "$location", "WordService", "$log", "color", function ($scope, $location, WordService, $log, color) {
+.controller("ExploreWordsController", ["$scope", "$location", "WordService", "$log", function ($scope, $location, WordService, $log) {
 	$scope.footer.visible = false;
 
 	var searchWord = {
@@ -16,7 +16,6 @@ angular.module('associations.pages.exploreWords',[
 		},
 		fixed: true
 	};
-	$scope.color = color;
 	$scope.model = {nodes:{}, links:{}};
 	$scope.diagramConfig = {};
 

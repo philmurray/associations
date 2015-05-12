@@ -2,9 +2,8 @@
 
 angular.module('associations.pages.playLanding',['associations.components.data.game'])
 
-.controller("PlayLandingController", ["$scope", "user", "GameService", "$location", "games", function ($scope, user, GameService, $location, games) {
+.controller("PlayLandingController", ["$scope", "GameService", "$location", "games", function ($scope, GameService, $location, games) {
 	$scope.footer.visible = true;
-	$scope.color = user.color;
 	$scope.games = games;
 
 	$scope.rematch = function(game, event){
@@ -34,14 +33,5 @@ angular.module('associations.pages.playLanding',['associations.components.data.g
 
 	$scope.sortGames = function(game){
 		return new Date(game.time) * game.status;
-	};
-
-	$scope.getViewButtonClass = function(game){
-		for (var i = 0, l = game.players.length; i<l; i++){
-			if (game.players[i].id === user.id){
-				return game.players[i].completed ? "fa-search": "fa-play";
-			}
-		}
-		return "fa-search";
 	};
 }]);

@@ -13,6 +13,6 @@
 		</div>
 	</div><!--
 --><div class="col-xs-3 vcenter">
-		<button class="btn btn-xs btn-color pull-right" ng-click="gotoGame(game)"><i class="fa {{getViewButtonClass(game)}}"></i></button>
+		<button class="btn btn-xs btn-color pull-right" ng-click="gotoGame(game)"><i ng-class="{'fa-play': game.status == 3, 'fa-search': game.status != 3}" class="fa"></i></button>
 	</div>
 </div>

@@ -5,9 +5,8 @@ angular.module('associations.pages.playMulti',[
 	'associations.components.data.game'
 ])
 
-.controller("PlayMultiController", ["$scope", "user", "UserService", "$q", "GameService", "$location", "recentPlayers", function ($scope, user, UserService, $q, GameService, $location, recentPlayers) {
+.controller("PlayMultiController", ["$scope", "UserService", "$q", "GameService", "$location", "recentPlayers", function ($scope, UserService, $q, GameService, $location, recentPlayers) {
 	$scope.footer.visible = true;
-	$scope.color = user.color;
 
 	$scope.recentPlayers = recentPlayers;
 	$scope.foundPlayers = [];

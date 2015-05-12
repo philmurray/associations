@@ -10,7 +10,7 @@
 
 	<link rel="stylesheet" href="app.css">
 </head>
-<body ng-controller="AppController" ng-class="{'footer': footer.visible}">
+<body ng-controller="AppController" ng-class="{'footer': footer.visible}" class="{{color.css_class}}">
 
 	<div class="alert-box">
 		<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>

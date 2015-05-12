@@ -2,10 +2,8 @@
 
 angular.module('associations.pages.main', [])
 
-.controller("MainController", ["$scope", "color", function($scope, color) {
+.controller("MainController", ["$scope", function($scope) {
 	$scope.footer.visible = true;
-
-	$scope.color = color;
 
 	$scope.links = [
 		{

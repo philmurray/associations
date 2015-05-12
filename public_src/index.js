@@ -38,10 +38,7 @@ angular.module('associations',
 		$routeProvider
 			.when('/', {
 				templateUrl: 'pages/main/main.html',
-				controller: 'MainController',
-				resolve: {
-					color: ColorResolver
-				}
+				controller: 'MainController'
 			})
 			.when('/playerProfile', {
 				templateUrl: 'pages/playerProfile/playerProfile.html',
@@ -54,7 +51,6 @@ angular.module('associations',
 				templateUrl: 'pages/playLanding/playLanding.html',
 				controller: 'PlayLandingController',
 				resolve: {
-					user: UserResolver,
 					games: GamesResolver
 				}
 			})
@@ -62,7 +58,6 @@ angular.module('associations',
 				templateUrl: 'pages/playMulti/playMulti.html',
 				controller: 'PlayMultiController',
 				resolve: {
-					user: UserResolver,
 					recentPlayers: RecentPlayersResolver
 				}
 			})
@@ -70,17 +65,13 @@ angular.module('associations',
 				templateUrl: 'pages/game/game.html',
 				controller: 'GameController',
 				resolve: {
-					color: ColorResolver,
 					game: GameResolver
 				}
 			})
 			.when('/exploreWords', {
 				templateUrl: 'pages/exploreWords/exploreWords.html',
 				controller: 'ExploreWordsController',
-				reloadOnSearch: false,
-				resolve: {
-					color: ColorResolver
-				}
+				reloadOnSearch: false
 			})
 			.otherwise({redirectTo: '/'});
 
@@ -96,10 +87,12 @@ angular.module('associations',
 			});
 		}
 	])
-	.controller("AppController", ["$scope", "$timeout", function($scope, $timeout){
+	.controller("AppController", ["$scope", "$timeout", "ColorService", function($scope, $timeout, ColorService){
 		$scope.footer = {visible: true};
 
 		$scope.alerts = [];
+
+		ColorService.setUserColor();
 
 		$scope.addAlert = function(alert) {
 			$scope.alerts.push(alert);
