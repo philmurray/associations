@@ -58,6 +58,43 @@
 		</h5>
 	</div>
 
+	<div class="chat" ng-if="!playing" ng-class="{well:chat.expanded}">
+		<button ng-if="!chat.expanded" class="btn btn-color" ng-click="chat.expanded = true">
+			<i class="fa fa-comment"></i>
+		</button>
+		<div ng-if="chat.expanded">
+			<div class="row">
+				<div class="col-xs-12">
+					<button class="btn btn-color btn-xs pull-right" ng-click="chat.expanded = false">
+						<i class="fa fa-minus"></i>
+					</button>
+				</div>
+			</div>
+			<div ng-repeat="message in chat.messages" class="{{message.player.color.css_class}} row">
+				<div class="col-xs-12 text-color">
+					<span class="pull-left">
+						<strong>{{message.player.alias}}</strong>
+					</span>
+					<span class="pull-right">
+						{{message.message}}
+					</span>
+				</div>
+			</div>
+			<form class="form-horizontal" name="forms.display">
+				<div class="form-group">
+					<div class="col-xs-9">
+						<input focus-input="chat.expanded" class="form-control" id="chatText" name="chatText" placeholder="what do you want to say?" ng-model="chat.currentText">
+					</div>
+					<div class="col-xs-3">
+						<button class="btn btn-color pull-right" ng-click="submitChat()">
+							<i class="fa fa-check-circle"></i>
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
 	<div game-graph
 		graph-model="game"
 		graph-config="graphConfig"

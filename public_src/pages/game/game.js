@@ -18,6 +18,11 @@ angular.module('associations.pages.game', [
 		placeholderText:"What do you think?"
 	};
 	$scope.playersExpanded = false;
+	$scope.chat = {
+		expanded: false,
+		currentText: "",
+		messages: []
+	};
 
 	$scope.$watch("playing.word", function(){
 		$scope.wordStart = new Date();
@@ -109,6 +114,17 @@ angular.module('associations.pages.game', [
 			$scope.player = $scope.game.players[$scope.game.player];
 			$scope.activatePlayer($scope.player);
 		});
+	};
+
+	$scope.submitChat = function(){
+		//todo: something real
+		$scope.chat.messages.push({
+			player: $scope.player,
+			message: $scope.chat.currentText,
+			time: new Date()
+		});
+
+		$scope.chat.currentText = "";
 	};
 
 	if ($scope.player !== undefined){
