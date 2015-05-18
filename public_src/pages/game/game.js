@@ -5,7 +5,8 @@ angular.module('associations.pages.game', [
 	'ui.bootstrap',
 	'associations.pages.game.components.startModal',
 	'associations.pages.game.components.graph',
-	'associations.components.focus-input'
+	'associations.components.focus-input',
+	'associations.components.scroll-bottom'
 ])
 
 .controller("GameController", ["$scope", "game", "$modal", "GameService", "$interval", function($scope, game, $modal, GameService, $interval) {

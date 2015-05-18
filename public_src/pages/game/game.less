@@ -110,9 +110,21 @@
 		bottom: @padding-base-horizontal;
 		left: @padding-base-horizontal;
 
+		max-width: 400px;
+
 		.form-group {
 			margin-bottom: 0;
 			margin-top: 15px;
+		}
+		.player {
+			max-width: 110px;
+			.text-overflow();
+		}
+		.messages {
+			max-height: 250px;
+			margin-top: 10px;
+			overflow-y: auto;
+			overflow-x: hidden;
 		}
 	}
 

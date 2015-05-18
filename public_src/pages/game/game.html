@@ -70,14 +70,18 @@
 					</button>
 				</div>
 			</div>
-			<div ng-repeat="message in chat.messages" class="{{message.player.color.css_class}} row">
-				<div class="col-xs-12 text-color">
-					<span class="pull-left">
-						<strong>{{message.player.alias}}</strong>
-					</span>
-					<span class="pull-right">
-						{{message.message}}
-					</span>
+			<div class="messages" scroll-bottom>
+				<div ng-repeat="message in chat.messages" class="{{message.player.color.css_class}} row">
+					<div class="col-xs-12">
+						<p>
+							<span class="player">
+								<strong class="text-color">{{message.player.alias}}: </strong>
+							</span>
+							<span class="text-muted">
+								{{message.message}}
+							</span>
+						</p>
+					</div>
 				</div>
 			</div>
 			<form class="form-horizontal" name="forms.display">
