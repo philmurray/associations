@@ -47,9 +47,14 @@ CREATE FUNCTION notify_trigger() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
 DECLARE
+    gameuser RECORD;
 BEGIN
-  PERFORM pg_notify(TG_TABLE_NAME || '_' || TG_OP, NEW.id );
-  RETURN new;
+	FOR gameuser IN SELECT user_id FROM games_users WHERE game_id = NEW.game_id LOOP
+		PERFORM pg_notify(gameuser.user_id::text, TG_TABLE_NAME );
+	END LOOP;
+	
+	RETURN new;
+
 END;
 $$;
 
@@ -88,10 +93,10 @@ CREATE TABLE answers_users (
 ALTER TABLE answers_users OWNER TO associations_dbuser;
 
 --
--- Name: chat; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
+-- Name: chats; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
 --
 
-CREATE TABLE chat (
+CREATE TABLE chats (
     id uuid DEFAULT uuid_generate_v4() NOT NULL,
     game_id uuid NOT NULL,
     user_id uuid NOT NULL,
@@ -100,7 +105,7 @@ CREATE TABLE chat (
 );
 
 
-ALTER TABLE chat OWNER TO associations_dbuser;
+ALTER TABLE chats OWNER TO associations_dbuser;
 
 --
 -- Name: colors; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
@@ -375,7 +380,7 @@ ALTER TABLE ONLY answers_users
 -- Name: chat_pkey; Type: CONSTRAINT; Schema: public; Owner: associations_dbuser; Tablespace: 
 --
 
-ALTER TABLE ONLY chat
+ALTER TABLE ONLY chats
     ADD CONSTRAINT chat_pkey PRIMARY KEY (id);
 
 
@@ -484,7 +489,7 @@ CREATE INDEX cov3 ON usf_norms USING btree ("to");
 -- Name: fki_chat_user_id_fkey; Type: INDEX; Schema: public; Owner: associations_dbuser; Tablespace: 
 --
 
-CREATE INDEX fki_chat_user_id_fkey ON chat USING btree (user_id);
+CREATE INDEX fki_chat_user_id_fkey ON chats USING btree (user_id);
 
 
 --
@@ -523,7 +528,7 @@ CREATE RULE "_RETURN" AS
 -- Name: chat_trigger; Type: TRIGGER; Schema: public; Owner: associations_dbuser
 --
 
-CREATE TRIGGER chat_trigger AFTER INSERT ON chat FOR EACH ROW EXECUTE PROCEDURE notify_trigger();
+CREATE TRIGGER chat_trigger AFTER INSERT ON chats FOR EACH ROW EXECUTE PROCEDURE notify_trigger();
 
 
 --
@@ -562,7 +567,7 @@ ALTER TABLE ONLY answers_users
 -- Name: chat_game_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: associations_dbuser
 --
 
-ALTER TABLE ONLY chat
+ALTER TABLE ONLY chats
     ADD CONSTRAINT chat_game_id_fkey FOREIGN KEY (game_id) REFERENCES games(id);
 
 
@@ -570,7 +575,7 @@ ALTER TABLE ONLY chat
 -- Name: chat_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: associations_dbuser
 --
 
-ALTER TABLE ONLY chat
+ALTER TABLE ONLY chats
     ADD CONSTRAINT chat_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id);
 
 

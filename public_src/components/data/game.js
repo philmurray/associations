@@ -53,6 +53,14 @@ angular.module('associations.components.data.game', [])
 					url: url,
 					data: wordData
 				});
+			},
+			submitChat: function(gameId, chat){
+				var url = "/rpc/game/" + gameId + "/chat";
+				return $http({
+					method: 'PUT',
+					url: url,
+					data: {word: chat}
+				});
 			}
 		};
 	}]);

@@ -118,14 +118,15 @@ angular.module('associations.pages.game', [
 	};
 
 	$scope.submitChat = function(){
-		//todo: something real
-		$scope.chat.messages.push({
-			player: $scope.player,
-			message: $scope.chat.currentText,
-			time: new Date()
-		});
-
-		$scope.chat.currentText = "";
+		GameService.submitChat($scope.game.id, $scope.chat.currentText)
+			.then(function (){
+				$scope.chat.messages.push({
+					player: $scope.player,
+					message: $scope.chat.currentText,
+					time: new Date()
+				});
+				$scope.chat.currentText = "";
+			});
 	};
 
 	if ($scope.player !== undefined){

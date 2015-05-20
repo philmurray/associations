@@ -109,6 +109,13 @@ router.post('/game/:gameId/submitWord', isAuthenticated, function(req,res){
 	});
 });
 
+router.put('/game/:gameId/chat', isAuthenticated, function(req, res){
+	models.Chat.addChat(req.user, req.params.gameId, req.body, function(err, ret){
+		if (err){ return res.status(500).send(err.message); }
+		res.json(ret);
+	});
+});
+
 router.get('/word', function(req,res){
 	models.Word.search(req.query.text || "", 10, function(err, words){
 		if (err){ return res.status(500).send(err.message); }

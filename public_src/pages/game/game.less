@@ -12,7 +12,7 @@
 	}
 	.players {
 		.tool;
-		.transition(width @animation-duration, max-height @animation-duration, padding @animation-duration);
+		.transition(@animation-duration);
 
 		top: 0;
 		right: 0;
@@ -46,7 +46,7 @@
 		}
 
 		.btn {
-			.transition(width @animation-duration, max-height @animation-duration, padding @animation-duration);
+			.transition(@animation-duration);
 			&,* {
 				.text-overflow();
 			}
@@ -105,31 +105,35 @@
 
 	.chat {
 		.tool;
+		.transition(@animation-duration);
 
 		margin-bottom: 0;
 		bottom: @padding-base-horizontal;
 		left: @padding-base-horizontal;
 
-		max-width: 400px;
+		width: @toolSizeMin;
+		max-height: @toolSizeMin;
+		overflow: hidden;
 
-		.form-group {
-			margin-bottom: 0;
-			margin-top: 15px;
-		}
 		.player {
 			max-width: 110px;
 			.text-overflow();
 		}
 		.messages {
 			max-height: 250px;
-			margin-top: 10px;
 			overflow-y: auto;
 			overflow-x: hidden;
+		}
+
+		&.expanded {
+			width: 400px;
+			max-height: 390px;
 		}
 	}
 
 	.context-controls {
 		.tool;
+		.transition(@animation-duration);
 
 		margin-bottom: 0;
 		bottom: @padding-base-horizontal;
@@ -139,6 +143,16 @@
 		}
 		a {
 			margin-left: 10px;
+		}
+
+		&.ng-enter,
+		&.ng-leave.ng-leave-active {
+		  opacity:0;
+		}
+
+		&.ng-leave,
+		&.ng-enter.ng-enter-active {
+		  opacity:1;
 		}
 	}
 
