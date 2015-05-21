@@ -212,7 +212,8 @@ CREATE TABLE games_users (
     user_id uuid NOT NULL,
     completed boolean DEFAULT false NOT NULL,
     start_time timestamp with time zone,
-    current_word integer DEFAULT 0 NOT NULL
+    current_word integer DEFAULT 0 NOT NULL,
+    chat_viewed_time timestamp with time zone DEFAULT now() NOT NULL
 );
 
 
@@ -229,7 +230,8 @@ CREATE TABLE games_users_scored (
     start_time timestamp with time zone,
     word text,
     score bigint,
-    normal double precision
+    normal double precision,
+    unread_chats bigint
 );
 
 
@@ -510,12 +512,16 @@ CREATE RULE "_RETURN" AS
     gus.start_time,
     gw.word,
     gus.score,
-    gus.normal
+    gus.normal,
+    ( SELECT count(*) AS count
+           FROM chats ch
+          WHERE (((ch.game_id = gus.game_id) AND (ch.user_id <> gus.user_id)) AND (ch.create_time > gus.chat_viewed_time))) AS unread_chats
    FROM (( SELECT gu.game_id,
             gu.user_id,
             gu.completed,
             gu.start_time,
             gu.current_word,
+            gu.chat_viewed_time,
             COALESCE(sum(ps.score), (0)::bigint) AS score,
             avg(ps.normal) AS normal
            FROM (games_users gu
