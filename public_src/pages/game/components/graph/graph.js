@@ -214,6 +214,12 @@ angular.module('associations.pages.game.components.graph', [
 					$scope.selectedWord = selected && selected.nodes && selected.nodes.length && nodes.get(selected.nodes[0]);
 					$scope.$apply();
 				},
+				onDoubleClick = function (selected) {
+					if (selected.nodes.length === 1){
+						$scope.selectedWord.expanded = true;
+					}
+					$scope.$apply();
+				},
 				expand = function(node){
 					if (node.from) {
 						node.expanded = true;
@@ -265,6 +271,7 @@ angular.module('associations.pages.game.components.graph', [
 
 				$scope.graph = new vis.Network(element, {nodes:nodes, edges:edges}, $scope.config);
 				$scope.graph.on('select', onSelect);
+				$scope.graph.on('doubleClick', onDoubleClick);
 
 				setGraphSize();
 				$scope.graph.zoomExtent({
