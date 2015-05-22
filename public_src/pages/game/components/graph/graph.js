@@ -216,7 +216,9 @@ angular.module('associations.pages.game.components.graph', [
 				},
 				onDoubleClick = function (selected) {
 					if (selected.nodes.length === 1){
-						$scope.selectedWord.expanded = true;
+						$timeout(function(){
+							$scope.selectedWord.expanded = true;
+						});
 					}
 					$scope.$apply();
 				},
