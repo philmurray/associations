@@ -123,11 +123,19 @@
 			max-height: 250px;
 			overflow-y: auto;
 			overflow-x: hidden;
+
+			@media (max-height: 450px) {
+				height: 100px;
+			}
 		}
 
 		&.expanded {
-			width: 400px;
+			width: calc(~"100% - 32px");
 			max-height: 390px;
+
+			@media (min-width: @screen-xs-min) {
+				width: 400px;
+			}
 		}
 		&.chat-badge {
 			width: @toolSizeMin *2;

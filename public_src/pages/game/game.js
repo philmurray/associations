@@ -119,14 +119,30 @@ angular.module('associations.pages.game', [
 
 	$scope.submitChat = function(){
 		GameService.submitChat($scope.game.id, $scope.chat.currentText)
-			.then(function (){
-				$scope.chat.messages.push({
-					player: $scope.player,
-					message: $scope.chat.currentText,
-					time: new Date()
-				});
+			.then(function (response){
+				$scope.chat.messages = response.data;
 				$scope.chat.currentText = "";
 			});
+	};
+
+	$scope.expandChat = function(){
+		if (!$scope.chat.loaded) {
+			GameService.getChats($scope.game.id)
+				.then(function(response){
+					$scope.chat.messages = response.data;
+					$scope.chat.expanded = true;
+					$scope.chat.loaded = true;
+					$scope.game.unreadChats = 0;
+				});
+		} else {
+			$scope.chat.expanded = true;
+		}
+	};
+
+	$scope.getPlayer = function(id){
+		for (var i = 0, l = $scope.game.players.length; i<l; i++){
+			if ($scope.game.players[i].id === id) return $scope.game.players[i];
+		}
 	};
 
 	if ($scope.player !== undefined){

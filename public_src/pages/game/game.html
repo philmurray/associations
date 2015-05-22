@@ -59,7 +59,7 @@
 	</div>
 
 	<div class="chat" ng-if="!playing && game.players.length > 1" ng-class="{well:chat.expanded, expanded:chat.expanded, 'chat-badge':!chat.expanded && game.unreadChats > 0}">
-		<button ng-if="!chat.expanded" class="btn btn-color" ng-click="chat.expanded = true">
+		<button ng-if="!chat.expanded" class="btn btn-color" ng-click="expandChat()">
 			<i class="fa fa-comment"></i>
 			<span ng-if="game.unreadChats > 0" class="badge" >{{game.unreadChats}}</span>
 		</button>
@@ -70,9 +70,9 @@
 				</button>
 			</p>
 			<div class="messages" scroll-bottom>
-				<p ng-repeat="message in chat.messages" class="{{message.player.color.css_class}}">
+				<p ng-repeat="message in chat.messages" class="{{getPlayer(message.player).color.css_class}}">
 					<span class="player">
-						<strong class="text-color">{{message.player.alias}}: </strong>
+						<strong class="text-color">{{getPlayer(message.player).alias}}: </strong>
 					</span>
 					<span class="text-muted">
 						{{message.message}}

@@ -115,6 +115,12 @@ router.put('/game/:gameId/chat', isAuthenticated, function(req, res){
 		res.json(ret);
 	});
 });
+router.get('/game/:gameId/chats', isAuthenticated, function(req, res){
+	models.Chat.getChats(req.user, req.params.gameId, function(err, ret){
+		if (err){ return res.status(500).send(err.message); }
+		res.json(ret);
+	});
+});
 
 router.get('/word', function(req,res){
 	models.Word.search(req.query.text || "", 10, function(err, words){
