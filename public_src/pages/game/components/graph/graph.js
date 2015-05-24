@@ -44,6 +44,7 @@ angular.module('associations.pages.game.components.graph', [
 			var viewModel,
 				nodes,
 				edges,
+				expandPromises = [],
 				createViewModel = function(){
 					var vm = {
 						picksArray: [],
@@ -236,14 +237,17 @@ angular.module('associations.pages.game.components.graph', [
 							timeoutInterval = 75;
 
 						viewModel.picks[fromValue].forEach(function(value){
-							$timeout(function(){
+							expandPromises.push($timeout(function(){
 								addValue(fromValue, value, true);
-							}, (timeoutDelay += timeoutInterval));
+							}, (timeoutDelay += timeoutInterval)));
 						});
 					}
 				},
 				collapse = function(node){
 					if (node.from) {
+						expandPromises.forEach($timeout.cancel);
+						expandPromises = [];
+
 						node.expanded = false;
 						nodes.update(node);
 						var fromValue = node.label;

@@ -121,10 +121,13 @@ angular.module('associations.pages.exploreWords.components.graph', [
 				if (o && o.word && o.word in n.nodes) addNode(o.word);
 				if (o && o.otherWord && o.otherWord in n.nodes) addNode(o.otherWord);
 
+				if ($scope.edgePromises) $scope.edgePromises.forEach($timeout.cancel);
+				$scope.edgePromises = [];
+
 				angular.forEach(n.links, function(data, id){
 					var existing = $scope.edges.get(id);
 					if(!existing){
-						$timeout(function(){
+						$scope.edgePromises.push($timeout(function(){
 							addNode(data.from);
 							addNode(data.to);
 							$scope.edges.add({
@@ -133,7 +136,7 @@ angular.module('associations.pages.exploreWords.components.graph', [
 								to: data.to,
 								value: data.value
 							});
-						}, (timeoutDelay += timeoutInterval));
+						}, (timeoutDelay += timeoutInterval), false));
 					}
 				});
 			};
