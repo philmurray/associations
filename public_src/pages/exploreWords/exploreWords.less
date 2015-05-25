@@ -1,17 +1,21 @@
 .page-explore-words {
-	.navbar-brand {
+	.tool() {
 		position: absolute;
 		z-index: 20;
 	}
+	@animation-duration: 0.4s;
+
+	.navbar-brand {
+		.tool();
+	}
 
 	.node-enter-word {
+		.tool();
+
 		margin: auto;
 		top: 0; right: 0; bottom: 0; left: 0;
 		height: 46px;
 		width: 200px;
-
-		position: absolute;
-		z-index:20;
 	}
 	.node-enter-word.ng-animate {
 		.transition(0.25s linear all);
@@ -28,14 +32,34 @@
 	}
 
 	.mode {
-		.list-unstyled;
-		bottom: @padding-base-horizontal;
-		right:@padding-base-horizontal;
+		.tool();
 
-		position: absolute;
-		z-index:20;
-		li {
-			padding-bottom: 5px;
+		top: @padding-base-horizontal;
+		right:@padding-base-horizontal;
+	}
+
+	.context-controls {
+		.tool;
+		.transition(@animation-duration);
+
+		margin-bottom: 0;
+		bottom: @padding-base-horizontal;
+		right: @padding-base-horizontal;
+		h5 {
+			margin: 0;
+		}
+		a {
+			margin-left: 10px;
+		}
+
+		&.ng-enter,
+		&.ng-leave.ng-leave-active {
+		  opacity:0;
+		}
+
+		&.ng-leave,
+		&.ng-enter.ng-enter-active {
+		  opacity:1;
 		}
 	}
 
@@ -52,6 +76,7 @@
 		z-index: 20;
 		text-align: center;
 	}
+
 
 	.loading-box {
 		background: white;

@@ -15,7 +15,8 @@ angular.module('associations.pages.exploreWords.components.graph', [
 			config:'=graphConfig',
 			onClick:'&graphOnClick',
 			wordId:'=',
-			otherWordId:'='
+			otherWordId:'=',
+			selectedWord: '=graphSelected'
 		},
 		link: function($scope, $element, attrs) {
 			var w = angular.element($window),
@@ -141,6 +142,11 @@ angular.module('associations.pages.exploreWords.components.graph', [
 				});
 			};
 
+			var onSelect = function (selected) {
+				$scope.selectedWord = selected && selected.nodes && selected.nodes.length && $scope.nodes.get(selected.nodes[0]);
+				$scope.$apply();
+			};
+
 			var setGraphSize = function(){
 				$scope.graph.setSize('100%', w[0].innerHeight+'px');
 				$scope.graph.redraw();
@@ -158,6 +164,7 @@ angular.module('associations.pages.exploreWords.components.graph', [
 						$scope.onClick({word:$scope.model.nodes[event.nodes[0]]});
 					}
 				});
+				$scope.graph.on('select', onSelect);
 
 				mergeModel($scope.model);
 			};

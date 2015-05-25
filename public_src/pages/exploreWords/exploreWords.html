@@ -24,19 +24,25 @@
 	</div>
 
 
-	<ul class="mode" >
-		<li>
-			<button href="" ng-class="{active:mode == 1}" ng-click="mode = 1; collapse = true;" class="btn btn-color">One</button>
-		</li>
-		<li>
-			<button href="" ng-class="{active:mode == 2}" ng-click="mode = 2; collapse = true;" class="btn btn-color">Two</button>
-		</li>
-	</ul>
+	<div class="btn-group mode" >
+		<button ng-class="{active:mode == 1}" ng-click="mode = 1; collapse = true;" class="btn btn-color">Word</button>
+		<button ng-class="{active:mode == 2}" ng-click="mode = 2; collapse = true;" class="btn btn-color">Path</button>
+	</div>
+
+	<div class="context-controls well" ng-if="selected">
+		<h5>
+			<strong>
+				{{selected.label}}
+				<a href="" ng-click="onGraphClick(selected.label)"><i class="fa fa-search"></i></a>
+			</strong>
+		</h5>
+	</div>
 
 	<div word-graph
 		graph-model="model"
 		graph-config="diagramConfig"
 		graph-on-click="onGraphClick(word)"
+		graph-selected="selected"
 		word-id="'enterSingleWord'"
 		other-word-id="'enterOtherWord'"
 		style="width: 100%; height: 100%;"></div>

@@ -34,6 +34,7 @@ angular.module('associations.pages.exploreWords',[
 	$scope.$watch("mode", function(n,o){
 		$scope.selectedWord.placeholderText = (n === 1) ? "Enter a Word" : "'From' word";
 		if (n !== o){
+			$scope.selected = null;
 			$scope.noData = false;
 			$scope.model = {nodes:{}, links:{}};
 			if (n === 1) {
@@ -98,6 +99,7 @@ angular.module('associations.pages.exploreWords',[
 			});
 	};
 	$scope.onGraphClick = function(word){
+		$scope.selected = null;
 		if ($scope.mode === 1) {
 			$scope.selectedWord.word = word;
 		} else {
