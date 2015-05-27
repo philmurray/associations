@@ -125,6 +125,7 @@ angular.module('associations.pages.exploreWords.components.graph', [
 				if ($scope.edgePromises) $scope.edgePromises.forEach($timeout.cancel);
 				$scope.edgePromises = [];
 
+				setGraphSize();
 				angular.forEach(n.links, function(data, id){
 					var existing = $scope.edges.get(id);
 					if(!existing){

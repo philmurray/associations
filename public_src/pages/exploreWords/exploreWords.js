@@ -105,7 +105,5 @@ angular.module('associations.pages.exploreWords',[
 		} else {
 			$scope.selectedOtherWord.word = word;
 		}
-
-		$scope.$digest();
 	};
 }]);
