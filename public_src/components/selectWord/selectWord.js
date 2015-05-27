@@ -15,14 +15,33 @@ angular.module('associations.components.selectWord', [
 		link: function($scope, $element, attrs) {
 			$scope.selected = $scope.selected || {word:""};
 
+			var allOptions = [];
 			$scope.wordOptions = [];
+
+			$scope.filterWords = function(query) {
+				var arr = [];
+				for (var i = 0, l = allOptions.length; i<l; i++){
+					if (allOptions[i].substr(0, query.length).toUpperCase() == query.toUpperCase()) {
+						arr.push(allOptions[i]);
+					}
+					if (arr.length >= 10) break;
+				}
+				return arr.sort();
+			};
+
 			$scope.refreshWords = function(searchTerm){
 				if (searchTerm) {
-					WordService.search(searchTerm)
-						.then(function(response){
-							$scope.wordOptions = response.data || [];
-						})
-						.catch($log);
+					var words = $scope.filterWords(searchTerm);
+					if (words.length < 10) {
+						WordService.search(searchTerm)
+							.then(function(response){
+								allOptions = response.data || [];
+								$scope.wordOptions = $scope.filterWords(searchTerm);
+							})
+							.catch($log);
+					} else {
+						$scope.wordOptions = words;
+					}
 				} else {
 					$scope.wordOptions = [];
 				}

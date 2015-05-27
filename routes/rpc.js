@@ -123,7 +123,7 @@ router.get('/game/:gameId/chats', isAuthenticated, function(req, res){
 });
 
 router.get('/word', function(req,res){
-	models.Word.search(req.query.text || "", 10, function(err, words){
+	models.Word.search(req.query.text || "", 150, function(err, words){
 		if (err){ return res.status(500).send(err.message); }
 		res.json(words);
 	});
