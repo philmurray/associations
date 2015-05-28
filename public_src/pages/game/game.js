@@ -37,6 +37,9 @@ angular.module('associations.pages.game', [
 	$scope.updatePlaying = function(newVal){
 		$scope.playersExpanded = !Boolean(newVal);
 		$scope.playing = newVal;
+		if (typeof newVal === "object" && !newVal.word) {
+			$scope.stopGame();
+		}
 	};
 
 	$scope.submitWord = function(wordData){
@@ -64,8 +67,8 @@ angular.module('associations.pages.game', [
 
 		GameService.resumeGame($scope.game.id).then(function(response){
 			$scope.updatePlaying(response.data);
-			$interval(function(){$scope.timeLeft--;},1000,$scope.timeLeft)
-				.then($scope.stopGame);
+			$scope.gameTimer = $interval(function(){$scope.timeLeft--;},1000,$scope.timeLeft);
+			$scope.gameTimer.then($scope.stopGame);
 		}).catch(function(){
 			$scope.addAlert({type: "danger", msg: "Game could not be continued"});
 		});
@@ -84,8 +87,8 @@ angular.module('associations.pages.game', [
 		}).then(function(response){
 			$scope.updatePlaying(response.data);
 			$scope.timeLeft = 30;
-			$interval(function(){$scope.timeLeft--;},1000,$scope.timeLeft)
-				.then($scope.stopGame);
+			$scope.gameTimer = $interval(function(){$scope.timeLeft--;},1000,$scope.timeLeft);
+			$scope.gameTimer.then($scope.stopGame);
 		}).catch(function(err){
 			if (err) {
 				$scope.addAlert({type: "danger", msg: "Game could not be started"});
@@ -109,6 +112,9 @@ angular.module('associations.pages.game', [
 	};
 
 	$scope.stopGame = function(){
+		if ($scope.gameTimer) {
+			$interval.cancel($scope.gameTimer);
+		}
 		GameService.stopGame($scope.game.id).then(function(response){
 			$scope.updatePlaying(false);
 			$scope.game = response.data;
@@ -144,6 +150,11 @@ angular.module('associations.pages.game', [
 			if ($scope.game.players[i].id === id) return $scope.game.players[i];
 		}
 	};
+	$scope.$on('$destroy', function() {
+		if ($scope.gameTimer) {
+			$interval.cancel($scope.gameTimer);
+		}
+	});
 
 	if ($scope.player !== undefined){
 		$scope.activatePlayer($scope.player);
