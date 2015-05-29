@@ -19,22 +19,6 @@ angular.module('associations',
 	])
 	.config(['$routeProvider', '$httpProvider',
 	function($routeProvider, $httpProvider) {
-		var ColorResolver = ['ColorService', function(ColorService){
-				return ColorService.getUserColor().then(function(response){return response.data;});
-			}],
-			UserResolver = ['UserService', function(UserService){
-				return UserService.get().then(function(response){return response.data;});
-			}],
-			RecentPlayersResolver = ['UserService', function(UserService){
-				return UserService.recentPlayers().then(function(response){return response.data;});
-			}],
-			GameResolver = ['GameService', '$route', function(GameService, $route){
-				return GameService.get($route.current.params.gameId).then(function(response){return response.data;});
-			}],
-			GamesResolver = ['GameService', '$route', function(GameService, $route){
-				return GameService.getGames().then(function(response){return response.data;});
-			}];
-
 		$routeProvider
 			.when('/', {
 				templateUrl: 'pages/main/main.html',
@@ -44,28 +28,42 @@ angular.module('associations',
 				templateUrl: 'pages/playerProfile/playerProfile.html',
 				controller: 'PlayerProfileController',
 				resolve: {
-					user: UserResolver
+					user: ['UserService', function(UserService){
+						return UserService.get().then(function(response){return response.data;});
+					}],
+					questions: ['QuestionService', function(QuestionService){
+						return QuestionService.getQuestionList().then(function(response){return response.data;});
+					}],
+					colorList: ['ColorService', function(ColorService){
+						return ColorService.getColorList().then(function(response){return response.data;});
+					}]
 				}
 			})
 			.when('/playLanding', {
 				templateUrl: 'pages/playLanding/playLanding.html',
 				controller: 'PlayLandingController',
 				resolve: {
-					games: GamesResolver
+					games: ['GameService', function(GameService){
+						return GameService.getGames().then(function(response){return response.data;});
+					}]
 				}
 			})
 			.when('/playMulti', {
 				templateUrl: 'pages/playMulti/playMulti.html',
 				controller: 'PlayMultiController',
 				resolve: {
-					recentPlayers: RecentPlayersResolver
+					recentPlayers: ['UserService', function(UserService){
+						return UserService.recentPlayers().then(function(response){return response.data;});
+					}]
 				}
 			})
 			.when('/game/:gameId', {
 				templateUrl: 'pages/game/game.html',
 				controller: 'GameController',
 				resolve: {
-					game: GameResolver
+					game: ['GameService', '$route', function(GameService, $route){
+						return GameService.get($route.current.params.gameId).then(function(response){return response.data;});
+					}]
 				}
 			})
 			.when('/exploreWords', {

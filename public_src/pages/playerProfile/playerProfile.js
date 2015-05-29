@@ -5,23 +5,15 @@ angular.module('associations.pages.playerProfile',[
 	'associations.components.data.user',
 	'associations.components.data.color',
 	'associations.components.data.question'])
-
-.controller("PlayerProfileController", ["$scope", "user", "UserService", "ColorService", "$log", "QuestionService", function ($scope, user, UserService, ColorService, $log, QuestionService) {
+.controller("PlayerProfileController", ["$scope", "user", "UserService", "ColorService", "$log", "QuestionService", "questions", "colorList", "$timeout", function ($scope, user, UserService, ColorService, $log, QuestionService, questions, colorList, $timeout) {
 	$scope.footer.visible = true;
 	$scope.profileUser = angular.extend({},user);
 	$scope.accountUser = angular.extend({},user);
+	$scope.colors = colorList;
+	$scope.questionsObj = questions;
 
 	$scope.forms = {};
 	$scope.activePage = "Profile";
-
-	ColorService.getColorList().then(function(response){
-		$scope.colors = response.data;
-	}).catch($log);
-
-	QuestionService.getQuestionList().then(function(response){
-		$scope.questionsObj = response.data;
-		$scope.initQuestions();
-	});
 
 	$scope.saveProfile = function (){
 		if ($scope.forms.display.$invalid){
@@ -33,7 +25,8 @@ angular.module('associations.pages.playerProfile',[
 			.then(ColorService.setUserColor)
 			.then(function(){
 				$scope.forms.display.showErrors = false;
-				$scope.addAlert({type: "success", msg: "Player profile saved!"});
+				$scope.showProfileConfirm = true;
+				$timeout(function(){$scope.showProfileConfirm = false;}, 2000);
 			})
 			.catch(function(err){
 				$scope.addAlert({type: "danger", msg: "Player profile could not be saved!"});
@@ -48,41 +41,45 @@ angular.module('associations.pages.playerProfile',[
 
 		UserService.save($scope.accountUser).then(function(){
 			$scope.forms.local.showErrors = false;
-			$scope.addAlert({type: "success", msg: "Player profile saved!"});
+			$scope.showAccountConfirm = true;
+			$timeout(function(){$scope.showAccountConfirm = false;}, 2000);
 		}).catch(function(err){
 			$scope.addAlert({type: "danger", msg: "Player profile could not be saved!"});
 		});
 	};
 
 	$scope.selectAnswer = function(question, answer){
-		angular.forEach(question.answers, function(a){
+		angular.forEach(question.question.answers, function(a){
 			a.selected = (a === answer);
+		});
+		var q = {};
+		q[question.id] = question.question;
+		QuestionService.saveQuestionList(q).then(function(){
+			$scope.initQuestions();
+		}).catch(function(err){
+			$scope.addAlert({type: "danger", msg: "Player survey could not be saved!"});
 		});
 	};
 
 	$scope.initQuestions = function(){
-		$scope.questions = [];
+		var rebuild = false;
+		if (!$scope.questions) {
+			rebuild = true;
+			$scope.questions = [];
+		}
 		$scope.unansweredQuestions = 0;
-		angular.forEach($scope.questionsObj, function(question){
+		angular.forEach($scope.questionsObj, function(question, questionId){
 			var hasAnswer = false;
 			angular.forEach(question.answers, function(answer){
 				hasAnswer = hasAnswer || answer.selected;
 			});
 			if (hasAnswer){
-				$scope.questions.push(question);
+				if (rebuild) $scope.questions.push({question:question, id: questionId});
 			} else {
-				$scope.questions.unshift(question);
+				if (rebuild) $scope.questions.unshift({question:question, id: questionId});
 				$scope.unansweredQuestions++;
 			}
 		});
 	};
-
-	$scope.saveSurvey = function(){
-		QuestionService.saveQuestionList($scope.questionsObj).then(function(){
-			$scope.initQuestions();
-			$scope.addAlert({type: "success", msg: "Player survey saved!"});
-		}).catch(function(err){
-			$scope.addAlert({type: "danger", msg: "Player survey could not be saved!"});
-		});
-	};
+	$scope.initQuestions();
 }]);

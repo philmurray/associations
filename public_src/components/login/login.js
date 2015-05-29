@@ -7,17 +7,24 @@ angular.module('associations.components.login', [
 	'ui.bootstrap'
 ])
 .factory('LoginInterceptorService', ['$q', '$location', '$injector', function($q, $location, $injector){
+	var loginPromise;
 	return {
 		responseError: function(response){
 			if (response.status === 401 && response.config.url !== '/auth/local' ){
 				var LoginService = $injector.get('LoginService'),
 					$http = $injector.get('$http');
 
-				return LoginService.login().then(function(){
+				if (!loginPromise){
+					loginPromise = LoginService.login();
+				}
+
+				return loginPromise.then(function(){
 					return $http(response.config);
 				}).catch(function(err){
 					$location.path("/");
 					return $q.reject(err);
+				}).finally(function(){
+					loginPromise = null;
 				});
 			}
 			return $q.reject(response);
