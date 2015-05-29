@@ -1,4 +1,14 @@
 <div class="row">
+	<div class="col-xs-12">
+		<h5 class="picks">
+			{{game.time | date}}
+			<small ng-if="game.picks">
+				{{game.picks.join(", ")}}
+			</small>
+		</h5>
+	</div>
+</div>
+<div class="row">
 	<div class="col-xs-9 vcenter">
 		<div class="row" ng-repeat="player in game.players | orderBy : 'alias'">
 			<div class="col-xs-9 player-name">
