@@ -99,7 +99,7 @@ ALTER TABLE answers_users OWNER TO associations_dbuser;
 CREATE TABLE chats (
     id uuid DEFAULT uuid_generate_v4() NOT NULL,
     game_id uuid NOT NULL,
-    user_id uuid NOT NULL,
+    user_id uuid,
     text text NOT NULL,
     create_time timestamp with time zone DEFAULT now() NOT NULL
 );
@@ -515,7 +515,7 @@ CREATE RULE "_RETURN" AS
     gus.normal,
     ( SELECT count(*) AS count
            FROM chats ch
-          WHERE (((ch.game_id = gus.game_id) AND (ch.user_id <> gus.user_id)) AND (ch.create_time > gus.chat_viewed_time))) AS unread_chats
+          WHERE (((ch.game_id = gus.game_id) AND ((ch.user_id <> gus.user_id) OR (ch.user_id IS NULL))) AND (ch.create_time > gus.chat_viewed_time))) AS unread_chats
    FROM (( SELECT gu.game_id,
             gu.user_id,
             gu.completed,
