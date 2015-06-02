@@ -197,7 +197,8 @@ ALTER TABLE game_top_words OWNER TO associations_dbuser;
 
 CREATE TABLE games (
     id uuid DEFAULT uuid_generate_v4() NOT NULL,
-    create_time timestamp with time zone DEFAULT now() NOT NULL
+    create_time timestamp with time zone DEFAULT now() NOT NULL,
+    completed boolean DEFAULT false NOT NULL
 );
 
 
@@ -213,7 +214,8 @@ CREATE TABLE games_users (
     completed boolean DEFAULT false NOT NULL,
     start_time timestamp with time zone,
     current_word integer DEFAULT 0 NOT NULL,
-    chat_viewed_time timestamp with time zone DEFAULT now() NOT NULL
+    chat_viewed_time timestamp with time zone DEFAULT now() NOT NULL,
+    declined boolean DEFAULT false NOT NULL
 );
 
 
@@ -526,6 +528,7 @@ CREATE RULE "_RETURN" AS
             avg(ps.normal) AS normal
            FROM (games_users gu
              LEFT JOIN picks_scored ps ON (((gu.game_id = ps.game_id) AND (gu.user_id = ps.user_id))))
+          WHERE (gu.declined = false)
           GROUP BY gu.game_id, gu.user_id) gus
      LEFT JOIN games_words gw ON (((gus.current_word = gw."order") AND (gus.game_id = gw.game_id))));
 
