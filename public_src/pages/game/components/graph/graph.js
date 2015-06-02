@@ -22,6 +22,10 @@ angular.module('associations.pages.game.components.graph', [
 			w.bind('resize', function () {
 				$scope.$apply();
 			});
+			$scope.$on('$destroy', function() {
+				w.unbind('resize');
+				expandPromises.forEach($timeout.cancel);
+			});
 
 			// Watch for resize event
 			$scope.$watch(function() {

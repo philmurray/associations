@@ -26,6 +26,10 @@ angular.module('associations.pages.exploreWords.components.graph', [
 			w.bind('resize', function () {
 				$scope.$apply();
 			});
+			$scope.$on('$destroy', function() {
+				w.unbind('resize');
+				if ($scope.edgePromises) $scope.edgePromises.forEach($timeout.cancel);
+			});
 
 			// Watch for resize event
 			$scope.$watch(function() {
