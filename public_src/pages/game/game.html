@@ -58,7 +58,7 @@
 		</h5>
 	</div>
 
-	<div class="chat" ng-if="!playing && game.players.length > 1" ng-class="{well:chat.expanded, expanded:chat.expanded, 'chat-badge':!chat.expanded && game.unreadChats > 0}">
+	<div class="chat" ng-if="!playing && (game.players.length > 1 || game.unreadChats > 0 || chat.messages.length > 0)" ng-class="{well:chat.expanded, expanded:chat.expanded, 'chat-badge':!chat.expanded && game.unreadChats > 0}">
 		<button ng-if="!chat.expanded" class="btn btn-color" ng-click="expandChat()">
 			<i class="fa fa-comment"></i>
 			<span ng-if="game.unreadChats > 0" class="badge" >{{game.unreadChats}}</span>

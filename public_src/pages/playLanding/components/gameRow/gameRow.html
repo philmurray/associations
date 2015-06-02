@@ -27,5 +27,8 @@
 			<i ng-class="{'fa-play': game.status == 3, 'fa-search': game.status != 3}" class="fa"></i>
 			<span ng-if="game.status != 3 && game.unreadChats > 0" class="badge" >{{game.unreadChats}}</span>
 		</button>
+		<button ng-if="game.status == 3" class="btn btn-xs btn-color pull-right" ng-click="declineGame(game)">
+			<i class="fa fa-times"></i>
+		</button>
 	</div>
 </div>

@@ -39,6 +39,13 @@ angular.module('associations.components.data.game', [])
 					url: url
 				});
 			},
+			declineGame: function(gameId){
+				var url = "/rpc/game/" + gameId + "/decline";
+				return $http({
+					method: 'POST',
+					url: url
+				});
+			},
 			resumeGame: function(gameId){
 				var url = "/rpc/game/" + gameId + "/resume";
 				return $http({

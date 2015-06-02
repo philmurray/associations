@@ -94,6 +94,13 @@ router.post('/game/:gameId/stop', isAuthenticated, function(req,res){
 		res.json(ret);
 	});
 });
+router.post('/game/:gameId/decline', isAuthenticated, function(req,res){
+
+	models.GameUser.declineGame(req.user, req.params.gameId, function(err, ret){
+		if (err){ return res.status(500).send(err.message); }
+		res.json(ret);
+	});
+});
 router.get('/game/:gameId/resume', isAuthenticated, function(req,res){
 
 	models.GameUser.resumeGame(req.user, req.params.gameId, function(err, ret){
