@@ -6,6 +6,7 @@ angular.module('associations',
 		'ngAnimate',
 		'ngRoute',
 		'associations.pages.main',
+		'associations.pages.landing',
 		'associations.pages.exploreWords',
 		'associations.pages.playerProfile',
 		'associations.pages.playLanding',
@@ -23,6 +24,15 @@ angular.module('associations',
 			.when('/', {
 				templateUrl: 'pages/main/main.html',
 				controller: 'MainController'
+			})
+			.when('/landing', {
+				templateUrl: 'pages/landing/landing.html',
+				controller: 'LandingController',
+				resolve: {
+					authenticated: ['UserService', function(UserService){
+						return UserService.authenticated().then(function(response){return response.data;});
+					}]
+				}
 			})
 			.when('/playerProfile', {
 				templateUrl: 'pages/playerProfile/playerProfile.html',

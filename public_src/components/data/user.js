@@ -30,6 +30,13 @@ angular.module('associations.components.data.user', [])
 					method: 'GET',
 					url: url
 				});
+			},
+			authenticated: function(){
+				var url = "/rpc/authenticated";
+				return $http({
+					method: 'GET',
+					url: url
+				});
 			}
 		};
 	}]);

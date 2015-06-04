@@ -10,6 +10,9 @@ var isAuthenticated = function (req, res, next) {
 	res.status(401).send('Not logged in.');
 };
 
+router.get('/authenticated', function(req, res){
+	res.send(req.isAuthenticated());
+});
 router.get('/user', isAuthenticated, function(req, res){
 	res.json(req.user.safeModel());
 });
