@@ -1,4 +1,4 @@
-<div class="page-landing">
+<div class="page-landing" infinite-scroll="page()" infinite-scroll-distance="1">
 	<div class="jumbotron bg-color text-center">
 		<div class="container">
 			<h1>
@@ -15,36 +15,14 @@
 			</p>
 		</div>
 	</div>
-	<div class="container">
-		<div class="page-header">
-			<h1>Explore <small>What do others think?</small></h1>
-		</div>
-		<div class="row">
-			<div class="col-md-4">
-				<div class="panel panel-default">
-					<div class="panel-body">
-						Some chart goes here
-					</div>
-				</div>
+	<div ng-repeat="section in sections | filter:filterSections" class="section" ng-class="{even: $even, odd: $odd}">
+		<div class="container">
+			<div class="page-header">
+				<h1>{{section.title}} <small>{{section.subtitle}}</small></h1>
 			</div>
-			<div class="col-md-4">
-				<div class="panel panel-default">
-					<div class="panel-body">
-						Some chart goes here
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="panel panel-default">
-					<div class="panel-body">
-						<h4>Search words</h4>
-						<p>
-							Enter a word and see how it is connected to other words.  Powered by the human mind!
-						</p>
-						<p class="text-center">
-							<a class="btn btn-color" href="#/exploreWords">Go there</a>
-						</p>
-					</div>
+			<div class="row">
+				<div ng-repeat="component in section.components" ng-include="component">
+
 				</div>
 			</div>
 		</div>
