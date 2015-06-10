@@ -1,14 +1,20 @@
 "use strict";
 angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 250);
 
-angular.module('associations.pages.landing', ['associations.components.login', 'infinite-scroll'])
+angular.module('associations.pages.landing', [
+	'associations.components.login',
+	'associations.pages.landing.components.pendingGames',
+	'infinite-scroll'
+])
 
 .controller("LandingController", ["$scope", "authenticated", "LoginService", function($scope, authenticated, LoginService) {
 	$scope.footer.visible = true;
-	$scope.authenticated = authenticated;
+	$scope.authenticated = {
+		value:authenticated
+	};
 	$scope.logIn = function(){
 		LoginService.login().then(function(){
-			$scope.authenticated = true;
+			$scope.authenticated.value = true;
 		});
 	};
 
@@ -31,37 +37,42 @@ angular.module('associations.pages.landing', ['associations.components.login', '
 
 	$scope.sections = [];
 	$scope.filterSections = function(value){
-		return $scope.authenticated || !value.authRequired;
+		return $scope.authenticated.value || !value.authRequired;
 	};
 
 	var availableSections = [
 		{
-			title: "You",
-			subtitle: "Getting to know you",
-			components: [],
-			authRequired: true
+			components:[],
+			authRequired:true
 		},
+		// {
+		// 	title: "Games",
+		// 	subtitle: "For people who like a challenge",
+		// 	components: [],
+		// 	authRequired: true
+		// },
+		// {
+		// 	title: "You",
+		// 	subtitle: "Getting to know you",
+		// 	components: [],
+		// 	authRequired: true
+		// },
 		{
-			title: "Games",
-			subtitle: "For people who like a challenge",
-			components: [],
-			authRequired: true
-		},
-		{
-			title: "Explore",
-			subtitle: "See what other people have on their minds",
 			components: []
 		}
 	],
 	availableComponents = [
 		[
-			"pages/landing/components/you/profile.html"
+			"pages/landing/components/pendingGames/pendingGames.html"
 		],
+		// [
+		// 	"pages/landing/components/gamesLink/gamesLink.html"
+		// ],
+		// [
+		// 	"pages/landing/components/profileLink/profileLink.html"
+		// ],
 		[
-			"pages/landing/components/games/new.html"
-		],
-		[
-			"pages/landing/components/explore/pageLink.html"
+			"pages/landing/components/exploreLink/exploreLink.html"
 		]
 	];
 

@@ -1,0 +1,36 @@
+<div class="pendingGames" ng-if="authenticated.value" ng-controller="PendingGamesCtrl as ctrl">
+	<div class="col-xs-12" ng-if="ctrl.games.length">
+		<div class='page-header text-center'>
+			<h2 class='text-center'>
+				Pending Games
+			</h2>
+		</div>
+	</div>
+	<div ng-repeat="game in ctrl.games" class="col-xs-12 col-sm-6 col-md-4">
+		<div class="panel">
+			<div class="panel-body">
+				<h4 class="text-center">
+					{{game.time | date}}
+					<small class="decline">
+						<a ng-click="ctrl.declineGame(game)"><i class="fa fa-times"></i></a>
+					</small>
+				</h4>
+				<p>
+					<ul class="list-unstyled">
+						<li class="player-name" ng-repeat="player in game.players" ng-class="{'text-muted':!player.completed}">
+							<span>{{player.alias}}</span>
+							<span class="pull-right">
+								<i class="fa" ng-class="{'fa-check':player.completed, 'fa-ellipsis-h':!player.completed}"></i>
+							</span>
+						</li>
+					</ul>
+				</p>
+				<p class="text-center buttons">
+					<button class="btn btn-color" ng-click="ctrl.gotoGame(game)">
+						<i class="fa fa-play"></i> Play!
+					</button>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
