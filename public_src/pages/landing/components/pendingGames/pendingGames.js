@@ -1,7 +1,7 @@
 "use strict";
-angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 250);
-
-angular.module('associations.pages.landing.components.pendingGames', [])
+angular.module('associations.pages.landing.components.pendingGames', [
+	'associations.components.data.game'
+])
 	.controller("PendingGamesCtrl", ["$scope", "GameService", "$location", function($scope, GameService, $location){
 		var self = this;
 		GameService.getGames(true,25,0).then(function(response){

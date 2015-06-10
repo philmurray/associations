@@ -1,0 +1,35 @@
+<div class="links" ng-controller="LinksCtrl as ctrl">
+	<div class="col-sm-6">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<h4 class="text-center">Play a game</h4>
+				<p>
+					How loose is your mind juice?  Try to come up with the most free associations before the time runs out.
+				</p>
+				<p class="text-center">
+					<button class="btn btn-color btn-lg" ng-click="ctrl.startSingleGame()">
+						<i class="fa fa-user fa-fw"></i>
+					</button>
+					<button class="btn btn-color btn-lg" ng-click="ctrl.startMultiGame()">
+						<i class="fa fa-users fa-fw"></i>
+					</button>
+				</p>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-6">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<h4 class="text-center">Profile</h4>
+				<p>
+					Edit your name and favorite color.  Also take a survey to help us get more data!
+				</p>
+				<p class="text-center">
+					<a class="btn btn-color btn-lg" href="#/playerProfile">
+						<i class="fa fa-cogs fa-fw"></i>
+					</a>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
