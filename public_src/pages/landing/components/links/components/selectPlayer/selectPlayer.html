@@ -1,0 +1,42 @@
+<div class="select-player">
+	<div class="modal-header">
+		<h3 class="modal-title">Select Players</h3>
+	</div>
+	<div class="modal-body">
+		<div class="form-group">
+			<input type="text" ng-model="searchPlayers" class="form-control" placeholder="Name or email of player" />
+		</div>
+		<div class="form-group">
+			<div class="panel panel-default">
+				<div class="list-group panel-body">
+					<div ng-repeat="player in foundPlayers" class="list-group-item">
+						<div class="row">
+							<div class="col-xs-9 vcenter">
+								<div class="row">
+									<div class="col-xs-9 player-name {{player.color.css_class}}">
+										<span class="text-color"><i class="fa fa-user fa-fw"></i>&nbsp;</span>
+										<span ng-if="playerSelected(player)"><strong>{{player.alias}}</strong></span>
+										<span ng-if="!playerSelected(player)" class="text-muted">{{player.alias}}</span>
+									</div>
+									<div class="col-xs-3">
+									</div>
+								</div>
+							</div><!--
+						--><div class="col-xs-3 vcenter">
+								<button class="btn btn-xs btn-color pull-right" ng-click="togglePlayer(player)">
+									<i ng-class="{'icon-invisible':!playerSelected(player)}" class="fa fa-check"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+					<div ng-if="!foundPlayers.length" class="list-group-item disabled">
+						<h5>No players found</h5>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button class="col-xs-12 btn btn-lg btn-color" ng-click="startGame()" ng-disabled="!hasPlayers()">Start Game!</button>
+	</div>
+</div>

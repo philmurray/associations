@@ -31,7 +31,7 @@ angular.module('associations.components.login', [
 		}
 	};
 }])
-.factory('LoginService', ['$modal', 'UserService', function($modal, UserService){
+.factory('LoginService', ['$modal', function($modal){
 	return {
 		login: function(){
 			return $modal.open({
