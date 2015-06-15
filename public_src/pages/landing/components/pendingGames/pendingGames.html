@@ -1,11 +1,4 @@
 <div class="pendingGames" ng-controller="PendingGamesCtrl as ctrl">
-	<div class="col-xs-12" ng-if="ctrl.games.length">
-		<div class='page-header text-center'>
-			<h2 class='text-center'>
-				Pending Games
-			</h2>
-		</div>
-	</div>
 	<div ng-repeat="game in ctrl.games" class="col-xs-12 col-sm-6 col-md-4">
 		<div class="panel">
 			<div class="panel-body">

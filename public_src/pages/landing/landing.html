@@ -1,4 +1,4 @@
-<div class="page-landing" infinite-scroll="page()" infinite-scroll-distance="1">
+<div class="page-landing" infinite-scroll="page()" infinite-scroll-distance="1" infinite-scroll-listen-for-event="landingSections:update">
 	<div class="jumbotron bg-color text-center">
 		<div class="container">
 			<h1>
@@ -15,8 +15,13 @@
 			</p>
 		</div>
 	</div>
-	<div ng-repeat="section in sections | filter:filterSections" class="section" ng-class="{even: $even, odd: $odd}">
+	<div ng-repeat="section in sections | filter:filterSections" class="section" ng-class="{even: $even, odd: $odd, 'no-title': !section.title}">
 		<div class="container">
+			<div class='page-header text-center' ng-if="section.title">
+				<h2 class='text-center'>
+					{{section.title}}
+				</h2>
+			</div>
 			<div class="row">
 				<div ng-repeat="component in section.components" ng-include="component">
 				</div>

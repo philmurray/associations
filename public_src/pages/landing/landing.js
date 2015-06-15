@@ -4,6 +4,7 @@ angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 250);
 angular.module('associations.pages.landing', [
 	'associations.components.login',
 	'associations.pages.landing.components.pendingGames',
+	'associations.pages.landing.components.pastGamesList',
 	'associations.pages.landing.components.links',
 	'infinite-scroll'
 ])
@@ -20,70 +21,56 @@ angular.module('associations.pages.landing', [
 	};
 
 	$scope.page = function(){
-		var currentSection = $scope.sections[$scope.sections.length - 1];
+		var currentSectionIndex = $scope.sections.length - 1,
+			currentSection = $scope.sections[currentSectionIndex];
 
-		if (!currentSection){
-			$scope.sections.push(availableSections.shift());
-		} else if (availableComponents.length) {
-			if (availableComponents[0].length){
-				currentSection.components.push(availableComponents[0].shift());
-			} else {
-				availableComponents.shift();
-				if (availableSections.length){
-					$scope.sections.push(availableSections.shift());
-				}
-			}
+		if (!currentSection || availableSections[currentSectionIndex].components.length === currentSection.components.length){
+			currentSectionIndex++;
+			if (!availableSections[currentSectionIndex]) return;
+
+			currentSection = angular.copy(availableSections[currentSectionIndex]);
+			currentSection.components = [];
+			$scope.sections.push(currentSection);
+		}
+		var nextComponent = availableSections[currentSectionIndex].components[currentSection.components.length];
+		if (nextComponent) {
+			currentSection.components.push(nextComponent);
 		}
 	};
 
+	$scope.$watch("sections", function(){
+		$scope.$emit("landingSections:update");
+	}, true);
+
 	$scope.sections = [];
 	$scope.filterSections = function(value){
-		return $scope.authenticated.value || !value.authRequired;
+		return value.visible && ($scope.authenticated.value || !value.authRequired);
 	};
 
 	var availableSections = [
 		{
-			components:[],
-			authRequired:true
+			title: "Pending Games",
+			components:["pages/landing/components/pendingGames/pendingGames.html"],
+			authRequired:true,
+			visible:true
 		},
 		{
-			components:[],
-			authRequired:true
+			components:["pages/landing/components/links/links.html"],
+			authRequired:true,
+			visible:true
 		},
-		// {
-		// 	title: "Games",
-		// 	subtitle: "For people who like a challenge",
-		// 	components: [],
-		// 	authRequired: true
-		// },
-		// {
-		// 	title: "You",
-		// 	subtitle: "Getting to know you",
-		// 	components: [],
-		// 	authRequired: true
-		// },
 		{
-			components: []
+			title: "Past Games",
+			components: ["pages/landing/components/pastGamesList/pastGamesList.html"],
+			authRequired:true,
+			visible:true
+		},
+		{
+			title: "Explore",
+			components: ["pages/landing/components/exploreLink/exploreLink.html"],
+			visible:true
 		}
-	],
-	availableComponents = [
-		[
-			"pages/landing/components/pendingGames/pendingGames.html"
-		],
-		[
-			"pages/landing/components/links/links.html"
-		],
-		// [
-		// 	"pages/landing/components/profileLink/profileLink.html"
-		// ],
-		[
-			"pages/landing/components/exploreLink/exploreLink.html"
-		]
 	];
-
-	while (!$scope.sections.filter($scope.filterSections).length) {
-		$scope.page();
-	}
 	$scope.page();
 
 }]);

@@ -4,7 +4,10 @@ angular.module('associations.components.data.game', [])
 	.factory('GameService', ['$http', function($http){
 		return {
 			getGames: function(pending, pageSize, page){
-				var url = "/rpc/games?pending=" + pending + "&pageSize=" + pageSize + "&page=" + page;
+				var url = "/rpc/games?pageSize=" + pageSize + "&page=" + page;
+				if (pending){
+					url += "&pending=" + pending;
+				}
 				return $http({
 					method: 'GET',
 					url: url
