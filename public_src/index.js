@@ -5,12 +5,9 @@ angular.module('associations',
 		'templates',
 		'ngAnimate',
 		'ngRoute',
-		'associations.pages.main',
 		'associations.pages.landing',
 		'associations.pages.exploreWords',
 		'associations.pages.playerProfile',
-		'associations.pages.playLanding',
-		'associations.pages.playMulti',
 		'associations.pages.game',
 		'associations.components.login',
 		'associations.components.data.color',
@@ -22,10 +19,6 @@ angular.module('associations',
 	function($routeProvider, $httpProvider) {
 		$routeProvider
 			.when('/', {
-				templateUrl: 'pages/main/main.html',
-				controller: 'MainController'
-			})
-			.when('/landing', {
 				templateUrl: 'pages/landing/landing.html',
 				controller: 'LandingController',
 				resolve: {
@@ -46,24 +39,6 @@ angular.module('associations',
 					}],
 					colorList: ['ColorService', function(ColorService){
 						return ColorService.getColorList().then(function(response){return response.data;});
-					}]
-				}
-			})
-			.when('/playLanding', {
-				templateUrl: 'pages/playLanding/playLanding.html',
-				controller: 'PlayLandingController',
-				resolve: {
-					games: ['GameService', function(GameService){
-						return GameService.getGames().then(function(response){return response.data;});
-					}]
-				}
-			})
-			.when('/playMulti', {
-				templateUrl: 'pages/playMulti/playMulti.html',
-				controller: 'PlayMultiController',
-				resolve: {
-					recentPlayers: ['UserService', function(UserService){
-						return UserService.recentPlayers().then(function(response){return response.data;});
 					}]
 				}
 			})

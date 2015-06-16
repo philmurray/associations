@@ -12,7 +12,6 @@
     "angular-ui-bootstrap-bower": "*",
     "angular-ui-select": "*",
     "angular-input-match": "*",
-    "springy": "*",
     "vis": "*",
     "fontawesome": "*",
     "ngInfiniteScroll": "*"

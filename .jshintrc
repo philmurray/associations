@@ -12,7 +12,6 @@
 	"afterEach": false,
 	"module": false,
 	"inject": false,
-	"Springy": false,
 	"jsPlumb": false,
 	"vis": false,
 	"console": false

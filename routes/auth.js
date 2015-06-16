@@ -9,7 +9,7 @@ router.post('/local', passport.authenticate('local'), function(req, res){
 });
 
 
-router.get('/facebook/login/:route*',function(req, res, next) {
+router.get('/facebook/login/:route*?',function(req, res, next) {
 	req.session.route = req.params.route;
 	passport.authenticate('facebook')(req, res, next);
 });
@@ -21,7 +21,7 @@ router.get('/facebook/callback',
 		res.redirect('/#/' + req.session.route);
 	});
 
-router.get('/twitter/login/:route*',function(req, res, next) {
+router.get('/twitter/login/:route*?',function(req, res, next) {
 	req.session.route = req.params.route;
 	passport.authenticate('twitter')(req, res, next);
 });
@@ -33,7 +33,7 @@ router.get('/twitter/callback',
 		res.redirect('/#/' + req.session.route);
 	});
 
-router.get('/google/login/:route*',function(req, res, next) {
+router.get('/google/login/:route*?',function(req, res, next) {
 	req.session.route = req.params.route;
 	passport.authenticate('google', {
 		scope: "https://www.googleapis.com/auth/plus.login"
