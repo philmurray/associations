@@ -14,7 +14,6 @@
 					<li role="presentation" ng-class="{active:activePage=='Profile'}"><a ng-click="activePage='Profile'; collapse = true;">Profile</a></li>
 					<li role="presentation" ng-class="{active:activePage=='Account'}"><a ng-click="activePage='Account'; collapse = true;">Account</a></li>
 					<li role="presentation" ng-class="{active:activePage=='Survey'}"><a ng-click="activePage='Survey'; collapse = true;">Survey <span class="badge">{{unansweredQuestions || ''}}</span></a></li>
-					<li role="presentation" ng-class="{active:activePage=='Statistics'}"><a ng-click="activePage='Statistics'; collapse = true;">Statistics</a></li>
 				</ul>
 			</div>
 		</div>
@@ -26,7 +25,6 @@
 					<li role="presentation" ng-class="{active:activePage=='Profile'}"><a ng-click="activePage='Profile'">Profile</a></li>
 					<li role="presentation" ng-class="{active:activePage=='Account'}"><a ng-click="activePage='Account'">Account</a></li>
 					<li role="presentation" ng-class="{active:activePage=='Survey'}"><a ng-click="activePage='Survey'">Survey <span class="badge">{{unansweredQuestions || ''}}</span></a></li>
-					<li role="presentation" ng-class="{active:activePage=='Statistics'}"><a ng-click="activePage='Statistics'">Statistics</a></li>
 				</ul>
 			</div>
 			<div ng-if="activePage=='Profile'" class="col-md-10 col-sm-9 col-xs-12">
@@ -169,12 +167,6 @@
 					</div>
 				</div>
 			</div>
-			<div ng-if="activePage=='Statistics'" class="col-md-10 col-sm-9 col-xs-12">
-				<div class="row">
-					<h1 class="col-sm-12">
-						Statistics
-					</h1>
-				</div></div>
 		</div>
 	</div>
 </div>

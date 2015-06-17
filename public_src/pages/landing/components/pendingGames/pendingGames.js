@@ -6,7 +6,6 @@ angular.module('associations.pages.landing.components.pendingGames', [
 		var self = this;
 		GameService.getGames(true,25,0).then(function(response){
 			self.games = response.data;
-			$scope.section.visible = self.games.length;
 		});
 
 		this.gotoGame = function(game){
@@ -19,7 +18,6 @@ angular.module('associations.pages.landing.components.pendingGames', [
 					var i = self.games.indexOf(game);
 					if (i !== -1){
 						self.games.splice(i,1);
-						$scope.section.visible = self.games.length;
 					}
 				})
 				.catch(function(err){

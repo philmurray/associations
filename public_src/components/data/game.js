@@ -3,10 +3,13 @@
 angular.module('associations.components.data.game', [])
 	.factory('GameService', ['$http', function($http){
 		return {
-			getGames: function(pending, pageSize, page){
+			getGames: function(pending, pageSize, page, multi){
 				var url = "/rpc/games?pageSize=" + pageSize + "&page=" + page;
-				if (pending){
+				if (pending) {
 					url += "&pending=" + pending;
+				}
+				if (multi) {
+					url += "&multi=" + multi;
 				}
 				return $http({
 					method: 'GET',

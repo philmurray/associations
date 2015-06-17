@@ -3,6 +3,7 @@ angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 250);
 
 angular.module('associations.pages.landing', [
 	'associations.components.login',
+	'associations.pages.landing.components.welcome',
 	'associations.pages.landing.components.pendingGames',
 	'associations.pages.landing.components.pastGamesList',
 	'associations.pages.landing.components.links',
@@ -49,19 +50,19 @@ angular.module('associations.pages.landing', [
 
 	var availableSections = [
 		{
-			title: "Pending Games",
-			components:["pages/landing/components/pendingGames/pendingGames.html"],
+			components:[
+				"pages/landing/components/welcome/welcome.html",
+				"pages/landing/components/links/links.html"
+			],
 			authRequired:true,
 			visible:true
 		},
 		{
-			components:["pages/landing/components/links/links.html"],
-			authRequired:true,
-			visible:true
-		},
-		{
-			title: "Past Games",
-			components: ["pages/landing/components/pastGamesList/pastGamesList.html"],
+			title: "Games",
+			components:[
+				"pages/landing/components/pendingGames/pendingGames.html",
+				"pages/landing/components/pastGamesList/pastGamesList.html"
+			],
 			authRequired:true,
 			visible:true
 		},

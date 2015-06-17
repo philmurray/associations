@@ -68,7 +68,7 @@ router.get('/colorlist', function(req,res){
 router.get('/games', isAuthenticated, function(req,res){
 	var method = req.query.pending ? models.Game.getPendingGames : models.Game.getGames;
 
-	method(req.user, req.query.pageSize || 10, req.query.page || 0, function(err, game){
+	method(req.user, req.query.multi, req.query.pageSize || 10, req.query.page || 0, function(err, game){
 		if (err){ return res.status(500).send(err.message); }
 		res.json(game);
 	});

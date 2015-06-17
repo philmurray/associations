@@ -1,42 +1,59 @@
-<div class="col-sm-6 past-games-list" ng-controller="PastGamesListCtrl as ctrl">
-	<div class="panel">
-		<div class="list-group panel-body">
-			<div ng-repeat="game in ctrl.games" class="list-group-item">
-				<div class="row">
-					<div class="col-xs-12">
-						<h5 class="picks">
-							{{game.time | date}}
-							<small ng-if="game.picks">
-								{{game.picks.join(", ")}}
-							</small>
-						</h5>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-9 vcenter">
-						<div class="row" ng-repeat="player in game.players | orderBy : 'alias'">
-							<div class="col-xs-9 player-name">
-								<span ng-if="player.winner"><strong><i class="fa fa-star"></i> {{player.alias}}</strong></span>
-								<span ng-if="!player.winner" class="text-muted">{{player.alias}}</span>
-							</div>
-							<div class="col-xs-3">
-								<span ng-if="player.winner"><strong>{{player.score}}</strong></span>
-								<span ng-if="!player.winner && player.completed" class="text-muted">{{player.score}}</span>
-								<span ng-if="!player.completed" class="text-muted">...</span>
-							</div>
+<div class="past-games-list" ng-controller="PastGamesListCtrl as ctrl">
+	<div class="col-sm-4">
+		<h2>
+			Recent Games
+		</h2>
+		<p class="text-muted">
+			Bear witness to your past glory.
+		</p>
+	</div>
+	<div class="col-sm-8">
+		<p>
+			<ul class="nav nav-pills">
+				<li role="presentation" ng-class="{active:!ctrl.multi}"><a ng-click="ctrl.setMode(false)"><i class="fa fa-user"></i></a></li>
+				<li role="presentation" ng-class="{active:ctrl.multi}"><a ng-click="ctrl.setMode(true)"><i class="fa fa-users"></i></a></li>
+			</ul>
+		</p>
+		<div class="panel panel-default">
+			<div class="list-group panel-body">
+				<div ng-repeat="game in ctrl.games" class="list-group-item">
+					<!-- <div class="row">
+						<div class="col-xs-12">
+							<h5 class="picks">
+								{{game.time | date}}
+								<small ng-if="game.picks">
+									{{game.picks.join(", ")}}
+								</small>
+							</h5>
 						</div>
-					</div><!--
-				--><div class="col-xs-3 vcenter">
-						<button class="btn btn-xs btn-color pull-right" ng-click="ctrl.gotoGame(game)">
-							<i class="fa fa-search"></i>
-							<span ng-if="game.unreadChats > 0" class="badge" >{{game.unreadChats}}</span>
-						</button>
+					</div> -->
+					<div class="row">
+						<div class="col-xs-9 vcenter">
+							<div class="row" ng-repeat="player in game.players | orderBy : 'alias'">
+								<div class="col-xs-9 player-name">
+									<span ng-if="player.winner"><strong><i class="fa fa-star"></i> {{player.alias}}</strong></span>
+									<span ng-if="!player.winner" class="text-muted">{{player.alias}}</span>
+								</div>
+								<div class="col-xs-3">
+									<span ng-if="player.winner"><strong>{{player.score}}</strong></span>
+									<span ng-if="!player.winner && player.completed" class="text-muted">{{player.score}}</span>
+									<span ng-if="!player.completed" class="text-muted">...</span>
+								</div>
+							</div>
+						</div><!--
+					--><div class="col-xs-3 vcenter">
+							<button class="btn btn-xs btn-color pull-right" ng-click="ctrl.gotoGame(game)">
+								<i class="fa fa-search"></i>
+								<span ng-if="game.unreadChats > 0" class="badge" >{{game.unreadChats}}</span>
+							</button>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div ng-if="!ctrl.games.length" class="list-group-item disabled">
-				<h5>No recent games.  Go play some!</h5>
+				<div ng-if="!ctrl.games.length" class="list-group-item disabled">
+					<h5>No recent games.  Go play some!</h5>
+				</div>
 			</div>
 		</div>
+		<a href="" ng-click="ctrl.loadMore()" ng-if="ctrl.hasMore">More...</a>
 	</div>
 </div>

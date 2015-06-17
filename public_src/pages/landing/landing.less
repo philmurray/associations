@@ -8,7 +8,9 @@
 		}
 	}
 	.section {
-		padding-bottom: 70px;
+		.padded.row {
+			padding-bottom: 100px;
+		}
 
 		&.even {
 			background: rgba(0,0,0,0.15);
@@ -16,8 +18,10 @@
 		&.odd {
 			background: rgba(0,0,0,0.35);
 		}
-		&.no-title {
-			padding-top: 100px;
+	}
+	.welcome {
+		h1 {
+			margin: @font-size-h1 * @line-height-base 0 @font-size-h1;
 		}
 	}
 	.links {

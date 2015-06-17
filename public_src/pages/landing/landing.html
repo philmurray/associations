@@ -15,15 +15,17 @@
 			</p>
 		</div>
 	</div>
-	<div ng-repeat="section in sections | filter:filterSections" class="section" ng-class="{even: $even, odd: $odd, 'no-title': !section.title}">
+	<div ng-repeat="section in sections | filter:filterSections" class="section" ng-class="{even: $even, odd: $odd}">
 		<div class="container">
-			<div class='page-header text-center' ng-if="section.title">
-				<h2 class='text-center'>
-					{{section.title}}
-				</h2>
-			</div>
 			<div class="row">
-				<div ng-repeat="component in section.components" ng-include="component">
+				<div class='col-xs-12 page-header text-center' ng-if="section.title">
+					<h1 class='text-center'>
+						{{section.title}}
+					</h1>
+				</div>
+			</div>
+			<div ng-repeat="component in section.components" ng-class="{padded:($last || component == 'break')}" class="row">
+				<div ng-if="component != 'break'" ng-include="component">
 				</div>
 			</div>
 		</div>
