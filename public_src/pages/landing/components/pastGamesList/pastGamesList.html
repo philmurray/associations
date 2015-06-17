@@ -27,23 +27,13 @@
 	<div class="col-sm-8">
 		<p>
 			<ul class="nav nav-pills">
-				<li role="presentation" ng-class="{active:!ctrl.multi}"><a ng-click="ctrl.setMode(false)"><i class="fa fa-user"></i></a></li>
-				<li role="presentation" ng-class="{active:ctrl.multi}"><a ng-click="ctrl.setMode(true)"><i class="fa fa-users"></i></a></li>
+				<li role="presentation" ng-class="{active:!ctrl.multi}"><a href="" ng-click="ctrl.setMode(false)"><i class="fa fa-user"></i></a></li>
+				<li role="presentation" ng-class="{active:ctrl.multi}"><a href="" ng-click="ctrl.setMode(true)"><i class="fa fa-users"></i></a></li>
 			</ul>
 		</p>
 		<div class="panel panel-default">
 			<div class="list-group panel-body">
 				<div ng-repeat="game in ctrl.games" class="list-group-item">
-					<!-- <div class="row">
-						<div class="col-xs-12">
-							<h5 class="picks">
-								{{game.time | date}}
-								<small ng-if="game.picks">
-									{{game.picks.join(", ")}}
-								</small>
-							</h5>
-						</div>
-					</div> -->
 					<div class="row">
 						<div class="col-xs-9 vcenter">
 							<div class="row" ng-repeat="player in game.players | orderBy : 'alias'">
