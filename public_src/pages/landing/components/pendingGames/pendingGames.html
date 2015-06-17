@@ -1,8 +1,11 @@
 <div class="pendingGames" ng-controller="PendingGamesCtrl as ctrl">
 	<div ng-if="ctrl.games.length" class="col-xs-12">
-		<h3>
+		<h2>
 			<i class="fa fa-exclamation-circle"></i> You have been challenged
-		</h3>
+		</h2>
+		<p>
+			&nbsp;
+		</p>
 	</div>
 	<div ng-repeat="game in ctrl.games" class="col-xs-12 col-sm-6 col-md-4">
 		<div class="well">
@@ -30,9 +33,9 @@
 
 		</div>
 	</div>
-	<div ng-if="ctrl.games.length" class="row padded">
-		<h3>
-			<i class="fa fa-exclamation-circle"></i> You have been challenged
-		</h3>
+	<div ng-if="ctrl.games.length" class="col-xs-12">
+		<p>
+			&nbsp;
+		</p>
 	</div>
 </div>

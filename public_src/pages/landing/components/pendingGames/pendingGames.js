@@ -4,7 +4,7 @@ angular.module('associations.pages.landing.components.pendingGames', [
 ])
 	.controller("PendingGamesCtrl", ["$scope", "GameService", "$location", function($scope, GameService, $location){
 		var self = this;
-		GameService.getGames(true,25,0).then(function(response){
+		GameService.getGames(true,25,0,true).then(function(response){
 			self.games = response.data;
 		});
 
