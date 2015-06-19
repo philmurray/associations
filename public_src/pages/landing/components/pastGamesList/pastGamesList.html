@@ -4,7 +4,7 @@
 			Past Games
 		</h2>
 	</div>
-	<div class="col-sm-4 text-center">
+	<div ng-if="ctrl.mostPicksGame" class="col-sm-4 text-center">
 		<h3>
 			<a href="" ng-click="ctrl.gotoGame(ctrl.highScoreGame)">{{ctrl.highScoreGame.score}}</a>
 		</h3>

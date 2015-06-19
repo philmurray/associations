@@ -11,15 +11,13 @@ angular.module('associations.pages.landing.components.pastGamesList', [
 		this.loadMore = function(clear){
 			return GameService.getGames(false,pageLength,self.page,self.multi).then(function(response){
 				self.page++;
-				if (response.data && response.data.length){
-					if (clear){
-						self.games = response.data;
-						self.hasMore = true;
-					} else {
-						self.games.push.apply(self.games, response.data);
-					}
-				} else {
+				if (clear){
 					self.games = [];
+					self.hasMore = true;
+				}
+
+				if (response.data && response.data.length){
+					self.games.push.apply(self.games, response.data);
 				}
 				if (!response.data || response.data.length < pageLength) {
 					self.hasMore = false;
