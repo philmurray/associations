@@ -10,11 +10,12 @@
 
 	<link rel="stylesheet" href="app.css">
 	<link rel="stylesheet" href="assets/css/fontcustom/fontcustom.css">
+	<script src="bower_components/angular/angular.min.js"></script>
 </head>
 <body ng-controller="AppController" ng-class="{'footer': footer.visible}" class="{{color.css_class}}">
 
 	<div class="alert-box">
-		<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+		<alert ng-cloak ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
 	</div>
 
 	<ng-view class="center-container">
@@ -27,7 +28,6 @@
 		<li><a href="#/"><small>about</small></a></li>
 	</ul>
 
-	<script src="bower_components/angular/angular.min.js"></script>
 	<script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
 
 	<script src="bower_components/angular-ui-select/dist/select.min.js"></script>
