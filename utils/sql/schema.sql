@@ -445,6 +445,14 @@ ALTER TABLE ONLY session
 
 
 --
+-- Name: users_email; Type: CONSTRAINT; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_email UNIQUE (email);
+
+
+--
 -- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: associations_dbuser; Tablespace: 
 --
 

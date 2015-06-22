@@ -48,8 +48,9 @@ angular.module('associations.pages.game', [
 				$scope.chosenWord.word = "";
 				$scope.player.picks.push(response.data.word);
 				$scope.updatePlaying(response.data.game);
-			}).catch(function(){
-				$scope.addAlert({type: "danger", msg: "Word could not be submitted."});
+			}).catch(function(err){
+				$scope.addAlert({type: "danger", msg: "Word could not be submitted"});
+				$scope.stopGame();
 			});
 		}
 	};
@@ -61,7 +62,7 @@ angular.module('associations.pages.game', [
 	$scope.continueGame = function(){
 		$scope.updatePlaying(true);
 
-		$scope.timeLeft = 30 - Math.floor((new Date() - new Date($scope.player.startTime))/1000);
+		$scope.timeLeft = 45 - Math.floor((new Date() - new Date($scope.player.startTime))/1000);
 
 		if ($scope.timeLeft < 0) $scope.stopGame();
 
@@ -71,6 +72,7 @@ angular.module('associations.pages.game', [
 			$scope.gameTimer.then($scope.stopGame);
 		}).catch(function(){
 			$scope.addAlert({type: "danger", msg: "Game could not be continued"});
+			$scope.stopGame();
 		});
 	};
 
@@ -86,7 +88,7 @@ angular.module('associations.pages.game', [
 			return GameService.startGame($scope.game.id);
 		}).then(function(response){
 			$scope.updatePlaying(response.data);
-			$scope.timeLeft = 30;
+			$scope.timeLeft = 45;
 			$scope.gameTimer = $interval(function(){$scope.timeLeft--;},1000,$scope.timeLeft);
 			$scope.gameTimer.then($scope.stopGame);
 		}).catch(function(err){

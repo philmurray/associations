@@ -55,7 +55,7 @@
 										</label>
 										<div class="col-sm-9">
 											<div ng-repeat="color in colors" class="col-xs-6 col-sm-4 color-select" >
-												<button class="btn btn-sm {{color.css_class}} col-xs-12" ng-class="{'active':profileUser.color.id==color.id}" ng-click="profileUser.color=color">{{color.name}}</button>
+												<button type="button" class="btn btn-sm {{color.css_class}} col-xs-12" ng-class="{'active':profileUser.color.id==color.id}" ng-click="profileUser.color=color">{{color.name}}</button>
 											</div>
 										</div>
 									</div>
