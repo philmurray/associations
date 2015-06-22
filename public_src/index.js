@@ -46,8 +46,12 @@ angular.module('associations',
 				templateUrl: 'pages/game/game.html',
 				controller: 'GameController',
 				resolve: {
-					game: ['GameService', '$route', function(GameService, $route){
-						return GameService.get($route.current.params.gameId).then(function(response){return response.data;});
+					game: ['GameService', '$route', '$location', function(GameService, $route, $location){
+						return GameService.get($route.current.params.gameId)
+							.then(function(response){return response.data;})
+							.catch(function(){
+								$location.path('/');
+							});
 					}]
 				}
 			})
