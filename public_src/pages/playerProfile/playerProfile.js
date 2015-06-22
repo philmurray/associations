@@ -41,10 +41,16 @@ angular.module('associations.pages.playerProfile',[
 
 		UserService.save($scope.accountUser).then(function(){
 			$scope.forms.local.showErrors = false;
+			$scope.forms.local.emailTaken = false;
 			$scope.showAccountConfirm = true;
 			$timeout(function(){$scope.showAccountConfirm = false;}, 2000);
 		}).catch(function(err){
-			$scope.addAlert({type: "danger", msg: "Player profile could not be saved!"});
+			if (err.data.message && err.data.message.match(/email/i)){
+				$scope.forms.local.showErrors = true;
+				$scope.forms.local.emailTaken = true;
+			} else {
+				$scope.addAlert({type: "danger", msg: "Player profile could not be saved!"});
+			}
 		});
 	};
 

@@ -96,12 +96,13 @@
 									You are logged in with <strong class="twitter">twitter</strong>
 								</div>
 								<form class="form-horizontal" ng-switch-default name="forms.local">
-									<div class="form-group" ng-class="{'has-error':forms.local.showErrors && forms.local.email.$invalid}">
+									<div class="form-group" ng-class="{'has-error':forms.local.showErrors && (forms.local.email.$invalid || forms.local.emailTaken)}">
 										<label for="email" class="col-sm-3 control-label">
 											Email
-											<ul ng-show="forms.local.showErrors && forms.local.email.$invalid" class="list-unstyled">
+											<ul ng-show="forms.local.showErrors && (forms.local.email.$invalid || forms.local.emailTaken)" class="list-unstyled">
 												<li ng-show="forms.local.email.$error.required">* required</li>
 												<li ng-show="forms.local.email.$error.email || forms.local.email.$error.pattern">* invalid</li>
+												<li ng-show="forms.local.emailTaken">* already taken</li>
 											</ul>
 										</label>
 										<div class="col-sm-9">
