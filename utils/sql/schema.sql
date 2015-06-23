@@ -343,7 +343,8 @@ CREATE TABLE users (
     oauth_id text,
     oauth_provider text,
     color_id integer DEFAULT 0 NOT NULL,
-    create_time timestamp with time zone DEFAULT now() NOT NULL
+    create_time timestamp with time zone DEFAULT now() NOT NULL,
+    seen_instructions boolean DEFAULT false NOT NULL
 );
 
 
