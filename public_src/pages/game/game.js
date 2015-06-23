@@ -83,7 +83,12 @@ angular.module('associations.pages.game', [
 			templateUrl: "pages/game/components/startModal/startModal.html",
 			controller: "StartModalController",
 			size: "sm",
-			backdrop: "static"
+			backdrop: "static",
+			resolve: {
+				showInstructions: function(){
+					return !$scope.game.seenInstructions;
+				}
+			}
 		}).result.then(function(){
 			return GameService.startGame($scope.game.id);
 		}).then(function(response){
