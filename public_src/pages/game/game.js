@@ -82,7 +82,7 @@ angular.module('associations.pages.game', [
 		$modal.open({
 			templateUrl: "pages/game/components/startModal/startModal.html",
 			controller: "StartModalController",
-			size: "sm",
+			size: "lg",
 			backdrop: "static",
 			resolve: {
 				showInstructions: function(){

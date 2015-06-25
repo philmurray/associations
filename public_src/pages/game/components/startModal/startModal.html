@@ -7,23 +7,75 @@
 	<div class="modal-body" ng-if="instructions.shown">
 		<carousel interval="0" disable-animation="true">
 			<slide>
-				<div style="width:200px; height:200px">
-					something goes here
+				<div class="instruction">
+					<p>
+						Thinkylinks is all about making free associations.
+					</p>
+					<img src="assets/img/logo.svg">
 				</div>
 			</slide>
 			<slide>
-				<div style="width:200px; height:200px">
-					something else goes here
+				<div class="instruction">
+					<p>
+						A free association is when you are given a word, then you type the first word that comes to your head.
+					</p>
+					<img src="assets/img/logo.svg">
 				</div>
 			</slide>
 			<slide>
-				<div style="width:200px; height:200px">
-					another something goes here
+				<div class="instruction">
+					<p>
+						The object of the game is to make as many free associations as you can before the timer runs out.
+					</p>
+					<img src="assets/img/logo.svg">
+				</div>
+			</slide>
+			<slide>
+				<div class="instruction">
+					<p>
+						Each word is scored based on the free associations of all other Thinkylinks players.
+					</p>
+					<img src="assets/img/logo.svg">
+				</div>
+			</slide>
+			<slide>
+				<div class="instruction">
+					<p>
+						All valid associations will get you 100 points.
+					</p>
+					<img src="assets/img/logo.svg">
+				</div>
+			</slide>
+			<slide>
+				<div class="instruction">
+					<p>
+						You get bonus points if you happen to pick the most commonly associated word.
+					</p>
+					<img src="assets/img/logo.svg">
+				</div>
+			</slide>
+			<slide>
+				<div class="instruction">
+					<p>
+						If you make an association that no player has ever made before, you get just get 1 point.
+					</p>
+					<img src="assets/img/logo.svg">
+				</div>
+			</slide>
+			<slide>
+				<div class="instruction">
+					<p>
+						That's all there is to it! Click on 'Go' to begin!
+					</p>
+					<p>
+						&nbsp;
+					</p>
+					<button class="btn btn-color btn-lg" ng-click="close()">Go!</button>
 				</div>
 			</slide>
 		</carousel>
 	</div>
-	<div class="modal-footer">
+	<div class="modal-footer" ng-if="!instructions.shown">
 		<button class="btn btn-color" ng-click="close()">Go!</button>
 	</div>
 </div>
