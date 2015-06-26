@@ -14,7 +14,7 @@
    width="400"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="logo.svg">
+   sodipodi:docname="instructions_logo.svg">
   <metadata
      id="metadata4229">
     <rdf:RDF>
@@ -41,20 +41,25 @@
      inkscape:window-width="1920"
      inkscape:window-height="1176"
      id="namedview4225"
-     showgrid="false"
+     showgrid="true"
      inkscape:zoom="2.2666667"
      inkscape:cx="200"
      inkscape:cy="225"
      inkscape:window-x="1280"
      inkscape:window-y="24"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="layer1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4152"
+       empspacing="20" />
+  </sodipodi:namedview>
   <g
      id="layer1"
      transform="matrix(0.181,0,0,0.18018,-0.87157,358.75689)">
     <g
        id="g4241"
-       transform="matrix(4.9177018,0,0,4.3487567,-23.802243,-2017.4547)"
+       transform="matrix(3.6882285,0,0,3.2615252,265.43057,-1388.8024)"
        style="stroke:#ffffff;stroke-opacity:1">
       <path
          id="path3382"
