@@ -12,7 +12,17 @@
   &.active {
       color: @background;
       background-color: @border;
-      border-color: @border
+      border-color: @border;
+
+      &:hover,
+      &:focus,
+      &.focus,
+      &:active,
+      .open > .dropdown-toggle& {
+        color: @background;
+        background-color: lighten(@border, 10%);
+            border-color: lighten(@border, 12%);
+      }
   }
 
 }

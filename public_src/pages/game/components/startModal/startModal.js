@@ -1,8 +1,7 @@
 "use strict";
 
 angular.module('associations.pages.game.components.startModal', [
-	'ui.bootstrap',
-	'associations.components.disable-animation'
+	'ui.bootstrap'
 ])
 
 .controller("StartModalController", ["$scope", "$modalInstance", "showInstructions", function($scope, $modalInstance, showInstructions) {
