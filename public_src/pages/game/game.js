@@ -4,6 +4,7 @@ angular.module('associations.pages.game', [
 	'associations.components.data.game',
 	'ui.bootstrap',
 	'associations.pages.game.components.startModal',
+	'associations.pages.game.components.finishModal',
 	'associations.pages.game.components.graph',
 	'associations.components.focus-input',
 	'associations.components.scroll-bottom'
@@ -122,11 +123,23 @@ angular.module('associations.pages.game', [
 		if ($scope.gameTimer) {
 			$interval.cancel($scope.gameTimer);
 		}
+		var showInstructions = !$scope.game.seenInstructions;
 		GameService.stopGame($scope.game.id).then(function(response){
 			$scope.updatePlaying(false);
 			$scope.game = response.data;
 			$scope.player = $scope.game.players[$scope.game.player];
 			$scope.activatePlayer($scope.player);
+			$modal.open({
+				templateUrl: "pages/game/components/finishModal/finishModal.html",
+				controller: "FinishModalController",
+				size: "sm",
+				resolve: {
+					showInstructions: function(){
+						return showInstructions;
+					}
+				}
+			});
+
 		});
 	};
 

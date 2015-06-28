@@ -1,0 +1,19 @@
+<div class="finish-modal">
+	<div class="modal-header">
+		<h3 class="modal-title">{{title}} <small ng-if="!instructions.shown" ><a href="" ng-click="instructions.shown = true"><i class="fa fa-question-circle"></i></a></small>
+
+		</h3>
+	</div>
+	<div class="modal-body">
+		<div ng-if="instructions.shown">
+			Ending tutorial stuff
+		</div>
+		<div ng-if="!instructions.shown">
+			Stats and level stuff
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button ng-if="!instructions.shown" class="btn btn-color" ng-click="close()">Close</button>
+		<button ng-if="instructions.shown" class="btn btn-color" ng-click="instructions.shown = false">Got it!</button>
+	</div>
+</div>
