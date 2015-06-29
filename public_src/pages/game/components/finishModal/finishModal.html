@@ -1,12 +1,23 @@
 <div class="finish-modal">
-	<div class="modal-header">
-		<h3 class="modal-title">{{title}} <small ng-if="!instructions.shown" ><a href="" ng-click="instructions.shown = true"><i class="fa fa-question-circle"></i></a></small>
+	<div class="modal-header" ng-if="!instructions.shown">
+		<h3 class="modal-title">{{title}} <small ><a href="" ng-click="instructions.shown = true"><i class="fa fa-question-circle"></i></a></small>
 
 		</h3>
 	</div>
 	<div class="modal-body">
 		<div ng-if="instructions.shown">
-			Ending tutorial stuff
+			<h4>
+				Congrats!  You finished a game!
+			</h4>
+			<p>
+				Feel free to explore the interactive graph.  You can get more information about nodes and links by selecting them.
+			</p>
+			<dl class="dl-horizontal">
+				<dt><i class="fa fa-expand text-color"></i></dt>
+				<dd>Will expand the word in place to see what other people associated with it</dd>
+				<dt><i class="fa fa-search text-color"></i></dt>
+				<dd>Will take you to the word exploration page</dd>
+			</dl>
 		</div>
 		<div ng-if="!instructions.shown">
 			Stats and level stuff

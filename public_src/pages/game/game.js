@@ -10,7 +10,8 @@ angular.module('associations.pages.game', [
 	'associations.components.scroll-bottom'
 ])
 
-.controller("GameController", ["$scope", "game", "$modal", "GameService", "$interval", function($scope, game, $modal, GameService, $interval) {
+.constant("GAME_TIME", 45)
+.controller("GameController", ["$scope", "game", "$modal", "GameService", "$interval", "GAME_TIME", function($scope, game, $modal, GameService, $interval, GAME_TIME) {
 	$scope.footer.visible = false;
 	$scope.game = game;
 	$scope.player = $scope.game.players[$scope.game.player];
@@ -36,7 +37,6 @@ angular.module('associations.pages.game', [
 	});
 
 	$scope.updatePlaying = function(newVal){
-		$scope.playersExpanded = !Boolean(newVal);
 		$scope.playing = newVal;
 		if (typeof newVal === "object" && !newVal.word) {
 			$scope.stopGame();
@@ -63,7 +63,7 @@ angular.module('associations.pages.game', [
 	$scope.continueGame = function(){
 		$scope.updatePlaying(true);
 
-		$scope.timeLeft = 45 - Math.floor((new Date() - new Date($scope.player.startTime))/1000);
+		$scope.timeLeft = GAME_TIME - Math.floor((new Date() - new Date($scope.player.startTime))/1000);
 
 		if ($scope.timeLeft < 0) $scope.stopGame();
 
@@ -94,7 +94,7 @@ angular.module('associations.pages.game', [
 			return GameService.startGame($scope.game.id);
 		}).then(function(response){
 			$scope.updatePlaying(response.data);
-			$scope.timeLeft = 45;
+			$scope.timeLeft = GAME_TIME;
 			$scope.gameTimer = $interval(function(){$scope.timeLeft--;},1000,$scope.timeLeft);
 			$scope.gameTimer.then($scope.stopGame);
 		}).catch(function(err){
@@ -132,7 +132,7 @@ angular.module('associations.pages.game', [
 			$modal.open({
 				templateUrl: "pages/game/components/finishModal/finishModal.html",
 				controller: "FinishModalController",
-				size: "sm",
+				size: "md",
 				resolve: {
 					showInstructions: function(){
 						return showInstructions;
