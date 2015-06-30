@@ -268,6 +268,18 @@ UNION
 ALTER TABLE graph_nodes OWNER TO associations_dbuser;
 
 --
+-- Name: levels; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+CREATE TABLE levels (
+    level integer NOT NULL,
+    requirement integer NOT NULL
+);
+
+
+ALTER TABLE levels OWNER TO associations_dbuser;
+
+--
 -- Name: picks_scored; Type: VIEW; Schema: public; Owner: associations_dbuser
 --
 
@@ -344,7 +356,9 @@ CREATE TABLE users (
     oauth_provider text,
     color_id integer DEFAULT 0 NOT NULL,
     create_time timestamp with time zone DEFAULT now() NOT NULL,
-    seen_instructions boolean DEFAULT false NOT NULL
+    seen_instructions boolean DEFAULT false NOT NULL,
+    level integer DEFAULT 0 NOT NULL,
+    level_progress double precision DEFAULT 0 NOT NULL
 );
 
 
@@ -419,6 +433,14 @@ ALTER TABLE ONLY games_users
 
 ALTER TABLE ONLY games_words
     ADD CONSTRAINT games_words_pkey PRIMARY KEY (game_id, word);
+
+
+--
+-- Name: levels_pkey; Type: CONSTRAINT; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+ALTER TABLE ONLY levels
+    ADD CONSTRAINT levels_pkey PRIMARY KEY (level);
 
 
 --
