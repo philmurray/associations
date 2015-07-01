@@ -1,0 +1,20 @@
+<div class="row level-progress">
+	<div class="col-xs-1 level-number">
+		{{level.level}}
+	</div>
+	<div class="col-xs-10">
+		<div class="progress">
+			<div class="progress-bar progress-bar-color"
+				role="progressbar"
+				aria-valuenow="{{level.progress}}"
+				aria-valuemin="0"
+				aria-valuemax="100"
+				style="width: {{level.progress}}%">
+				<span class="sr-only">{{level.progress}}</span>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-1 level-number">
+		{{level.level + 1}}
+	</div>
+</div>

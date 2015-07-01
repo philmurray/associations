@@ -11,7 +11,7 @@ angular.module('associations.pages.game', [
 ])
 
 .constant("GAME_TIME", 45)
-.controller("GameController", ["$scope", "game", "$modal", "GameService", "$interval", "GAME_TIME", function($scope, game, $modal, GameService, $interval, GAME_TIME) {
+.controller("GameController", ["$scope", "game", "$modal", "GameService", "$interval", "GAME_TIME", "$timeout", function($scope, game, $modal, GameService, $interval, GAME_TIME, $timeout) {
 	$scope.footer.visible = false;
 	$scope.game = game;
 	$scope.player = $scope.game.players[$scope.game.player];
@@ -123,22 +123,31 @@ angular.module('associations.pages.game', [
 		if ($scope.gameTimer) {
 			$interval.cancel($scope.gameTimer);
 		}
-		var showInstructions = !$scope.game.seenInstructions;
+		var showInstructions = !$scope.game.seenInstructions,
+			previousLevel = $scope.game.level;
 		GameService.stopGame($scope.game.id).then(function(response){
 			$scope.updatePlaying(false);
 			$scope.game = response.data;
 			$scope.player = $scope.game.players[$scope.game.player];
 			$scope.activatePlayer($scope.player);
-			$modal.open({
-				templateUrl: "pages/game/components/finishModal/finishModal.html",
-				controller: "FinishModalController",
-				size: "md",
-				resolve: {
-					showInstructions: function(){
-						return showInstructions;
+			$timeout(function(){
+				$modal.open({
+					templateUrl: "pages/game/components/finishModal/finishModal.html",
+					controller: "FinishModalController",
+					size: "md",
+					resolve: {
+						showInstructions: function(){
+							return showInstructions;
+						},
+						levelProgress: function(){
+							return {
+								previous: previousLevel,
+								current: $scope.game.level
+							};
+						}
 					}
-				}
-			});
+				});
+			},1500);
 
 		});
 	};

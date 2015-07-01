@@ -19,8 +19,17 @@
 				<dd>Will take you to the word exploration page</dd>
 			</dl>
 		</div>
-		<div ng-if="!instructions.shown">
-			Stats and level stuff
+		<div ng-if="!instructions.shown" class="container-fluid">
+			<div class="row">
+				<div class="col-sm-2">
+					<strong>
+						Level:
+					</strong>
+				</div>
+				<div class="col-sm-10">
+					<div level-progress level="level"></div>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="modal-footer">
