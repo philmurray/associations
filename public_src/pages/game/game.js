@@ -147,7 +147,7 @@ angular.module('associations.pages.game', [
 						}
 					}
 				});
-			},1500);
+			},1000);
 
 		});
 	};

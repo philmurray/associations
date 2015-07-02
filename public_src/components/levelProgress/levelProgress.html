@@ -1,20 +1,21 @@
 <div class="row level-progress">
-	<div class="col-xs-1 level-number">
-		{{level.level}}
+	<div class="col-xs-1 level-number current">
+		{{current ? current.level : level.level}}
 	</div>
 	<div class="col-xs-10">
 		<div class="progress">
-			<div class="progress-bar progress-bar-color"
+			<div ng-class="{reset:resetProgress}"
+				class="progress-bar progress-bar-color"
 				role="progressbar"
-				aria-valuenow="{{level.progress}}"
+				aria-valuenow="{{current ? current.progress : level.progress}}"
 				aria-valuemin="0"
 				aria-valuemax="100"
-				style="width: {{level.progress}}%">
-				<span class="sr-only">{{level.progress}}</span>
+				style="width: {{current ? current.progress : level.progress}}%">
+				<span class="sr-only">{{current ? current.progress : level.progress}}</span>
 			</div>
 		</div>
 	</div>
-	<div class="col-xs-1 level-number">
-		{{level.level + 1}}
+	<div class="col-xs-1 level-number next">
+		{{current ? current.level + 1 : level.level + 1}}
 	</div>
 </div>

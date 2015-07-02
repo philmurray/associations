@@ -15,7 +15,7 @@ angular.module('associations.pages.game.components.finishModal', [
 		if (!val) {
 			$timeout(function(){
 				$scope.level = levelProgress.current;
-			},1000);
+			},750);
 		}
 	});
 

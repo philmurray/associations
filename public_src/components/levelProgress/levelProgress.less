@@ -1,9 +1,16 @@
 .level-progress {
-	.progress-bar {
-		.transition(1s);
+	.progress-bar{
+		.transition(width 1s ease);
+		&.reset {
+			.transition(none);
+		}
 	}
 	.level-number {
 		text-align: center;
 		font-weight: bold;
+		line-height: 32px;
+		&.current {
+			font-size: 28px;
+		}
 	}
 }
