@@ -65,7 +65,10 @@ angular.module('associations.pages.game', [
 
 		$scope.timeLeft = GAME_TIME - Math.floor((new Date() - new Date($scope.player.startTime))/1000);
 
-		if ($scope.timeLeft < 0) $scope.stopGame();
+		if ($scope.timeLeft < 0) {
+			$scope.stopGame();
+			return;
+		}
 
 		GameService.resumeGame($scope.game.id).then(function(response){
 			$scope.updatePlaying(response.data);
@@ -144,6 +147,9 @@ angular.module('associations.pages.game', [
 								previous: previousLevel,
 								current: $scope.game.level
 							};
+						},
+						player: function(){
+							return $scope.player;
 						}
 					}
 				});
@@ -194,6 +200,10 @@ angular.module('associations.pages.game', [
 				$scope.continueGame();
 			}
 		}
+		// for debugging
+		// else {
+		// 	$scope.stopGame();
+		// }
 	} else {
 		$scope.activatePlayer($scope.game.players[0]);
 	}

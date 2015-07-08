@@ -1,13 +1,14 @@
 "use strict";
 
 angular.module('associations.pages.exploreWords.components.graph', [
-	'associations.components.graph.defaults'
+	'associations.components.graph.defaults',
+	'associations.components.windowResize'
 ])
 .constant("WordGraphDefaults", {
 	dragNetwork: false,
 	zoomable: false
 })
-.directive("wordGraph", ["$window", "GraphDefaults", "WordGraphDefaults", "$timeout", "$document", function ($window, GraphDefaults, WordGraphDefaults, $timeout, $document) {
+.directive("wordGraph", ["$window", "GraphDefaults", "WordGraphDefaults", "$timeout", "$document", "windowResize", function ($window, GraphDefaults, WordGraphDefaults, $timeout, $document, windowResize) {
 	return {
 		restrict: 'EA',
 		scope: {
@@ -21,25 +22,6 @@ angular.module('associations.pages.exploreWords.components.graph', [
 		link: function($scope, $element, attrs) {
 			var w = angular.element($window),
 			element = $element[0];
-
-			// Browser onresize event
-			w.bind('resize', function () {
-				$scope.$apply();
-			});
-			$scope.$on('$destroy', function() {
-				w.unbind('resize');
-				if ($scope.edgePromises) $scope.edgePromises.forEach($timeout.cancel);
-			});
-
-			// Watch for resize event
-			$scope.$watch(function() {
-				return {
-					width: w[0].innerWidth,
-					height: w[0].innerHeight
-				};
-			}, function() {
-				$scope.render();
-			},true);
 
 			$scope.config = angular.extend({}, WordGraphDefaults, GraphDefaults, $scope.config || {});
 
@@ -177,28 +159,32 @@ angular.module('associations.pages.exploreWords.components.graph', [
 			$scope.$watch('model', mergeModel);
 
 			$scope.render = function() {
-				if (!$scope.graph){
-					initGraph();
-				} else {
-					setGraphSize();
+				setGraphSize();
 
-					var node;
-					if ($scope.model.word) {
-						node = $scope.nodes.get($scope.model.word);
-						if (node){
-							setAnchorNodePosition(node, wordElement);
-							$scope.nodes.update(node);
-						}
+				var node;
+				if ($scope.model.word) {
+					node = $scope.nodes.get($scope.model.word);
+					if (node){
+						setAnchorNodePosition(node, wordElement);
+						$scope.nodes.update(node);
 					}
-					if ($scope.model.otherWord) {
-						node = $scope.nodes.get($scope.model.otherWord);
-						if (node){
-							setAnchorNodePosition(node, otherWordElement);
-							$scope.nodes.update(node);
-						}
+				}
+				if ($scope.model.otherWord) {
+					node = $scope.nodes.get($scope.model.otherWord);
+					if (node){
+						setAnchorNodePosition(node, otherWordElement);
+						$scope.nodes.update(node);
 					}
 				}
 			};
+
+			initGraph();
+
+			windowResize.register($scope.render);
+			$scope.$on('$destroy', function() {
+				windowResize.deregister($scope.render);
+				if ($scope.edgePromises) $scope.edgePromises.forEach($timeout.cancel);
+			});
 		}
 	};
 }]);

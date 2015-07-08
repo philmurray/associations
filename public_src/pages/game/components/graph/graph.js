@@ -1,11 +1,12 @@
 "use strict";
 
 angular.module('associations.pages.game.components.graph', [
-	'associations.components.graph.defaults'
+	'associations.components.graph.defaults',
+	'associations.components.windowResize'
 ])
 .constant("GameGraphDefaults", {
 })
-.directive("gameGraph", ["$window", "GraphDefaults", "GameGraphDefaults", "$timeout", function ($window, GraphDefaults, GameGraphDefaults, $timeout) {
+.directive("gameGraph", ["$window", "GraphDefaults", "GameGraphDefaults", "$timeout", "windowResize", function ($window, GraphDefaults, GameGraphDefaults, $timeout, windowResize) {
 	return {
 		restrict: 'EA',
 		scope: {
@@ -16,26 +17,7 @@ angular.module('associations.pages.game.components.graph', [
 		},
 		link: function($scope, $element, attrs) {
 			var w = angular.element($window),
-			element = $element[0];
-
-			// Browser onresize event
-			w.bind('resize', function () {
-				$scope.$apply();
-			});
-			$scope.$on('$destroy', function() {
-				w.unbind('resize');
-				expandPromises.forEach($timeout.cancel);
-			});
-
-			// Watch for resize event
-			$scope.$watch(function() {
-				return {
-					width: w[0].innerWidth,
-					height: w[0].innerHeight
-				};
-			}, function() {
-				$scope.render();
-			},true);
+				element = $element[0];
 
 			$scope.config = angular.extend({}, GraphDefaults, GameGraphDefaults, $scope.config || {});
 
@@ -319,13 +301,16 @@ angular.module('associations.pages.game.components.graph', [
 			}, true);
 
 			$scope.render = function() {
-				if (!$scope.graph){
-					initGraph();
-				} else {
-					setGraphSize();
-
-				}
+				setGraphSize();
 			};
+
+			windowResize.register($scope.render);
+			$scope.$on('$destroy', function() {
+				windowResize.deregister($scope.render);
+				expandPromises.forEach($timeout.cancel);
+			});
+
+			initGraph();
 		}
 	};
 }]);
