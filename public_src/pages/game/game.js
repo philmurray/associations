@@ -86,7 +86,7 @@ angular.module('associations.pages.game', [
 		$modal.open({
 			templateUrl: "pages/game/components/startModal/startModal.html",
 			controller: "StartModalController",
-			size: "lg",
+			size: $scope.game.seenInstructions ? "sm" : "lg",
 			backdrop: "static",
 			resolve: {
 				showInstructions: function(){
@@ -200,10 +200,6 @@ angular.module('associations.pages.game', [
 				$scope.continueGame();
 			}
 		}
-		// for debugging
-		// else {
-		// 	$scope.stopGame();
-		// }
 	} else {
 		$scope.activatePlayer($scope.game.players[0]);
 	}

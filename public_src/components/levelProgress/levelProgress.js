@@ -9,12 +9,14 @@ angular.module('associations.components.levelProgress', [])
 			},
 			templateUrl: "components/levelProgress/levelProgress.html",
 			link: function($scope, $element, attrs) {
+				$scope.resetProgress = true;
 				$scope.$watch('level', function(){
 					if (!$scope.level) return;
 					if (!$scope.current){
 						$scope.current = $scope.level;
 					} else {
-						addLevel();
+						$scope.resetProgress = false;
+						$timeout(addLevel, 100);
 					}
 				});
 

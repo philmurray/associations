@@ -4,12 +4,11 @@ angular.module('associations.pages.game.components.startModal', [
 	'ui.bootstrap'
 ])
 
-.controller("StartModalController", ["$scope", "$modalInstance", "showInstructions", function($scope, $modalInstance, showInstructions) {
+.controller("StartModalController", ["$scope", "$modalInstance", "showInstructions", "$modalStack", function($scope, $modalInstance, showInstructions, $modalStack) {
 	$scope.close = $modalInstance.close;
 	$scope.instructions = {
 		shown: showInstructions
 	};
-
 
 	$scope.slides = [{
 		text: "Thinkylinks is all about making free associations.",

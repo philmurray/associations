@@ -15,34 +15,29 @@ angular.module('associations.pages.game.components.finishModal', [
 	$scope.score = 0;
 	$scope.normal = 0;
 	$scope.color = player.color.hex;
+	$scope.step = 0;
 
 	$scope.$watch('instructions.shown', function(val){
 		if (!val) {
 			$timeout(function(){
+				$scope.step++;
+				var incr = player.score/100;
 				$interval(function(){
-					$scope.score += 10;
-				}, 10, Math.floor(player.score/10)).then(function(){
+					$scope.score += incr;
+				}, 10, 100).then(function(){
 					$scope.score = player.score;
 				});
 			},750);
 
 			$timeout(function(){
+				$scope.step++;
 				$scope.normal = player.normal;
-			},1500);
+			},2000);
 
 			$timeout(function(){
+				$scope.step++;
 				$scope.level = levelProgress.current;
-			},2250);
+			},3250);
 		}
 	});
-
-	var titles = [
-		"All Done!",
-		"Good Job!",
-		"Whew!",
-		"Nicely done.",
-		"Human after all",
-		"Close your mind now"
-	];
-	$scope.title = titles[Math.floor(Math.random()*titles.length)];
 }]);

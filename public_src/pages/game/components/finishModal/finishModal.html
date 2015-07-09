@@ -1,9 +1,4 @@
 <div class="finish-modal">
-	<div class="modal-header" ng-if="!instructions.shown">
-		<h3 class="modal-title">{{title}} <small ><a href="" ng-click="instructions.shown = true"><i class="fa fa-question-circle"></i></a></small>
-
-		</h3>
-	</div>
 	<div class="modal-body">
 		<div ng-if="instructions.shown">
 			<h4>
@@ -21,26 +16,29 @@
 		</div>
 		<div ng-if="!instructions.shown" class="container-fluid">
 			<div class="row">
-				<div class="col-xs-12 text-center">
-					<h3>
-						Score: <span class="text-color">{{score}}</span>
+				<div class="col-sm-6 text-center">
+					<h3 class="title" ng-class="{'text-muted':step < 1}">
+						Score
 					</h3>
+					<h2 class="text-color">
+						{{score}}
+					</h2>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12">
+
+				<div class="col-sm-6 text-center">
+					<h3 class="title" ng-class="{'text-muted':step < 2}">
+						Normal-o-meter
+					</h3>
 					<div class="normal" normal normal-value="normal" normal-color="color">
 
 					</div>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-sm-2">
-					<strong>
-						Level:
-					</strong>
-				</div>
-				<div class="col-sm-10">
+				<div class="col-sm-12 text-center">
+					<h3 class="title" ng-class="{'text-muted':step < 3}">
+						Level
+					</h3>
 					<div level-progress level="level"></div>
 				</div>
 			</div>
