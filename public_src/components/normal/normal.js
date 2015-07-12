@@ -3,8 +3,8 @@
 angular.module('associations.components.normal', [
 	'associations.components.windowResize'
 ])
-.constant('NORMAL_RANGE_CLASS', ['fa-circle-o','fa-circle','fa-square-o', 'fa-square', 'fa-check-square-o', 'fa-check-square'])
-.constant('NORMAL_RANGE_CHAR', ['\uf10c', '\uf111', '\uf096', '\uf0c8', '\uf046', '\uf14a'])
+.constant('NORMAL_RANGE_CLASS', ['icon-normal_0','icon-normal_1','icon-normal_2','icon-normal_3','icon-normal_4','icon-normal_5'])
+.constant('NORMAL_RANGE_CHAR', ['\uf101', '\uf102', '\uf103', '\u104', '\uf105', '\uf106'])
 .constant('NORMAL_DOMAIN', [0,0.25])
 .factory('NormalConverter', ["NORMAL_RANGE_CHAR", "NORMAL_RANGE_CLASS", "NORMAL_DOMAIN", function(NORMAL_RANGE_CHAR, NORMAL_RANGE_CLASS,NORMAL_DOMAIN){
 	var scale = d3.scale.linear().domain(NORMAL_DOMAIN).rangeRound([0,NORMAL_RANGE_CHAR.length-1]).clamp(true);
@@ -183,7 +183,7 @@ angular.module('associations.components.normal', [
 						var newAngle = config.minAngle + (ratio * range);
 						return 'rotate(' +newAngle +') translate(0,' +(config.labelInset - r) +')';
 					})
-					.attr('font-family', 'FontAwesome')
+					.attr('font-family', 'fontcustom')
 					.text(config.labelFormat);
 
 			var lineData = [ [config.pointerWidth / 2, 0],
