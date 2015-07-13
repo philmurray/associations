@@ -13,7 +13,7 @@ angular.module('associations.pages.game.components.finishModal', [
 
 	$scope.level = levelProgress.previous;
 	$scope.score = 0;
-	$scope.normal = 0;
+	$scope.normal = 1;
 	$scope.color = player.color.hex;
 	$scope.step = 0;
 
