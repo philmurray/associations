@@ -1,12 +1,17 @@
 "use strict";
 angular.module('associations.pages.landing.components.pastGamesList', [
-	'associations.components.data.game'
+	'associations.components.data.game',
+	'associations.components.normal'
 ])
-	.controller("PastGamesListCtrl", ["$scope", "GameService", "$location", function($scope, GameService, $location){
+	.controller("PastGamesListCtrl", ["$scope", "GameService", "$location", "NormalConverter", function($scope, GameService, $location, NormalConverter){
 		var self = this,
 			pageLength = 5;
 
 		self.games = [];
+
+		this.getNormal = function (player){
+			return NormalConverter.toClass(player.normal);
+		};
 
 		this.loadMore = function(clear){
 			return GameService.getGames(false,pageLength,self.page,self.multi).then(function(response){

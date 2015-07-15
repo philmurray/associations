@@ -7,11 +7,12 @@ angular.module('associations.pages.game', [
 	'associations.pages.game.components.finishModal',
 	'associations.pages.game.components.graph',
 	'associations.components.focus-input',
-	'associations.components.scroll-bottom'
+	'associations.components.scroll-bottom',
+	'associations.components.normal'
 ])
 
 .constant("GAME_TIME", 45)
-.controller("GameController", ["$scope", "game", "$modal", "GameService", "$interval", "GAME_TIME", "$timeout", function($scope, game, $modal, GameService, $interval, GAME_TIME, $timeout) {
+.controller("GameController", ["$scope", "game", "$modal", "GameService", "$interval", "GAME_TIME", "$timeout", "NormalConverter", function($scope, game, $modal, GameService, $interval, GAME_TIME, $timeout, NormalConverter) {
 	$scope.footer.visible = false;
 	$scope.game = game;
 	$scope.player = $scope.game.players[$scope.game.player];
@@ -119,7 +120,7 @@ angular.module('associations.pages.game', [
 	};
 
 	$scope.getNormal = function (player){
-		return Math.floor((1 - player.normal) * 100) + "%";
+		return NormalConverter.toClass(player.normal);
 	};
 
 	$scope.stopGame = function(){

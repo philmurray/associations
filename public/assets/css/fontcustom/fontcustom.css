@@ -4,11 +4,11 @@
 
 @font-face {
   font-family: "fontcustom";
-  src: url("./fontcustom_908210f6d3b11d39d2daf782e43540e1.eot");
-  src: url("./fontcustom_908210f6d3b11d39d2daf782e43540e1.eot?#iefix") format("embedded-opentype"),
-       url("./fontcustom_908210f6d3b11d39d2daf782e43540e1.woff") format("woff"),
-       url("./fontcustom_908210f6d3b11d39d2daf782e43540e1.ttf") format("truetype"),
-       url("./fontcustom_908210f6d3b11d39d2daf782e43540e1.svg#fontcustom") format("svg");
+  src: url("./fontcustom_d8cc1a858b26a8dedda5a723a7f24d26.eot");
+  src: url("./fontcustom_d8cc1a858b26a8dedda5a723a7f24d26.eot?#iefix") format("embedded-opentype"),
+       url("./fontcustom_d8cc1a858b26a8dedda5a723a7f24d26.woff") format("woff"),
+       url("./fontcustom_d8cc1a858b26a8dedda5a723a7f24d26.ttf") format("truetype"),
+       url("./fontcustom_d8cc1a858b26a8dedda5a723a7f24d26.svg#fontcustom") format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -16,7 +16,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: "fontcustom";
-    src: url("./fontcustom_908210f6d3b11d39d2daf782e43540e1.svg#fontcustom") format("svg");
+    src: url("./fontcustom_d8cc1a858b26a8dedda5a723a7f24d26.svg#fontcustom") format("svg");
   }
 }
 
@@ -24,12 +24,12 @@
 
 [data-icon]:before,
 .icon-logo:before,
-.icon-normal_0:before,
-.icon-normal_1:before,
-.icon-normal_2:before,
-.icon-normal_3:before,
-.icon-normal_4:before,
-.icon-normal_5:before {
+.icon-nf_0:before,
+.icon-nf_1:before,
+.icon-nf_2:before,
+.icon-nf_3:before,
+.icon-nf_4:before,
+.icon-nf_5:before {
   display: inline-block;
   font-family: "fontcustom";
   font-style: normal;
@@ -45,9 +45,9 @@
 }
 
 .icon-logo:before { content: "\f100"; }
-.icon-normal_0:before { content: "\f101"; }
-.icon-normal_1:before { content: "\f102"; }
-.icon-normal_2:before { content: "\f103"; }
-.icon-normal_3:before { content: "\f104"; }
-.icon-normal_4:before { content: "\f105"; }
-.icon-normal_5:before { content: "\f106"; }
+.icon-nf_0:before { content: "\f107"; }
+.icon-nf_1:before { content: "\f108"; }
+.icon-nf_2:before { content: "\f109"; }
+.icon-nf_3:before { content: "\f10a"; }
+.icon-nf_4:before { content: "\f10b"; }
+.icon-nf_5:before { content: "\f10c"; }

@@ -37,13 +37,13 @@
 					<div class="row">
 						<div class="col-xs-9 vcenter">
 							<div class="row" ng-repeat="player in game.players | orderBy : 'alias'">
-								<div class="col-xs-9 player-name">
+								<div class="col-xs-8 player-name">
 									<span ng-if="player.winner"><strong><i class="fa fa-star"></i> {{player.alias}}</strong></span>
 									<span ng-if="!player.winner" class="text-muted">{{player.alias}}</span>
 								</div>
-								<div class="col-xs-3">
-									<span ng-if="player.winner"><strong>{{player.score}}</strong></span>
-									<span ng-if="!player.winner && player.completed" class="text-muted">{{player.score}}</span>
+								<div class="col-xs-4">
+									<span ng-if="player.winner"><strong>{{player.score}}</strong>&nbsp;&nbsp;&nbsp;<i class="{{ctrl.getNormal(player)}}"></i></span>
+									<span ng-if="!player.winner && player.completed" class="text-muted">{{player.score}}&nbsp;&nbsp;&nbsp;<i class="{{ctrl.getNormal(player)}}"></i></span>
 									<span ng-if="!player.completed" class="text-muted">...</span>
 								</div>
 							</div>

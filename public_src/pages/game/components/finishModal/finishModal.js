@@ -32,12 +32,12 @@ angular.module('associations.pages.game.components.finishModal', [
 			$timeout(function(){
 				$scope.step++;
 				$scope.normal = player.normal;
-			},2000);
+			},2750);
 
 			$timeout(function(){
 				$scope.step++;
 				$scope.level = levelProgress.current;
-			},3250);
+			},4750);
 		}
 	});
 }]);

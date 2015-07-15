@@ -35,8 +35,7 @@
 					<span class="pull-left">score: </span>
 					<span class="pull-right">{{p.score}}</span>
 					<br/>
-					<span class="pull-left">weirdo: </span>
-					<span class="pull-right">{{getNormal(p)}}</span>
+					<span class="text-center weirdo"><i class="{{getNormal(p)}}"></i></span>
 				</p>
 				<p ng-if="!p.completed">
 					Waiting...

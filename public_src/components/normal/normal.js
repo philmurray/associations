@@ -3,8 +3,8 @@
 angular.module('associations.components.normal', [
 	'associations.components.windowResize'
 ])
-.constant('NORMAL_RANGE_CLASS', ['icon-normal_5','icon-normal_4','icon-normal_3','icon-normal_2','icon-normal_1','icon-normal_0'])
-.constant('NORMAL_RANGE_CHAR', ['\uf106', '\uf105', '\uf104', '\uf103', '\uf102', '\uf101'])
+.constant('NORMAL_RANGE_CLASS', ['icon-nf_5','icon-nf_4','icon-nf_3','icon-nf_2','icon-nf_1','icon-nf_0'])
+.constant('NORMAL_RANGE_CHAR', ['\uf10c', '\uf10b', '\uf10a', '\uf109', '\uf108', '\uf107'])
 .constant('NORMAL_DOMAIN', [0,0.25])
 .factory('NormalConverter', ["NORMAL_RANGE_CHAR", "NORMAL_RANGE_CLASS", "NORMAL_DOMAIN", function(NORMAL_RANGE_CHAR, NORMAL_RANGE_CLASS,NORMAL_DOMAIN){
 	var scale = d3.scale.linear().domain(NORMAL_DOMAIN).rangeRound([0,NORMAL_RANGE_CHAR.length-1]).clamp(true);
@@ -31,7 +31,7 @@ angular.module('associations.components.normal', [
 				config = {
 					minValue: NORMAL_DOMAIN[1],
 					maxValue: 0,
-					arcColorFn: d3.interpolateHsl(d3.rgb($scope.color).darker(1), d3.rgb($scope.color).darker(5)),
+					arcColorFn: d3.interpolateHsl(d3.rgb($scope.color).darker(1), d3.rgb($scope.color).darker(7)),
 					majorTicks: NORMAL_RANGE_CHAR.length-1,
 					labelFormat: NormalConverter.toChar
 				};
@@ -67,12 +67,12 @@ angular.module('associations.components.normal', [
 			size						: 200,
 			clipWidth					: 200,
 			clipHeight					: 110,
-			ringInset					: 40,
-			ringWidth					: 40,
+			ringInset					: 55,
+			ringWidth					: 10,
 
 			pointerWidth				: 10,
 			pointerTailLength			: 5,
-			pointerHeadLengthPercent	: 0.7,
+			pointerHeadLengthPercent	: 0.65,
 
 			minValue					: 0,
 			maxValue					: 10,
@@ -84,7 +84,7 @@ angular.module('associations.components.normal', [
 
 			majorTicks					: 5,
 			labelFormat					: d3.format(',g'),
-			labelInset					: 25
+			labelInset					: 28
 		};
 		var range;
 		var r;
@@ -175,7 +175,7 @@ angular.module('associations.components.normal', [
 					.attr('d', arc);
 
 			var lg = svg.append('g')
-					.attr('class', 'label')
+					.attr('class', 'gauge-label')
 					.attr('transform', centerTx);
 			lg.selectAll('text')
 					.data(ticks)
@@ -187,7 +187,11 @@ angular.module('associations.components.normal', [
 						return 'rotate(' +newAngle +') translate(0,' +(config.labelInset - r) +') rotate(' + reverseAngle +')';
 					})
 					.attr('font-family', 'fontcustom')
+					.attr('text-anchor', 'middle')
+					.attr('font-size', '37px')
+					.attr('fill', '#bbb')
 					.text(config.labelFormat);
+
 
 			var lineData = [ [config.pointerWidth / 2, 0],
 							[0, -pointerHeadLength],
@@ -196,7 +200,8 @@ angular.module('associations.components.normal', [
 							[config.pointerWidth / 2, 0] ];
 			var pointerLine = d3.svg.line().interpolate('monotone');
 			var pg = svg.append('g').data([lineData])
-					.attr('class', 'pointer')
+					.attr('fill', '#bbb')
+					.attr('stroke', '#999')
 					.attr('transform', centerTx);
 
 			pointer = pg.append('path')

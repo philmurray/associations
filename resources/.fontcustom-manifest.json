@@ -1,42 +1,42 @@
 {
   "checksum": {
-    "previous": "908210f6d3b11d39d2daf782e43540e1ba088baf17b58cc364d108e06c463a65",
-    "current": "908210f6d3b11d39d2daf782e43540e1ba088baf17b58cc364d108e06c463a65"
+    "previous": "d8cc1a858b26a8dedda5a723a7f24d268c8acaeb1b1658109e97d08151687baa",
+    "current": "d8cc1a858b26a8dedda5a723a7f24d268c8acaeb1b1658109e97d08151687baa"
   },
   "fonts": [
-    "../public/assets/css/fontcustom/fontcustom_908210f6d3b11d39d2daf782e43540e1.ttf",
-    "../public/assets/css/fontcustom/fontcustom_908210f6d3b11d39d2daf782e43540e1.svg",
-    "../public/assets/css/fontcustom/fontcustom_908210f6d3b11d39d2daf782e43540e1.woff",
-    "../public/assets/css/fontcustom/fontcustom_908210f6d3b11d39d2daf782e43540e1.eot"
+    "../public/assets/css/fontcustom/fontcustom_d8cc1a858b26a8dedda5a723a7f24d26.ttf",
+    "../public/assets/css/fontcustom/fontcustom_d8cc1a858b26a8dedda5a723a7f24d26.svg",
+    "../public/assets/css/fontcustom/fontcustom_d8cc1a858b26a8dedda5a723a7f24d26.woff",
+    "../public/assets/css/fontcustom/fontcustom_d8cc1a858b26a8dedda5a723a7f24d26.eot"
   ],
   "glyphs": {
     "logo": {
       "codepoint": 61696,
       "source": "./icons/logo.svg"
     },
-    "normal_0": {
-      "codepoint": 61697,
-      "source": "./icons/normal_0.svg"
+    "nf_0": {
+      "codepoint": 61703,
+      "source": "./icons/nf_0.svg"
     },
-    "normal_1": {
-      "codepoint": 61698,
-      "source": "./icons/normal_1.svg"
+    "nf_1": {
+      "codepoint": 61704,
+      "source": "./icons/nf_1.svg"
     },
-    "normal_2": {
-      "codepoint": 61699,
-      "source": "./icons/normal_2.svg"
+    "nf_2": {
+      "codepoint": 61705,
+      "source": "./icons/nf_2.svg"
     },
-    "normal_3": {
-      "codepoint": 61700,
-      "source": "./icons/normal_3.svg"
+    "nf_3": {
+      "codepoint": 61706,
+      "source": "./icons/nf_3.svg"
     },
-    "normal_4": {
-      "codepoint": 61701,
-      "source": "./icons/normal_4.svg"
+    "nf_4": {
+      "codepoint": 61707,
+      "source": "./icons/nf_4.svg"
     },
-    "normal_5": {
-      "codepoint": 61702,
-      "source": "./icons/normal_5.svg"
+    "nf_5": {
+      "codepoint": 61708,
+      "source": "./icons/nf_5.svg"
     }
   },
   "options": {
