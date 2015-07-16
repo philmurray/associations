@@ -51,7 +51,7 @@ angular.module('associations.components.normal', [
 				if (!g){
 					$scope.render();
 				} else {
-					config.transitionMs = 3000;
+					config.transitionMs = 1500;
 					g.update($scope.value,config);
 				}
 			});
@@ -220,7 +220,7 @@ angular.module('associations.components.normal', [
 			var newAngle = config.minAngle + (ratio * range);
 			pointer.transition()
 				.duration(config.transitionMs)
-				.ease('elastic')
+				.ease('cubic-in-out')
 				.attr('transform', 'rotate(' +newAngle +')');
 		}
 		that.update = update;

@@ -1,13 +1,13 @@
 {
   "checksum": {
-    "previous": "d8cc1a858b26a8dedda5a723a7f24d268c8acaeb1b1658109e97d08151687baa",
-    "current": "d8cc1a858b26a8dedda5a723a7f24d268c8acaeb1b1658109e97d08151687baa"
+    "previous": "50d29662b37a60bdd48297ba56bcb0165baf68d4c3e9040544eeea768b5585ef",
+    "current": "50d29662b37a60bdd48297ba56bcb0165baf68d4c3e9040544eeea768b5585ef"
   },
   "fonts": [
-    "../public/assets/css/fontcustom/fontcustom_d8cc1a858b26a8dedda5a723a7f24d26.ttf",
-    "../public/assets/css/fontcustom/fontcustom_d8cc1a858b26a8dedda5a723a7f24d26.svg",
-    "../public/assets/css/fontcustom/fontcustom_d8cc1a858b26a8dedda5a723a7f24d26.woff",
-    "../public/assets/css/fontcustom/fontcustom_d8cc1a858b26a8dedda5a723a7f24d26.eot"
+    "../public/assets/css/fontcustom/fontcustom_50d29662b37a60bdd48297ba56bcb016.ttf",
+    "../public/assets/css/fontcustom/fontcustom_50d29662b37a60bdd48297ba56bcb016.svg",
+    "../public/assets/css/fontcustom/fontcustom_50d29662b37a60bdd48297ba56bcb016.woff",
+    "../public/assets/css/fontcustom/fontcustom_50d29662b37a60bdd48297ba56bcb016.eot"
   ],
   "glyphs": {
     "logo": {

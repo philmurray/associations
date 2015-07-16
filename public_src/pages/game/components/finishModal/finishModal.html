@@ -16,8 +16,8 @@
 		</div>
 		<div ng-if="!instructions.shown" class="container-fluid">
 			<div class="row">
-				<div class="col-sm-6 text-center">
-					<h3 class="title" ng-class="{'text-muted':step < 1}">
+				<div class="col-sm-6 text-center stat" ng-class="{'muted':step < 1}">
+					<h3 class="title">
 						Score
 					</h3>
 					<h2 class="text-color">
@@ -25,8 +25,8 @@
 					</h2>
 				</div>
 
-				<div class="col-sm-6 text-center">
-					<h3 class="title" ng-class="{'text-muted':step < 2}">
+				<div class="col-sm-6 text-center stat" ng-class="{'muted':step < 2}">
+					<h3 class="title">
 						Weird-o-meter
 					</h3>
 					<div class="normal" normal normal-value="normal" normal-color="color">
@@ -35,8 +35,8 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-sm-12 text-center">
-					<h3 class="title" ng-class="{'text-muted':step < 3}">
+				<div class="col-sm-12 text-center stat" ng-class="{'muted':step < 3}">
+					<h3 class="title">
 						Level
 					</h3>
 					<div level-progress level="level"></div>
