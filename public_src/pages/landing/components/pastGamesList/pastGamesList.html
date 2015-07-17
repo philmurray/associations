@@ -1,36 +1,10 @@
 <div class="past-games-list" ng-controller="PastGamesListCtrl as ctrl">
-	<div class="col-xs-12">
-		<h2>
-			Past Games
-		</h2>
-	</div>
-	<div ng-if="ctrl.mostPicksGame" class="col-sm-4 text-center">
-		<h3>
-			<a href="" ng-click="ctrl.gotoGame(ctrl.highScoreGame)">{{ctrl.highScoreGame.score}}</a>
-		</h3>
-		<p class="text-muted">
-			The highest score you have ever gotten in a game
-		</p>
-		<p>
-			&nbsp;
-		</p>
-		<h3>
-			<a href="" ng-click="ctrl.gotoGame(ctrl.mostPicksGame)">{{ctrl.mostPicksGame.picks}}</a>
-		</h3>
-		<p class="text-muted">
-			The most associations you have ever made in a game
-		</p>
-		<p>
-			&nbsp;
-		</p>
-	</div>
 	<div class="col-sm-8">
-		<p>
-			<ul class="nav nav-pills">
-				<li role="presentation" ng-class="{active:!ctrl.multi}"><a href="" ng-click="ctrl.setMode(false)"><i class="fa fa-user"></i></a></li>
-				<li role="presentation" ng-class="{active:ctrl.multi}"><a href="" ng-click="ctrl.setMode(true)"><i class="fa fa-users"></i></a></li>
-			</ul>
-		</p>
+		<ul class="nav nav-pills">
+			<li role="presentation" ng-class="{active:!ctrl.multi}"><a href="" ng-click="ctrl.setMode(false)"><i class="fa fa-user"></i></a></li>
+			<li role="presentation" ng-class="{active:ctrl.multi}"><a href="" ng-click="ctrl.setMode(true)"><i class="fa fa-users"></i></a></li>
+		</ul>
+		&nbsp;
 		<div class="panel panel-default">
 			<div class="list-group panel-body">
 				<div ng-repeat="game in ctrl.games" class="list-group-item">
@@ -39,11 +13,11 @@
 							<div class="row" ng-repeat="player in game.players | orderBy : 'alias'">
 								<div class="col-xs-8 player-name">
 									<span ng-if="player.winner"><strong><i class="fa fa-star"></i> {{player.alias}}</strong></span>
-									<span ng-if="!player.winner" class="text-muted">{{player.alias}}</span>
+									<span ng-if="!player.winner" ng-class="{'text-muted':ctrl.multi}">{{player.alias}}</span>
 								</div>
 								<div class="col-xs-4">
 									<span ng-if="player.winner"><strong>{{player.score}}</strong>&nbsp;&nbsp;&nbsp;<i class="{{ctrl.getNormal(player)}}"></i></span>
-									<span ng-if="!player.winner && player.completed" class="text-muted">{{player.score}}&nbsp;&nbsp;&nbsp;<i class="{{ctrl.getNormal(player)}}"></i></span>
+									<span ng-if="!player.winner && player.completed" ng-class="{'text-muted':ctrl.multi}">{{player.score}}&nbsp;&nbsp;&nbsp;<i class="{{ctrl.getNormal(player)}}"></i></span>
 									<span ng-if="!player.completed" class="text-muted">...</span>
 								</div>
 							</div>
@@ -62,5 +36,37 @@
 			</div>
 		</div>
 		<a class="pull-right" href="" ng-click="ctrl.loadMore()" ng-if="ctrl.hasMore">More...</a>
+	</div>
+	<div class="col-sm-4">
+		<div lock-switch lock="game-stats">
+			<div unlocked>
+				<h3>
+					<a href="" ng-click="ctrl.gotoGame(data.highScoreGame)">{{data.highScoreGame.score}}</a>
+				</h3>
+				<p class="text-muted">
+					The highest score you have ever gotten in a game
+				</p>
+				<p>
+					&nbsp;
+				</p>
+				<h3>
+					<a href="" ng-click="ctrl.gotoGame(data.mostPicksGame)">{{data.mostPicksGame.picks}}</a>
+				</h3>
+				<p class="text-muted">
+					The most associations you have ever made in a game
+				</p>
+				<p>
+					&nbsp;
+				</p>
+			</div>
+			<div locked class="locked">
+				<h3>
+					Stats
+				</h3>
+				<p>
+					Unlocked at level {{data.locked}}
+				</p>
+			</div>
+		</div>
 	</div>
 </div>

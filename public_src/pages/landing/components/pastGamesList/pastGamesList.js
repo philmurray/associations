@@ -1,7 +1,8 @@
 "use strict";
 angular.module('associations.pages.landing.components.pastGamesList', [
 	'associations.components.data.game',
-	'associations.components.normal'
+	'associations.components.normal',
+	'associations.components.locked'
 ])
 	.controller("PastGamesListCtrl", ["$scope", "GameService", "$location", "NormalConverter", function($scope, GameService, $location, NormalConverter){
 		var self = this,
