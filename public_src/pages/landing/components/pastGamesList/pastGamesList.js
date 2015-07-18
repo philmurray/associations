@@ -42,14 +42,6 @@ angular.module('associations.pages.landing.components.pastGamesList', [
 			return this.loadMore(true);
 		};
 
-		GameService.getHighScore().then(function(response){
-			self.highScoreGame = response.data;
-		});
-
-		GameService.getMostPicks().then(function(response){
-			self.mostPicksGame = response.data;
-		});
-
 		this.setMode(true).then(function(){
 			if (!self.games.length){
 				self.setMode(false);

@@ -31,20 +31,6 @@ angular.module('associations.components.data.game', [])
 					url: url
 				});
 			},
-			getHighScore: function(){
-				var url = "/rpc/game?highScore=true";
-				return $http({
-					method: 'GET',
-					url: url
-				});
-			},
-			getMostPicks: function(){
-				var url = "/rpc/game?mostPicks=true";
-				return $http({
-					method: 'GET',
-					url: url
-				});
-			},
 			startGame: function(gameId){
 				var url = "/rpc/game/" + gameId + "/start";
 				return $http({

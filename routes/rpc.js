@@ -51,6 +51,13 @@ router.post('/questions', isAuthenticated, function(req,res){
 	});
 });
 
+router.get('/lock/:data', isAuthenticated, function(req,res){
+	models.Lock.get(req.user, req.params.data, function(err, data){
+		if (err){ return res.status(500).send(err.message); }
+		res.json(data);
+	});
+});
+
 router.get('/color', function(req,res){
 	models.Color.getActiveColor(req.user, function(err, color){
 		if (err){ return res.status(500).send(err.message); }
@@ -79,25 +86,11 @@ router.post('/game', isAuthenticated, function(req,res){
 		res.json(game);
 	});
 });
-router.get('/game/:gameId?', function(req,res){
-	if (req.params.gameId) {
-		models.Game.getGame(req.user, req.params.gameId, function(err, game){
-			if (err){ return res.status(500).send(err.message); }
-			res.json(game);
-		});
-	} else if (req.user && req.query.highScore){
-		models.Game.getPlayerHighScore(req.user, function(err, game){
-			if (err){ return res.status(500).send(err.message); }
-			res.json(game);
-		});
-	} else if (req.user && req.query.mostPicks){
-		models.Game.getPlayerMostPicks(req.user, function(err, game){
-			if (err){ return res.status(500).send(err.message); }
-			res.json(game);
-		});
-	} else {
-		return res.status(500).send("invalid request");
-	}
+router.get('/game/:gameId', function(req,res){
+	models.Game.getGame(req.user, req.params.gameId, function(err, game){
+		if (err){ return res.status(500).send(err.message); }
+		res.json(game);
+	});
 });
 router.post('/game/:gameId/start', isAuthenticated, function(req,res){
 

@@ -280,6 +280,32 @@ CREATE TABLE levels (
 ALTER TABLE levels OWNER TO associations_dbuser;
 
 --
+-- Name: locks; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+CREATE TABLE locks (
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
+    level integer NOT NULL,
+    data text NOT NULL
+);
+
+
+ALTER TABLE locks OWNER TO associations_dbuser;
+
+--
+-- Name: locks_users; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+CREATE TABLE locks_users (
+    user_id uuid NOT NULL,
+    lock_id uuid NOT NULL,
+    seen boolean DEFAULT false NOT NULL
+);
+
+
+ALTER TABLE locks_users OWNER TO associations_dbuser;
+
+--
 -- Name: picks_scored; Type: VIEW; Schema: public; Owner: associations_dbuser
 --
 
@@ -441,6 +467,22 @@ ALTER TABLE ONLY games_words
 
 ALTER TABLE ONLY levels
     ADD CONSTRAINT levels_pkey PRIMARY KEY (level);
+
+
+--
+-- Name: locks_pkey; Type: CONSTRAINT; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+ALTER TABLE ONLY locks
+    ADD CONSTRAINT locks_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: locks_users_pkey; Type: CONSTRAINT; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+ALTER TABLE ONLY locks_users
+    ADD CONSTRAINT locks_users_pkey PRIMARY KEY (user_id, lock_id);
 
 
 --
@@ -649,6 +691,22 @@ ALTER TABLE ONLY games_words
 
 ALTER TABLE ONLY games_words
     ADD CONSTRAINT games_words_word_fkey FOREIGN KEY (word) REFERENCES words(text);
+
+
+--
+-- Name: locks_users_lock_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: associations_dbuser
+--
+
+ALTER TABLE ONLY locks_users
+    ADD CONSTRAINT locks_users_lock_id_fkey FOREIGN KEY (lock_id) REFERENCES locks(id);
+
+
+--
+-- Name: locks_users_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: associations_dbuser
+--
+
+ALTER TABLE ONLY locks_users
+    ADD CONSTRAINT locks_users_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id);
 
 
 --
