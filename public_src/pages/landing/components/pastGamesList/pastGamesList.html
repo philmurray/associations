@@ -1,7 +1,12 @@
 <div class="past-games-list" ng-controller="PastGamesListCtrl as ctrl">
-	<div class="col-xs-12">
+	<div class="col-xs-12 col-sm-8">
 		<h2>
 			Past Games
+		</h2>
+	</div>
+	<div class="hidden-xs col-sm-4">
+		<h2>
+			Stats
 		</h2>
 	</div>
 	<div class="col-sm-8">
@@ -42,32 +47,30 @@
 		</div>
 		<a class="pull-right" href="" ng-click="ctrl.loadMore()" ng-if="ctrl.hasMore">More...</a>
 	</div>
+	<div class="visible-xs col-xs-12">
+		<h2>
+			Stats
+		</h2>
+	</div>
 	<div class="col-sm-4">
 		<div lock-switch lock="playerGameStats">
-			<div unlocked class="text-center">
-				<h3>
-					<a href="" ng-click="ctrl.gotoGame(data.highScoreGame)">{{data.highScoreGame.score}}</a>
-				</h3>
-				<p class="text-muted">
-					The highest score you have ever gotten in a game
-				</p>
-				<p>
-					&nbsp;
-				</p>
-				<h3>
-					<a href="" ng-click="ctrl.gotoGame(data.mostPicksGame)">{{data.mostPicksGame.picks}}</a>
-				</h3>
-				<p class="text-muted">
-					The most associations you have ever made in a game
-				</p>
-				<p>
-					&nbsp;
-				</p>
+			<div unlocked class="well">
+				<ul class="list-unstyled">
+					<li>
+						<span>High Score</span>
+						<span class="pull-right">
+							<a href="" ng-click="ctrl.gotoGame(data.highScoreGame)">{{data.highScoreGame.score}}</a>
+						</span>
+					</li>
+					<li>
+						<span>Most Words</span>
+						<span class="pull-right">
+							<a href="" ng-click="ctrl.gotoGame(data.mostPicksGame)">{{data.mostPicksGame.picks}}</a>
+						</span>
+					</li>
+				</ul>
 			</div>
 			<div locked class="locked">
-				<h3>
-					Stats
-				</h3>
 				<p>
 					Unlocked at level {{data.level}}
 				</p>
