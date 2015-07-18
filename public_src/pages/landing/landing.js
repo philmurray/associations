@@ -58,7 +58,7 @@ angular.module('associations.pages.landing', [
 			visible:true
 		},
 		{
-			title: "Past Games",
+			title: "Games",
 			components:[
 				"pages/landing/components/pendingGames/pendingGames.html",
 				"pages/landing/components/pastGamesList/pastGamesList.html"

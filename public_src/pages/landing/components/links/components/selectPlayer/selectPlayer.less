@@ -4,7 +4,19 @@
 		max-height: 250px;
 		overflow-y: auto;
 	}
-	.player-name {
-		.text-overflow();
+	.row {
+		cursor: pointer;
+
+		.available {
+			.text-muted;
+		}
+
+		.selected .alias {
+			font-weight: bold;
+		}
+
+		.player-name {
+			.text-overflow();
+		}
 	}
 }

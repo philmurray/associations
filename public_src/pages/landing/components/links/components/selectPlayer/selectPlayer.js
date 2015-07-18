@@ -19,7 +19,11 @@ angular.module('associations.pages.landing.components.links.components.selectPla
 				});
 			});
 		} else {
-			$scope.foundPlayers = recentPlayers;
+			$scope.foundPlayers = [];
+			angular.forEach($scope.selectedPlayers, function(player){
+				$scope.foundPlayers.push(player);
+			});
+			$scope.foundPlayers = $scope.foundPlayers.concat(recentPlayers);
 		}
 	});
 
