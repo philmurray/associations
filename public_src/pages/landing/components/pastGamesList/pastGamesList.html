@@ -57,6 +57,12 @@
 			<div unlocked class="well">
 				<ul class="list-unstyled">
 					<li>
+						<span>All Games Played</span>
+						<span class="pull-right">
+							{{data.stats.allgames}}
+						</span>
+					</li>
+					<li>
 						<span>High Score</span>
 						<span class="pull-right">
 							<a href="" ng-click="ctrl.gotoGame(data.highScoreGame)">{{data.highScoreGame.score}}</a>
@@ -66,6 +72,12 @@
 						<span>Most Words</span>
 						<span class="pull-right">
 							<a href="" ng-click="ctrl.gotoGame(data.mostPicksGame)">{{data.mostPicksGame.picks}}</a>
+						</span>
+					</li>
+					<li>
+						<span>Games won</span>
+						<span class="pull-right">
+							{{data.stats.wongames}}
 						</span>
 					</li>
 				</ul>
