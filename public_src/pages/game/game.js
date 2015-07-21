@@ -151,6 +151,9 @@ angular.module('associations.pages.game', [
 						},
 						player: function(){
 							return $scope.player;
+						},
+						game: function(){
+							return $scope.game;
 						}
 					}
 				});

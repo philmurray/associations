@@ -1,6 +1,6 @@
 <div class="finish-modal">
 	<div class="modal-body">
-		<div ng-if="instructions.shown">
+		<div ng-show="show.instructions">
 			<h4>
 				Congrats!  You finished a game!
 			</h4>
@@ -14,38 +14,62 @@
 				<dd>This will take you to the word exploration page</dd>
 			</dl>
 		</div>
-		<div ng-if="!instructions.shown" class="container-fluid">
-			<div class="row">
-				<div class="col-sm-6 text-center stat" ng-class="{'muted':step < 1}">
-					<h3 class="title">
-						Score
-					</h3>
-					<h2 class="text-color">
-						{{score}}
-					</h2>
-				</div>
-
-				<div class="col-sm-6 text-center stat" ng-class="{'muted':step < 2}">
-					<h3 class="title">
-						Weird-o-meter
-					</h3>
-					<div class="normal" normal normal-value="normal" normal-color="color">
-
+		<div ng-show="!show.instructions" class="container-fluid">
+			<div ng-show="show.multi">
+				<h2 class="text-center">
+					{{show.winner?'Winner!':'...'}}
+				</h2>
+				<div class="row multi-players" ng-class="{winner:player.winner && show.winner}" ng-repeat="player in players | orderBy:'-gameScore'">
+					<div class="col-xs-3 player-name">
+						<span><i class="fa fa-star"></i> {{player.alias}} <i class="fa fa-star"></i></span>
+					</div>
+					<div class="col-xs-9 {{player.color.css_class}}">
+						<div class="progress">
+							<div class="progress-bar progress-bar-color"
+								role="progressbar"
+								aria-valuenow="{{player.score}}"
+								aria-valuemin="0"
+								aria-valuemax="{{winnerScore}}" style="min-width: 2em; width:{{100*(player.score/winnerScore)}}%">
+							{{player.score}}
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-sm-12 text-center stat" ng-class="{'muted':step < 3}">
-					<h3 class="title">
-						Level
-					</h3>
-					<div level-progress level="level"></div>
+			<div ng-show="!show.multi">
+				<div class="row">
+					<div class="col-sm-6 text-center stat" ng-class="{'muted':step < 1}">
+						<h3 class="title">
+							Score
+						</h3>
+						<h2 class="text-color">
+							{{score}}
+						</h2>
+					</div>
+
+					<div class="col-sm-6 text-center stat" ng-class="{'muted':step < 2}">
+						<h3 class="title">
+							Weird-o-meter
+						</h3>
+						<div class="normal" normal normal-value="normal" normal-color="color">
+
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12 text-center stat" ng-class="{'muted':step < 3}">
+						<h3 class="title">
+							Level
+						</h3>
+						<div level-progress level="level"></div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="modal-footer">
-		<button ng-if="!instructions.shown" class="btn btn-color" ng-click="close()">Close</button>
-		<button ng-if="instructions.shown" class="btn btn-color" ng-click="instructions.shown = false">Got it!</button>
+		<button ng-if="!show.instructions && !show.multi" class="btn btn-color" ng-click="close()">Close</button>
+		<button ng-if="!show.instructions && show.multi" class="btn btn-color" ng-click="show.multi = false">Your stats</button>
+		<button ng-if="show.instructions" class="btn btn-color" ng-click="show.instructions = false">Got it!</button>
 	</div>
 </div>
