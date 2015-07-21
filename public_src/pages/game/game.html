@@ -2,6 +2,8 @@
 
 	<a ng-if="!playing" class="navbar-brand" href="#/"><i class="fa fa-arrow-left"></i></a>
 
+	<a ng-if="!playing && again.show" class="again" ng-click="playAgain();"><i class="fa fa-repeat"></i> {{again.text}}</a>
+
 	<div ng-if="playing" class="word-entry panel panel-default">
 		<div class="panel-heading">
 			<h4>

@@ -12,7 +12,7 @@ angular.module('associations.pages.game', [
 ])
 
 .constant("GAME_TIME", 45)
-.controller("GameController", ["$scope", "game", "$modal", "GameService", "$interval", "GAME_TIME", "$timeout", "NormalConverter", function($scope, game, $modal, GameService, $interval, GAME_TIME, $timeout, NormalConverter) {
+.controller("GameController", ["$scope", "game", "$modal", "GameService", "$interval", "GAME_TIME", "$timeout", "NormalConverter", "$location", function($scope, game, $modal, GameService, $interval, GAME_TIME, $timeout, NormalConverter, $location) {
 	$scope.footer.visible = false;
 	$scope.game = game;
 	$scope.player = $scope.game.players[$scope.game.player];
@@ -26,6 +26,10 @@ angular.module('associations.pages.game', [
 		expanded: false,
 		currentText: "",
 		messages: []
+	};
+	$scope.again = {
+		show: false,
+		text: $scope.game.players.length === 1 ? "Again?" : "Rematch?"
 	};
 
 	$scope.$watch("playing.word", function(){
@@ -119,6 +123,25 @@ angular.module('associations.pages.game', [
 
 	};
 
+	$scope.activateAgain = function(){
+		$scope.again.show = true;
+
+		$scope.game.players.forEach(function(player){
+			if (!player.completed) $scope.again.show = false;
+		});
+	};
+
+	$scope.playAgain = function(){
+		var players = $scope.game.players.length > 1 ? $scope.game.players.map(function(player){return player.id;}) : undefined;
+		GameService.createGame(players)
+			.then(function(response){
+				$location.path("/game/"+response.data.id);
+			})
+			.catch(function(err){
+				$scope.addAlert({type: "danger", msg: "Game could not be created"});
+			});
+	};
+
 	$scope.getNormal = function (player){
 		return NormalConverter.toClass(player.normal);
 	};
@@ -134,6 +157,7 @@ angular.module('associations.pages.game', [
 			$scope.game = response.data;
 			$scope.player = $scope.game.players[$scope.game.player];
 			$scope.activatePlayer($scope.player);
+			$scope.activateAgain();
 			$timeout(function(){
 				$modal.open({
 					templateUrl: "pages/game/components/finishModal/finishModal.html",
@@ -203,6 +227,8 @@ angular.module('associations.pages.game', [
 			} else {
 				$scope.continueGame();
 			}
+		} else {
+			$scope.activateAgain();
 		}
 		// else {
 		// 	$scope.stopGame();
