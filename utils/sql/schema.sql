@@ -215,7 +215,8 @@ CREATE TABLE games_users (
     start_time timestamp with time zone,
     current_word integer DEFAULT 0 NOT NULL,
     chat_viewed_time timestamp with time zone DEFAULT now() NOT NULL,
-    declined boolean DEFAULT false NOT NULL
+    declined boolean DEFAULT false NOT NULL,
+    won boolean DEFAULT false NOT NULL
 );
 
 
@@ -327,7 +328,7 @@ CREATE VIEW picks_scored AS
                FROM graph_rels rs1
               WHERE (rs1."from" = p."from")) = 0) THEN 100
             WHEN (r.score IS NOT NULL) THEN 100
-            ELSE 0
+            ELSE 1
         END AS score,
         CASE
             WHEN (p."to" IS NULL) THEN NULL::double precision
@@ -370,6 +371,39 @@ CREATE TABLE session (
 ALTER TABLE session OWNER TO associations_dbuser;
 
 --
+-- Name: user_game_stats; Type: VIEW; Schema: public; Owner: associations_dbuser
+--
+
+CREATE VIEW user_game_stats AS
+ SELECT g.user_id,
+    count(
+        CASE
+            WHEN (c.count = 1) THEN 1
+            ELSE NULL::integer
+        END) AS singlegames,
+    count(
+        CASE
+            WHEN (c.count > 1) THEN 1
+            ELSE NULL::integer
+        END) AS multigames,
+    count(
+        CASE
+            WHEN (g.won = true) THEN 1
+            ELSE NULL::integer
+        END) AS wongames,
+    count(*) AS allgames
+   FROM (games_users g
+     JOIN ( SELECT games_users.game_id,
+            count(games_users.user_id) AS count
+           FROM games_users
+          GROUP BY games_users.game_id) c ON ((g.game_id = c.game_id)))
+  WHERE (g.completed = true)
+  GROUP BY g.user_id;
+
+
+ALTER TABLE user_game_stats OWNER TO associations_dbuser;
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
 --
 
@@ -384,7 +418,8 @@ CREATE TABLE users (
     create_time timestamp with time zone DEFAULT now() NOT NULL,
     seen_instructions boolean DEFAULT false NOT NULL,
     level integer DEFAULT 0 NOT NULL,
-    level_progress double precision DEFAULT 0 NOT NULL
+    level_progress double precision DEFAULT 0 NOT NULL,
+    oauth_displayname text
 );
 
 

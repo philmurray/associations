@@ -19,6 +19,9 @@
 					<label for="passwordInput">Password</label>
 					<input focus-input="passwordRequired" type="password" class="form-control" id="passwordInput" placeholder="Password" ng-model="password">
 				</div>
+				<p ng-show="!passwordRequired">
+					* If you don't have an account yet, we'll create one for you
+				</p>
 				<button ng-disabled="form.$invalid" class="btn btn-color pull-right" ng-click="submitEmail()">OK</button>
 			</form>
 		</div>

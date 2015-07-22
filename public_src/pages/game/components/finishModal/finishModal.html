@@ -30,7 +30,7 @@
 								aria-valuenow="{{player.score}}"
 								aria-valuemin="0"
 								aria-valuemax="{{winnerScore}}" style="min-width: 2em; width:{{100*(player.score/winnerScore)}}%">
-							{{player.score}}
+							{{player.score | number:0}}
 							</div>
 						</div>
 					</div>
@@ -43,7 +43,7 @@
 							Score
 						</h3>
 						<h2 class="text-color">
-							{{score}}
+							{{score | number:0}}
 						</h2>
 					</div>
 

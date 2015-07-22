@@ -39,7 +39,6 @@ angular.module('associations.pages.game.components.finishModal', [
 				$timeout(function(){
 					var incr = $scope.winnerScore/200;
 					$interval(function(){
-						var finished = true;
 						$scope.players.forEach(function(player){
 							if (player.score < player.gameScore){
 								player.score += incr;
