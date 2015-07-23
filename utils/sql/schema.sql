@@ -529,6 +529,14 @@ ALTER TABLE ONLY picks
 
 
 --
+-- Name: picks_user_id_game_id_from_key; Type: CONSTRAINT; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+ALTER TABLE ONLY picks
+    ADD CONSTRAINT picks_user_id_game_id_from_key UNIQUE (user_id, game_id, "from");
+
+
+--
 -- Name: questions_pkey; Type: CONSTRAINT; Schema: public; Owner: associations_dbuser; Tablespace: 
 --
 
