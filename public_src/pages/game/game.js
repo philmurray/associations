@@ -54,9 +54,6 @@ angular.module('associations.pages.game', [
 				$scope.chosenWord.word = "";
 				$scope.player.picks.push(response.data.word);
 				$scope.updatePlaying(response.data.game);
-			}).catch(function(err){
-				$scope.addAlert({type: "danger", msg: "Word could not be submitted"});
-				$scope.stopGame();
 			});
 		}
 	};
