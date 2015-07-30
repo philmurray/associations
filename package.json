@@ -16,6 +16,7 @@
         "pg": "*",
         "bcrypt-nodejs": "*",
         "checkit": "*",
+        "spell": "*",
 
         "passport": "*",
         "passport-local": "*",

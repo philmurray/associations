@@ -141,8 +141,8 @@ router.get('/game/:gameId/chats', isAuthenticated, function(req, res){
 	});
 });
 
-router.get('/word', function(req,res){
-	models.Word.search(req.query.text || "", 150, function(err, words){
+router.get('/word/:word', function(req,res){
+	models.Word.check(req.params.word, function(err, words){
 		if (err){ return res.status(500).send(err.message); }
 		res.json(words);
 	});

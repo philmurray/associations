@@ -8,7 +8,8 @@ angular.module('associations.pages.game', [
 	'associations.pages.game.components.graph',
 	'associations.components.focus-input',
 	'associations.components.scroll-bottom',
-	'associations.components.normal'
+	'associations.components.normal',
+	'associations.components.wordEntry'
 ])
 
 .constant("GAME_TIME", 45)

@@ -1,26 +1,26 @@
-<div class='page-explore-words'>
+<div class="page-explore-words">
 
 	<a class="navbar-brand" href="#/"><i class="fa fa-arrow-left"></i></a>
 
 	<div id="enterSingleWord" class="node-enter-word" ng-class="{source:mode == 2}">
-		<select-word selected="selectedWord" class='select-word' placeholderText="'Enter a word'"></select-word>
+		<word-entry selected="selectedWord" class="select-word" placeholder-text="'Enter a word'" ></word-entry>
 	</div>
 	<div ng-if="noData" class="no-data">
 		<h3 ng-if="!selectedOtherWord.word">No data was found for {{selectedWord.word}}.</h3>
 		<h3 ng-if="selectedOtherWord.word">No data was found to link {{selectedWord.word}} and {{selectedOtherWord.word}}.</h3>
 	</div>
 
-	<div ng-class="{loading:loading}" class='loading-box l1'>
+	<div ng-class="{loading:loading}" class="loading-box l1">
 
 	</div>
-	<div ng-class="{loading:loading}" class='loading-box l2'>
+	<div ng-class="{loading:loading}" class="loading-box l2">
 
 	</div>
-	<div ng-class="{loading:loading}" class='loading-box l3'>
+	<div ng-class="{loading:loading}" class="loading-box l3">
 
 	</div>
 	<div id="enterOtherWord" class="node-enter-word target" ng-show="mode == 2">
-		<select-word selected="selectedOtherWord" class='select-word'></select-word>
+		<word-entry selected="selectedOtherWord" class="select-word" placeholder-text="'Enter another word'" ></word-entry>
 	</div>
 
 

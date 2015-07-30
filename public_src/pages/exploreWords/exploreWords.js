@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module('associations.pages.exploreWords',[
-	"associations.components.selectWord",
+	"associations.components.wordEntry",
 	"associations.components.data.word",
 	"associations.pages.exploreWords.components.graph"
 	])
