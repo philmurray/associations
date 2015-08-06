@@ -43,6 +43,9 @@
     .progress-bar-color {
       .progress-bar-variant(@color);
     }
+    .alert-color {
+        .alert-variant(darken(@color, 45%); @hover-color; @color);
+    }
 
 	.btn-color,
 	&.btn {

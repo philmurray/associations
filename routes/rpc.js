@@ -25,6 +25,13 @@ router.post('/user', isAuthenticated, function(req, res){
 	});
 });
 
+router.get('/user/notifications', isAuthenticated, function(req,res){
+	models.User.getNotifications(req.user, function(err, notifications){
+		if (err){ return res.status(500).send(err.message); }
+		res.json(notifications);
+	});
+});
+
 router.get('/users', isAuthenticated, function(req,res){
 	models.User.search(req.user, req.query.search || "", 15, function(err, users){
 		if (err){ return res.status(500).send(err.message); }

@@ -1,0 +1,8 @@
+<div ng-controller="AlertsCtrl as ctrl" class="alerts col-xs-12">
+	<div class="alert alert-color" ng-if="ctrl.notifications.pendingGames">
+		<strong><i class="fa fa-exclamation-circle"></i> You have pending games!</strong> Scroll down to view them
+	</div>
+	<div class="alert alert-color" ng-if="ctrl.notifications.unlocked">
+		<strong><i class="fa fa-info-circle"></i> You have unlocked new stuff!</strong> Scroll down to find it
+	</div>
+</div>

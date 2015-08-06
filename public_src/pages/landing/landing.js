@@ -4,6 +4,7 @@ angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 250);
 angular.module('associations.pages.landing', [
 	'associations.components.login',
 	'associations.pages.landing.components.welcome',
+	'associations.pages.landing.components.alerts',
 	'associations.pages.landing.components.pendingGames',
 	'associations.pages.landing.components.pastGamesList',
 	'associations.pages.landing.components.links',
@@ -52,6 +53,7 @@ angular.module('associations.pages.landing', [
 		{
 			components:[
 				"pages/landing/components/welcome/welcome.html",
+				"pages/landing/components/alerts/alerts.html",
 				"pages/landing/components/links/links.html"
 			],
 			authRequired:true,

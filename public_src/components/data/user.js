@@ -37,6 +37,13 @@ angular.module('associations.components.data.user', [])
 					method: 'GET',
 					url: url
 				});
+			},
+			notifications: function(){
+				var url = "/rpc/user/notifications";
+				return $http({
+					method: 'GET',
+					url: url
+				});
 			}
 		};
 	}]);
