@@ -24,7 +24,8 @@ angular.module('associations.pages.landing', [
 
 	$scope.page = function(){
 		var currentSectionIndex = $scope.sections.length - 1,
-			currentSection = $scope.sections[currentSectionIndex];
+			currentSection = $scope.sections[currentSectionIndex],
+			added = false;
 
 		if (!currentSection || availableSections[currentSectionIndex].components.length === currentSection.components.length){
 			currentSectionIndex++;
@@ -33,10 +34,18 @@ angular.module('associations.pages.landing', [
 			currentSection = angular.copy(availableSections[currentSectionIndex]);
 			currentSection.components = [];
 			$scope.sections.push(currentSection);
+			added = true;
 		}
 		var nextComponent = availableSections[currentSectionIndex].components[currentSection.components.length];
 		if (nextComponent) {
 			currentSection.components.push(nextComponent);
+			added = true;
+		}
+
+		if (added){
+			if (currentSection.authRequired && ! $scope.authenticated.value){
+				$scope.page();
+			}
 		}
 	};
 

@@ -180,12 +180,16 @@ CREATE VIEW game_top_words AS
             g."from",
             g."to",
             g.score,
-            rank() OVER (PARTITION BY g."from" ORDER BY g.score DESC) AS rank
+            g.rank
            FROM (( SELECT DISTINCT picks."from",
                     picks.game_id
                    FROM picks
                   WHERE (picks."to" IS NOT NULL)) p
-             JOIN graph_rels g ON ((p."from" = g."from")))) t
+             JOIN ( SELECT graph_rels."from",
+                    graph_rels."to",
+                    graph_rels.score,
+                    row_number() OVER (PARTITION BY graph_rels."from" ORDER BY graph_rels.score DESC) AS rank
+                   FROM graph_rels) g ON ((p."from" = g."from")))) t
   WHERE (t.rank <= 5);
 
 
