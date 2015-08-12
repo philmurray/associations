@@ -75,10 +75,9 @@
 						</span>
 					</li>
 					<li>
-						<span>Games won</span>
-						<span class="pull-right">
-							{{data.stats.wongames}}
-						</span>
+						<div piechart pie-data="ctrl.getPieData(data.stats)" >
+
+						</div>
 					</li>
 				</ul>
 			</div>

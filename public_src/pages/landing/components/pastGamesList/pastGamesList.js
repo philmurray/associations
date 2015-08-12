@@ -2,7 +2,8 @@
 angular.module('associations.pages.landing.components.pastGamesList', [
 	'associations.components.data.game',
 	'associations.components.normal',
-	'associations.components.locked'
+	'associations.components.locked',
+	'associations.components.piechart'
 ])
 	.controller("PastGamesListCtrl", ["$scope", "GameService", "$location", "NormalConverter", function($scope, GameService, $location, NormalConverter){
 		var self = this,
@@ -40,6 +41,24 @@ angular.module('associations.pages.landing.components.pastGamesList', [
 			self.multi = multi;
 
 			return this.loadMore(true);
+		};
+
+		this.getPieData = function(stats){
+			if (!this.pieData){
+				this.pieData = [
+					{
+						key: "Games Won",
+						value: stats.wongames,
+						color: d3.rgb($scope.color.hex)
+					},
+					{
+						key: "Games Lost",
+						value: stats.multigames-stats.wongames,
+						color: d3.rgb($scope.color.hex).darker(5)
+					}
+				];
+			}
+			return this.pieData;
 		};
 
 		this.setMode(true).then(function(){
