@@ -43,20 +43,28 @@ angular.module('associations.pages.landing.components.pastGamesList', [
 			return this.loadMore(true);
 		};
 
+		this.showPie = function(stats){
+			return stats.multigames > 5;
+		};
 		this.getPieData = function(stats){
 			if (!this.pieData){
-				this.pieData = [
-					{
+				this.pieData = [];
+
+				if (stats.wongames > 0){
+					this.pieData.push({
 						key: "Games Won",
 						value: stats.wongames,
 						color: d3.rgb($scope.color.hex)
-					},
-					{
+					});
+				}
+				var lostgames = stats.multigames-stats.wongames;
+				if (lostgames > 0) {
+					this.pieData.push({
 						key: "Games Lost",
-						value: stats.multigames-stats.wongames,
+						value: lostgames,
 						color: d3.rgb($scope.color.hex).darker(5)
-					}
-				];
+					});
+				}
 			}
 			return this.pieData;
 		};

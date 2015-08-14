@@ -16,10 +16,10 @@ angular.module('associations.components.piechart', [
 			};
 
 			$scope.render = function(){
-				$scope.viewModel.size = $scope.viewModel.element.offsetWidth;
+				$scope.viewModel.size = Math.min($scope.viewModel.element.offsetWidth, 300);
 				$scope.viewModel.width = $scope.viewModel.size;
 				$scope.viewModel.height = $scope.viewModel.size;
-				$scope.viewModel.radius = Math.min($scope.viewModel.width, $scope.viewModel.height) / 2;
+				$scope.viewModel.radius = Math.min($scope.viewModel.width, $scope.viewModel.height) / 2 - 50;
 
 				d3.select($scope.viewModel.element).select('svg').remove();
 
@@ -34,6 +34,10 @@ angular.module('associations.components.piechart', [
 				$scope.viewModel.arc = d3.svg.arc()
 					.outerRadius($scope.viewModel.radius - 10)
 					.innerRadius(0);
+
+				$scope.viewModel.arcLabel = d3.svg.arc()
+					.outerRadius($scope.viewModel.radius + 50)
+					.innerRadius($scope.viewModel.radius);
 
 				$scope.viewModel.pie = d3.layout.pie()
 					.sort(null)
@@ -60,7 +64,7 @@ angular.module('associations.components.piechart', [
 					.style("text-anchor", "middle");
 
 				arc.selectAll("text")
-					.attr("transform", function(d) { return "translate(" + $scope.viewModel.arc.centroid(d) + ")"; })
+					.attr("transform", function(d) { return "translate(" + $scope.viewModel.arcLabel.centroid(d) + ")"; })
 					.text(function(d) { return d.data.key; });
 			};
 

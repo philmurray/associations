@@ -74,7 +74,7 @@
 							<a href="" ng-click="ctrl.gotoGame(data.mostPicksGame)">{{data.mostPicksGame.picks}}</a>
 						</span>
 					</li>
-					<li>
+					<li ng-if="ctrl.showPie(data.stats)">
 						<div piechart pie-data="ctrl.getPieData(data.stats)" >
 
 						</div>
