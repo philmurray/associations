@@ -2,6 +2,8 @@
 	<div class="col-xs-12 col-sm-8">
 		<h2>
 			Past Games
+			<span><button class="btn btn-color" ng-class="{active: !ctrl.multi}" ng-click="ctrl.setMode(false)"><i class="fa fa-user"></i></button></span>
+			<span><button class="btn btn-color" ng-class="{active: ctrl.multi}" ng-click="ctrl.setMode(true)"><i class="fa fa-users"></i></button></span>
 		</h2>
 	</div>
 	<div class="hidden-xs col-sm-4">
@@ -10,11 +12,6 @@
 		</h2>
 	</div>
 	<div class="col-sm-8 col-xs-12">
-		<ul class="nav nav-pills">
-			<li role="presentation" ng-class="{active:!ctrl.multi}"><a href="" ng-click="ctrl.setMode(false)"><i class="fa fa-user"></i></a></li>
-			<li role="presentation" ng-class="{active:ctrl.multi}"><a href="" ng-click="ctrl.setMode(true)"><i class="fa fa-users"></i></a></li>
-		</ul>
-		&nbsp;
 		<div class="panel panel-default">
 			<div class="list-group panel-body">
 				<div ng-repeat="game in ctrl.games" class="list-group-item">
