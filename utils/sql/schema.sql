@@ -408,6 +408,67 @@ CREATE VIEW user_game_stats AS
 ALTER TABLE user_game_stats OWNER TO associations_dbuser;
 
 --
+-- Name: user_stats_normal; Type: VIEW; Schema: public; Owner: associations_dbuser
+--
+
+CREATE VIEW user_stats_normal AS
+ SELECT p.user_id,
+    ((p.normal - avg(p.normal) OVER ()) / stddev(p.normal) OVER ()) AS normal
+   FROM ( SELECT picks_scored.user_id,
+            avg(picks_scored.normal) AS normal
+           FROM picks_scored
+          GROUP BY picks_scored.user_id) p;
+
+
+ALTER TABLE user_stats_normal OWNER TO associations_dbuser;
+
+--
+-- Name: words; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+CREATE TABLE words (
+    text text NOT NULL,
+    rank integer NOT NULL,
+    lemma text NOT NULL,
+    pos text NOT NULL,
+    play_order integer
+);
+
+
+ALTER TABLE words OWNER TO associations_dbuser;
+
+--
+-- Name: user_stats_rank; Type: VIEW; Schema: public; Owner: associations_dbuser
+--
+
+CREATE VIEW user_stats_rank AS
+ SELECT p.user_id,
+    ((p.rank - avg(p.rank) OVER ()) / stddev(p.rank) OVER ()) AS rank
+   FROM ( SELECT p_1.user_id,
+            avg(w.rank) AS rank
+           FROM (picks p_1
+             JOIN words w ON ((p_1."to" = w.text)))
+          GROUP BY p_1.user_id) p;
+
+
+ALTER TABLE user_stats_rank OWNER TO associations_dbuser;
+
+--
+-- Name: user_stats_time; Type: VIEW; Schema: public; Owner: associations_dbuser
+--
+
+CREATE VIEW user_stats_time AS
+ SELECT p.user_id,
+    ((p.time_taken - avg(p.time_taken) OVER ()) / stddev(p.time_taken) OVER ()) AS time_taken
+   FROM ( SELECT picks.user_id,
+            avg(picks.time_taken) AS time_taken
+           FROM picks
+          GROUP BY picks.user_id) p;
+
+
+ALTER TABLE user_stats_time OWNER TO associations_dbuser;
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
 --
 
@@ -430,19 +491,22 @@ CREATE TABLE users (
 ALTER TABLE users OWNER TO associations_dbuser;
 
 --
--- Name: words; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
+-- Name: user_stats; Type: VIEW; Schema: public; Owner: associations_dbuser
 --
 
-CREATE TABLE words (
-    text text NOT NULL,
-    rank integer NOT NULL,
-    lemma text NOT NULL,
-    pos text NOT NULL,
-    play_order integer
-);
+CREATE VIEW user_stats AS
+ SELECT u.id,
+    u.level,
+    t.time_taken,
+    r.rank,
+    n.normal
+   FROM (((users u
+     JOIN user_stats_time t ON ((t.user_id = u.id)))
+     JOIN user_stats_rank r ON ((r.user_id = u.id)))
+     JOIN user_stats_normal n ON ((n.user_id = u.id)));
 
 
-ALTER TABLE words OWNER TO associations_dbuser;
+ALTER TABLE user_stats OWNER TO associations_dbuser;
 
 --
 -- Name: answers_pkey; Type: CONSTRAINT; Schema: public; Owner: associations_dbuser; Tablespace: 
