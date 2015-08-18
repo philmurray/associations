@@ -1,4 +1,7 @@
 @import "pages/landing/components/links/components/selectPlayer/selectPlayer.less";
+
+@big-icon: @font-size-large * 3;
+
 .page-landing {
 	img {
 		width: 220px;
@@ -29,7 +32,7 @@
 	}
 	.links {
 		h4 {
-			font-size: @font-size-large * 3;
+			font-size: @big-icon;
 		}
 	}
 	.locked {
@@ -53,6 +56,14 @@
 	.past-games-list {
 		.player-name, .picks {
 			.text-overflow();
+		}
+	}
+	.playerLevel {
+		.level {
+			font-size: @big-icon;
+			.level-text {
+				color: @body-bg;
+			}
 		}
 	}
 }

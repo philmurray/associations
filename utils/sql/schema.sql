@@ -412,12 +412,10 @@ ALTER TABLE user_game_stats OWNER TO associations_dbuser;
 --
 
 CREATE VIEW user_stats_normal AS
- SELECT p.user_id,
-    ((p.normal - avg(p.normal) OVER ()) / stddev(p.normal) OVER ()) AS normal
-   FROM ( SELECT picks_scored.user_id,
-            avg(picks_scored.normal) AS normal
-           FROM picks_scored
-          GROUP BY picks_scored.user_id) p;
+ SELECT picks_scored.user_id,
+    avg(picks_scored.normal) AS normal
+   FROM picks_scored
+  GROUP BY picks_scored.user_id;
 
 
 ALTER TABLE user_stats_normal OWNER TO associations_dbuser;
