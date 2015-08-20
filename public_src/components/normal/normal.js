@@ -5,8 +5,16 @@ angular.module('associations.components.normal', [
 ])
 .constant('NORMAL_RANGE_CLASS', ['icon-nf_5','icon-nf_4','icon-nf_3','icon-nf_2','icon-nf_1','icon-nf_0'])
 .constant('NORMAL_RANGE_CHAR', ['\uf10c', '\uf10b', '\uf10a', '\uf109', '\uf108', '\uf107'])
+.constant('NORMAL_RANGE_TEXT', [
+	'You are super normal',
+	'You are normal',
+	'You have some quirks',
+	'You have some really weird traits',
+	'You exist on the fringe of society',
+	'You are probably not human'
+])
 .constant('NORMAL_DOMAIN', [0,0.25])
-.factory('NormalConverter', ["NORMAL_RANGE_CHAR", "NORMAL_RANGE_CLASS", "NORMAL_DOMAIN", function(NORMAL_RANGE_CHAR, NORMAL_RANGE_CLASS,NORMAL_DOMAIN){
+.factory('NormalConverter', ["NORMAL_RANGE_CHAR", "NORMAL_RANGE_CLASS", "NORMAL_DOMAIN", "NORMAL_RANGE_TEXT", function(NORMAL_RANGE_CHAR, NORMAL_RANGE_CLASS,NORMAL_DOMAIN,NORMAL_RANGE_TEXT){
 	var scale = d3.scale.linear().domain(NORMAL_DOMAIN).rangeRound([0,NORMAL_RANGE_CHAR.length-1]).clamp(true);
 	return {
 		toChar: function(n){
@@ -14,7 +22,10 @@ angular.module('associations.components.normal', [
 		},
 		toClass: function(n){
 			return NORMAL_RANGE_CLASS[scale(n)];
-		}
+		},
+		toText: function(n){
+			return NORMAL_RANGE_TEXT[scale(n)];
+		},
 	};
 }])
 .directive('normal', ["windowResize", "Gauge", "NormalConverter", "NORMAL_RANGE_CHAR", "NORMAL_DOMAIN", function(windowResize, Gauge, NormalConverter, NORMAL_RANGE_CHAR, NORMAL_DOMAIN) {

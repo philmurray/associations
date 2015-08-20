@@ -37,9 +37,14 @@
 	}
 	.locked {
 		.well;
-		.text-center;
 		.text-muted;
 		padding-bottom: 36px;
+	}
+	.locked-icon {
+		font-size: @big-icon;
+		.locked-text {
+			color: @body-bg;
+		}
 	}
 	.pendingGames {
 		h4 {
@@ -64,6 +69,12 @@
 			.level-text {
 				color: @body-bg;
 			}
+		}
+	}
+	.playerNormal {
+		.normal {
+			font-size: @big-icon * 1.5;
+			line-height: @big-icon * 1.5;
 		}
 	}
 }

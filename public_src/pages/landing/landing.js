@@ -9,6 +9,7 @@ angular.module('associations.pages.landing', [
 	'associations.pages.landing.components.pastGamesList',
 	'associations.pages.landing.components.links',
 	'associations.pages.landing.components.playerLevel',
+	'associations.pages.landing.components.playerNormal',
 	'infinite-scroll'
 ])
 
@@ -81,7 +82,11 @@ angular.module('associations.pages.landing', [
 		{
 			title: "You",
 			authRequired: true,
-			components: ["pages/landing/components/playerLevel/playerLevel.html"],
+			components: [
+				"pages/landing/components/playerLevel/playerLevel.html",
+				"break",
+				"pages/landing/components/playerNormal/playerNormal.html"
+			],
 			visible: true
 		},
 		{

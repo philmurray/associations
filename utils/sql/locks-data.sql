@@ -16,10 +16,10 @@ SET search_path = public, pg_catalog;
 --
 
 COPY locks (id, level, data) FROM stdin;
-26728357-991b-412a-900b-576856f9c99b	2	playerGameStats
-bb7ed54a-5f9a-44bf-9cb1-7d8b0010695f	1	playerNormal
-8c493b0b-79cb-41dc-b59e-230cc55340f9	4	playerRank
-629368b7-edbd-46ba-9b23-cea74a8d815c	3	playerTime
+bb7ed54a-5f9a-44bf-9cb1-7d8b0010695f	2	playerNormal
+26728357-991b-412a-900b-576856f9c99b	3	playerGameStats
+629368b7-edbd-46ba-9b23-cea74a8d815c	5	playerTime
+8c493b0b-79cb-41dc-b59e-230cc55340f9	8	playerRank
 \.
 
 
