@@ -6,12 +6,12 @@ angular.module('associations.components.normal', [
 .constant('NORMAL_RANGE_CLASS', ['icon-nf_5','icon-nf_4','icon-nf_3','icon-nf_2','icon-nf_1','icon-nf_0'])
 .constant('NORMAL_RANGE_CHAR', ['\uf10c', '\uf10b', '\uf10a', '\uf109', '\uf108', '\uf107'])
 .constant('NORMAL_RANGE_TEXT', [
-	'You are super normal',
-	'You are normal',
-	'You have some quirks',
-	'You have some really weird traits',
-	'You exist on the fringe of society',
-	'You are probably not human'
+	'You are super normal.  Really.  It\'s actually kind of weird how normal you are.  When people say \'think outside the box\', they are referring to you.  You are, essentially, a box.  Get out there and try new things!  Like sushi, parasailing or Ecstasy',
+	'You are a normal human being.  You most likely have a job or go to school, and you have an interesting hobby or two.  You most likely enjoy things that require a little creativity, but not TOO much.  Like cooking or building model cars.',
+	'You are what some might describe as \'quirky\'.  You are a little bit weird, but not in a weird way.  You probably have a couple of habits that no one else you know shares, like enjoying peanut butter and onions together.  Or snorting when you laugh.',
+	'You are kind of a weirdo.  You see the world in a different way than most other people.  You are still able to function in normal society, but you have probably always felt that you don\'t quite fit in.  You probably have a passion that you don\'t share with others until you really get to know them.  Like LARPing or collecting antique toilet plungers.',
+	'You exist on the fringes of society.  You can\'t understand the rest of the world, and they don\'t understand you.  You probably surround yourself with a small group of like minded individuals and rarely interact with people outside it.  This group may be an extreemist religous cult, travelling circus, or network of conspiracy theorists.',
+	'You are not human.  You are likely either an alien, or some kind of mutant vegetable that has gained consciousness and the ability to type.  Or you may just be the next step in human evolution and are just waiting for the rest of the world to catch up.'
 ])
 .constant('NORMAL_DOMAIN', [0,0.25])
 .factory('NormalConverter', ["NORMAL_RANGE_CHAR", "NORMAL_RANGE_CLASS", "NORMAL_DOMAIN", "NORMAL_RANGE_TEXT", function(NORMAL_RANGE_CHAR, NORMAL_RANGE_CLASS,NORMAL_DOMAIN,NORMAL_RANGE_TEXT){
