@@ -22,7 +22,7 @@
 					</h1>
 				</div>
 			</div>
-			<div ng-repeat="component in section.components" ng-class="{padded:($last || component == 'break')}" class="row">
+			<div ng-repeat="component in section.components track by $index" ng-class="{padded:($last || component == 'break')}" class="row">
 				<div ng-if="component != 'break'" ng-include="component">
 				</div>
 			</div>

@@ -10,6 +10,8 @@ angular.module('associations.pages.landing', [
 	'associations.pages.landing.components.links',
 	'associations.pages.landing.components.playerLevel',
 	'associations.pages.landing.components.playerNormal',
+	'associations.pages.landing.components.playerAnalysis',
+	'associations.pages.landing.components.questionAnalysis',
 	'infinite-scroll'
 ])
 
@@ -85,7 +87,11 @@ angular.module('associations.pages.landing', [
 			components: [
 				"pages/landing/components/playerLevel/playerLevel.html",
 				"break",
-				"pages/landing/components/playerNormal/playerNormal.html"
+				"pages/landing/components/playerNormal/playerNormal.html",
+				"break",
+				"pages/landing/components/playerAnalysis/playerAnalysis.html",
+				"break",
+				"pages/landing/components/questionAnalysis/questionAnalysis.html"
 			],
 			visible: true
 		},

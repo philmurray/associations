@@ -6,7 +6,7 @@ angular.module('associations.pages.landing.components.playerLevel', [
 	{
 		min: 0,
 		max: 2,
-		text: "This is your current analysis level.  Every free association you make in any game will increase your level a little bit.  When your level gets a little higher, we will be able to show you more stats and give you more interesting personality analysis."
+		text: "This is your current analysis level.  Every free association you make in any game will increase your level a little bit.  When your level gets higher, we will be able to show you more stats and give you more interesting personality analysis."
 	},
 	{
 		min: 3,
