@@ -44,7 +44,7 @@ angular.module('associations.pages.landing.components.pastGamesList', [
 		};
 
 		this.showPie = function(stats){
-			return stats.multigames > 5;
+			return stats.multigames > 3;
 		};
 		this.getPieData = function(stats){
 			if (!this.pieData){
