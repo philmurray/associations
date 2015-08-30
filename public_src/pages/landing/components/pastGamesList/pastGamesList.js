@@ -32,8 +32,8 @@ angular.module('associations.pages.landing.components.pastGamesList', [
 			});
 		};
 
-		this.gotoGame = function(game){
-			$location.path("/game/"+game.id);
+		this.gotoGame = function(game_id){
+			$location.path("/game/"+game_id);
 		};
 
 		this.setMode = function(multi){

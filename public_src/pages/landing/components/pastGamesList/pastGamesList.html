@@ -30,7 +30,7 @@
 							</div>
 						</div><!--
 					--><div class="col-xs-3 vcenter">
-							<button class="btn btn-xs btn-color pull-right" ng-click="ctrl.gotoGame(game)">
+							<button class="btn btn-xs btn-color pull-right" ng-click="ctrl.gotoGame(game.id)">
 								<i class="fa fa-search"></i>
 								<span ng-if="game.unreadChats > 0" class="badge" >{{game.unreadChats}}</span>
 							</button>
@@ -62,19 +62,25 @@
 					<li>
 						<span>High Score</span>
 						<span class="pull-right">
-							<a href="" ng-click="ctrl.gotoGame(data.highScoreGame)">{{data.highScoreGame.score}}</a>
+							<a href="" ng-click="ctrl.gotoGame(data.highScoreGame.id)">{{data.highScoreGame.score}}</a>
 						</span>
 					</li>
 					<li>
 						<span>Most Words</span>
 						<span class="pull-right">
-							<a href="" ng-click="ctrl.gotoGame(data.mostPicksGame)">{{data.mostPicksGame.picks}}</a>
+							<a href="" ng-click="ctrl.gotoGame(data.mostPicksGame.id)">{{data.mostPicksGame.picks}}</a>
 						</span>
 					</li>
 					<li ng-if="ctrl.showPie(data.stats)">
 						<div piechart pie-data="ctrl.getPieData(data.stats)" >
 
 						</div>
+					</li>
+					<li>
+						<span>Best Link</span>
+						<span class="pull-right">
+							<a href="" ng-click="ctrl.gotoGame(data.mostObscureWord.game_id)">{{data.mostObscureWord.from}}&#8594;{{data.mostObscureWord.to}}</a>
+						</span>
 					</li>
 				</ul>
 			</div>

@@ -350,6 +350,19 @@ CREATE VIEW picks_scored AS
 ALTER TABLE picks_scored OWNER TO associations_dbuser;
 
 --
+-- Name: pos; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+CREATE TABLE pos (
+    abbreviation text NOT NULL,
+    description text,
+    category text
+);
+
+
+ALTER TABLE pos OWNER TO associations_dbuser;
+
+--
 -- Name: questions; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
 --
 
@@ -507,6 +520,27 @@ CREATE VIEW user_stats AS
 ALTER TABLE user_stats OWNER TO associations_dbuser;
 
 --
+-- Name: user_stats_rank_word; Type: VIEW; Schema: public; Owner: associations_dbuser
+--
+
+CREATE VIEW user_stats_rank_word AS
+ SELECT p.user_id,
+    p."from",
+    p."to",
+    p.game_id
+   FROM ( SELECT p_1.user_id,
+            row_number() OVER (PARTITION BY p_1.user_id ORDER BY w.rank DESC) AS rank,
+            p_1."from",
+            p_1."to",
+            p_1.game_id
+           FROM (picks p_1
+             JOIN words w ON ((p_1."to" = w.text)))) p
+  WHERE (p.rank = 1);
+
+
+ALTER TABLE user_stats_rank_word OWNER TO associations_dbuser;
+
+--
 -- Name: answers_pkey; Type: CONSTRAINT; Schema: public; Owner: associations_dbuser; Tablespace: 
 --
 
@@ -600,6 +634,14 @@ ALTER TABLE ONLY picks
 
 ALTER TABLE ONLY picks
     ADD CONSTRAINT picks_user_id_game_id_from_key UNIQUE (user_id, game_id, "from");
+
+
+--
+-- Name: pos_pkey; Type: CONSTRAINT; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+ALTER TABLE ONLY pos
+    ADD CONSTRAINT pos_pkey PRIMARY KEY (abbreviation);
 
 
 --
@@ -872,6 +914,14 @@ ALTER TABLE ONLY usf_norms
 
 ALTER TABLE ONLY usf_norms
     ADD CONSTRAINT usf_norms_to_fkey FOREIGN KEY ("to") REFERENCES words(text);
+
+
+--
+-- Name: words_pos_fkey; Type: FK CONSTRAINT; Schema: public; Owner: associations_dbuser
+--
+
+ALTER TABLE ONLY words
+    ADD CONSTRAINT words_pos_fkey FOREIGN KEY (pos) REFERENCES pos(abbreviation);
 
 
 --
