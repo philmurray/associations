@@ -77,10 +77,10 @@
 						</div>
 					</li>
 					<li>
-						<span>Best Link</span>
-						<span class="pull-right">
-							<a href="" ng-click="ctrl.gotoGame(data.mostObscureWord.game_id)">{{data.mostObscureWord.from}}&#8594;{{data.mostObscureWord.to}}</a>
-						</span>
+						<span>Best Links</span>
+					</li>
+					<li ng-repeat="word in data.mostObscureWord" class="text-center">
+						<a href="" ng-click="ctrl.gotoGame(word.game_id)">{{word.from}}&#8594;{{word.to}}</a>
 					</li>
 				</ul>
 			</div>

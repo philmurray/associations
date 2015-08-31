@@ -122,6 +122,23 @@ CREATE TABLE colors (
 ALTER TABLE colors OWNER TO associations_dbuser;
 
 --
+-- Name: picks; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+CREATE TABLE picks (
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
+    "from" text NOT NULL,
+    "to" text,
+    user_id uuid NOT NULL,
+    game_id uuid NOT NULL,
+    time_taken integer,
+    create_time timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE picks OWNER TO associations_dbuser;
+
+--
 -- Name: usf_norms; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
 --
 
@@ -140,31 +157,41 @@ ALTER TABLE usf_norms OWNER TO associations_dbuser;
 --
 
 CREATE MATERIALIZED VIEW graph_rels AS
- SELECT usf_norms."from",
-    usf_norms."to",
-    ((usf_norms.pick)::double precision / (usf_norms."group")::double precision) AS score
-   FROM usf_norms
+ WITH all_picks AS (
+         SELECT usf_norms."from",
+            usf_norms."to",
+            usf_norms.pick
+           FROM usf_norms
+        UNION
+         SELECT picks."from",
+            picks."to",
+            1 AS pick
+           FROM picks
+          WHERE (picks."to" IS NOT NULL)
+        ), to_count AS (
+         SELECT all_picks."from",
+            all_picks."to",
+            sum(all_picks.pick) AS picks
+           FROM all_picks
+          GROUP BY all_picks."from", all_picks."to"
+        ), from_count AS (
+         SELECT all_picks."from",
+            sum(all_picks.pick) AS picks
+           FROM all_picks
+          GROUP BY all_picks."from"
+        )
+ SELECT t."from",
+    t."to",
+    ((t.picks)::double precision / (f.picks)::double precision) AS score,
+    t.picks,
+    f.picks AS "group"
+   FROM (to_count t
+     JOIN from_count f ON ((t."from" = f."from")))
+  WHERE ((f.picks > 10) AND (t.picks > 1))
   WITH NO DATA;
 
 
 ALTER TABLE graph_rels OWNER TO associations_dbuser;
-
---
--- Name: picks; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
---
-
-CREATE TABLE picks (
-    id uuid DEFAULT uuid_generate_v4() NOT NULL,
-    "from" text NOT NULL,
-    "to" text,
-    user_id uuid NOT NULL,
-    game_id uuid NOT NULL,
-    time_taken integer,
-    create_time timestamp with time zone DEFAULT now() NOT NULL
-);
-
-
-ALTER TABLE picks OWNER TO associations_dbuser;
 
 --
 -- Name: game_top_words; Type: VIEW; Schema: public; Owner: associations_dbuser
@@ -258,19 +285,109 @@ CREATE TABLE games_words (
 ALTER TABLE games_words OWNER TO associations_dbuser;
 
 --
+-- Name: graph_to_count; Type: VIEW; Schema: public; Owner: associations_dbuser
+--
+
+CREATE VIEW graph_to_count AS
+ SELECT graph_rels."to",
+    sum(graph_rels.picks) AS count
+   FROM graph_rels
+  GROUP BY graph_rels."to"
+  ORDER BY sum(graph_rels.picks) DESC;
+
+
+ALTER TABLE graph_to_count OWNER TO associations_dbuser;
+
+--
+-- Name: words; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+CREATE TABLE words (
+    text text NOT NULL,
+    rank integer NOT NULL,
+    lemma text NOT NULL,
+    pos text NOT NULL,
+    play_order integer
+);
+
+
+ALTER TABLE words OWNER TO associations_dbuser;
+
+--
+-- Name: graph_common_count; Type: VIEW; Schema: public; Owner: associations_dbuser
+--
+
+CREATE VIEW graph_common_count AS
+ SELECT w.category,
+    sum(c.count) AS count
+   FROM (graph_to_count c
+     JOIN ( SELECT words.text,
+                CASE
+                    WHEN (words.rank < 1000) THEN 'boring'::text
+                    WHEN (words.rank < 2500) THEN 'common'::text
+                    WHEN (words.rank < 5000) THEN 'normal'::text
+                    WHEN (words.rank < 10000) THEN 'interesting'::text
+                    WHEN (words.rank < 30000) THEN 'rare'::text
+                    WHEN (words.rank < 60000) THEN 'epic'::text
+                    ELSE 'legendary'::text
+                END AS category
+           FROM words) w ON ((c."to" = w.text)))
+  GROUP BY w.category
+  ORDER BY sum(c.count) DESC;
+
+
+ALTER TABLE graph_common_count OWNER TO associations_dbuser;
+
+--
 -- Name: graph_nodes; Type: MATERIALIZED VIEW; Schema: public; Owner: associations_dbuser; Tablespace: 
 --
 
 CREATE MATERIALIZED VIEW graph_nodes AS
- SELECT DISTINCT usf_norms."from" AS node
-   FROM usf_norms
-UNION
- SELECT DISTINCT usf_norms."to" AS node
-   FROM usf_norms
+ SELECT nodes.node
+   FROM ( SELECT DISTINCT usf_norms."from" AS node
+           FROM usf_norms
+        UNION
+         SELECT DISTINCT usf_norms."to" AS node
+           FROM usf_norms
+        UNION
+         SELECT DISTINCT picks."from" AS node
+           FROM picks
+        UNION
+         SELECT DISTINCT picks."to" AS node
+           FROM picks) nodes
   WITH NO DATA;
 
 
 ALTER TABLE graph_nodes OWNER TO associations_dbuser;
+
+--
+-- Name: pos; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+CREATE TABLE pos (
+    abbreviation text NOT NULL,
+    description text,
+    category text
+);
+
+
+ALTER TABLE pos OWNER TO associations_dbuser;
+
+--
+-- Name: graph_pos_count; Type: VIEW; Schema: public; Owner: associations_dbuser
+--
+
+CREATE VIEW graph_pos_count AS
+ SELECT p.category,
+    sum(c.count) AS count
+   FROM ((graph_to_count c
+     JOIN words w ON ((c."to" = w.text)))
+     JOIN pos p ON ((w.pos = p.abbreviation)))
+  GROUP BY p.category
+  ORDER BY sum(c.count) DESC;
+
+
+ALTER TABLE graph_pos_count OWNER TO associations_dbuser;
 
 --
 -- Name: levels; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
@@ -350,19 +467,6 @@ CREATE VIEW picks_scored AS
 ALTER TABLE picks_scored OWNER TO associations_dbuser;
 
 --
--- Name: pos; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
---
-
-CREATE TABLE pos (
-    abbreviation text NOT NULL,
-    description text,
-    category text
-);
-
-
-ALTER TABLE pos OWNER TO associations_dbuser;
-
---
 -- Name: questions; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
 --
 
@@ -432,21 +536,6 @@ CREATE VIEW user_stats_normal AS
 
 
 ALTER TABLE user_stats_normal OWNER TO associations_dbuser;
-
---
--- Name: words; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
---
-
-CREATE TABLE words (
-    text text NOT NULL,
-    rank integer NOT NULL,
-    lemma text NOT NULL,
-    pos text NOT NULL,
-    play_order integer
-);
-
-
-ALTER TABLE words OWNER TO associations_dbuser;
 
 --
 -- Name: user_stats_rank; Type: VIEW; Schema: public; Owner: associations_dbuser
@@ -535,7 +624,7 @@ CREATE VIEW user_stats_rank_word AS
             p_1.game_id
            FROM (picks p_1
              JOIN words w ON ((p_1."to" = w.text)))) p
-  WHERE (p.rank = 1);
+  WHERE (p.rank < 4);
 
 
 ALTER TABLE user_stats_rank_word OWNER TO associations_dbuser;
