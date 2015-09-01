@@ -285,10 +285,10 @@ CREATE TABLE games_words (
 ALTER TABLE games_words OWNER TO associations_dbuser;
 
 --
--- Name: graph_to_count; Type: VIEW; Schema: public; Owner: associations_dbuser
+-- Name: global_to_count; Type: VIEW; Schema: public; Owner: associations_dbuser
 --
 
-CREATE VIEW graph_to_count AS
+CREATE VIEW global_to_count AS
  SELECT graph_rels."to",
     sum(graph_rels.picks) AS count
    FROM graph_rels
@@ -296,7 +296,7 @@ CREATE VIEW graph_to_count AS
   ORDER BY sum(graph_rels.picks) DESC;
 
 
-ALTER TABLE graph_to_count OWNER TO associations_dbuser;
+ALTER TABLE global_to_count OWNER TO associations_dbuser;
 
 --
 -- Name: words; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
@@ -314,13 +314,13 @@ CREATE TABLE words (
 ALTER TABLE words OWNER TO associations_dbuser;
 
 --
--- Name: graph_common_count; Type: VIEW; Schema: public; Owner: associations_dbuser
+-- Name: global_common_count; Type: VIEW; Schema: public; Owner: associations_dbuser
 --
 
-CREATE VIEW graph_common_count AS
+CREATE VIEW global_common_count AS
  SELECT w.category,
     sum(c.count) AS count
-   FROM (graph_to_count c
+   FROM (global_to_count c
      JOIN ( SELECT words.text,
                 CASE
                     WHEN (words.rank < 1000) THEN 'boring'::text
@@ -336,7 +336,36 @@ CREATE VIEW graph_common_count AS
   ORDER BY sum(c.count) DESC;
 
 
-ALTER TABLE graph_common_count OWNER TO associations_dbuser;
+ALTER TABLE global_common_count OWNER TO associations_dbuser;
+
+--
+-- Name: pos; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+CREATE TABLE pos (
+    abbreviation text NOT NULL,
+    description text,
+    category text
+);
+
+
+ALTER TABLE pos OWNER TO associations_dbuser;
+
+--
+-- Name: global_pos_count; Type: VIEW; Schema: public; Owner: associations_dbuser
+--
+
+CREATE VIEW global_pos_count AS
+ SELECT p.category,
+    sum(c.count) AS count
+   FROM ((global_to_count c
+     JOIN words w ON ((c."to" = w.text)))
+     JOIN pos p ON ((w.pos = p.abbreviation)))
+  GROUP BY p.category
+  ORDER BY sum(c.count) DESC;
+
+
+ALTER TABLE global_pos_count OWNER TO associations_dbuser;
 
 --
 -- Name: graph_nodes; Type: MATERIALIZED VIEW; Schema: public; Owner: associations_dbuser; Tablespace: 
@@ -359,35 +388,6 @@ CREATE MATERIALIZED VIEW graph_nodes AS
 
 
 ALTER TABLE graph_nodes OWNER TO associations_dbuser;
-
---
--- Name: pos; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
---
-
-CREATE TABLE pos (
-    abbreviation text NOT NULL,
-    description text,
-    category text
-);
-
-
-ALTER TABLE pos OWNER TO associations_dbuser;
-
---
--- Name: graph_pos_count; Type: VIEW; Schema: public; Owner: associations_dbuser
---
-
-CREATE VIEW graph_pos_count AS
- SELECT p.category,
-    sum(c.count) AS count
-   FROM ((graph_to_count c
-     JOIN words w ON ((c."to" = w.text)))
-     JOIN pos p ON ((w.pos = p.abbreviation)))
-  GROUP BY p.category
-  ORDER BY sum(c.count) DESC;
-
-
-ALTER TABLE graph_pos_count OWNER TO associations_dbuser;
 
 --
 -- Name: levels; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 

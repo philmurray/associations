@@ -169,4 +169,23 @@ router.get('/wordPath/:from/:to', function(req, res, next){
 	});
 });
 
+router.get('/globalStats/to', function(req,res,next){
+	models.GlobalStats.To.get(req.query.limit || 20,function(err, result){
+		if (err){ return next(err); }
+		res.json(result);
+	});
+});
+router.get('/globalStats/common', function(req,res,next){
+	models.GlobalStats.Common.get(function(err, result){
+		if (err){ return next(err); }
+		res.json(result);
+	});
+});
+router.get('/globalStats/pos', function(req,res,next){
+	models.GlobalStats.Pos.get(function(err, result){
+		if (err){ return next(err); }
+		res.json(result);
+	});
+});
+
 module.exports = router;

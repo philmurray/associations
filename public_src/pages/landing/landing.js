@@ -12,6 +12,7 @@ angular.module('associations.pages.landing', [
 	'associations.pages.landing.components.playerNormal',
 	'associations.pages.landing.components.playerAnalysis',
 	'associations.pages.landing.components.questionAnalysis',
+	'associations.pages.landing.components.exploreLink',
 	'infinite-scroll'
 ])
 
