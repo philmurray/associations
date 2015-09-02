@@ -1,21 +1,21 @@
 <div class="explore-link" ng-controller="ExploreLinkCtrl as ctrl">
 	<div class="col-md-4">
-		<div class="panel panel-default">
-			<div class="panel-body">
-				<h4>Search words</h4>
+		<!-- <div class="panel panel-default">
+			<div class="panel-body"> -->
+				<h3 class="text-center">Top of mind</h3>
 				<p>
-					Enter a word and see how it is connected to other words.  Powered by the human mind!
+					These are the words that people most associate to.  Click on one, or search below, to see how they are connected to other words.
 				</p>
 				<p class="text-center">
 					<a class="btn btn-color" href="#/exploreWords">
 						<i class="fa fa-search fa-fw"></i>
 					</a>
 				</p>
-			</div>
-		</div>
+			<!-- </div>
+		</div> -->
 	</div>
 	<div class="col-md-8">
-		<div cloud cloud-data="ctrl.cloudData" cloud-text-attr="'to'" cloud-size-attr="'count'" cloud-height="300" >
+		<div cloud cloud-data="ctrl.cloudData" cloud-text-attr="'to'" cloud-size-attr="'count'" cloud-height="300" cloud-on-click="ctrl.wordClick(word)" >
 
 		</div>
 	</div>

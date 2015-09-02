@@ -10,7 +10,8 @@ angular.module('associations.components.cloud', [
 			data: "=cloudData",
 			textAttr: "=cloudTextAttr",
 			sizeAttr: "=cloudSizeAttr",
-			height: "=cloudHeight"
+			height: "=cloudHeight",
+			click: "&?cloudOnClick"
 		},
 		link: function($scope, $element, attrs) {
 
@@ -26,7 +27,7 @@ angular.module('associations.components.cloud', [
 
 				$scope.viewModel.svg = d3.select($scope.viewModel.element)
 					.append('svg:svg')
-						.attr('class', 'pie-chart center-block')
+						.attr('class', 'word-cloud center-block')
 						.attr('width', $scope.viewModel.width)
 						.attr('height', $scope.viewModel.height)
 					.append("g")
@@ -59,19 +60,23 @@ angular.module('associations.components.cloud', [
 					.words(words)
 					.padding(5)
 					.rotate(function() { return ~~(Math.random() * 2) * 90; })
-					.font("Impact")
+					.font("Helvetica Neue")
 					.fontSize(function(d) { return d.size; })
 					.on("end", function(d){
 						$scope.viewModel.svg.selectAll("text").data(d).enter()
 							.append("text")
 								.style("font-size", function(d) { return d.size + "px"; })
-								.style("font-family", "Impact")
-								.style("fill", "white")
+								.classed({'svg-link':Boolean($scope.click)})
 								.attr("text-anchor", "middle")
 								.attr("transform", function(d) {
 									return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
 								})
-								.text(function(d) { return d.text; });
+								.text(function(d) { return d.text; })
+								.on('click', function(d) {
+									if ($scope.click) {
+										$scope.click({word:d.text});
+									}
+								});
 					});
 
 				layout.start();

@@ -66,6 +66,12 @@
 		stroke:@color;
 		fill:@color;
 	}
+    .svg-link {
+        fill: @nav-color;
+		&:hover {
+			fill: @hover-color;
+		}
+    }
 
 	.panel-color {
 		.panel-variant(@color; @panel-default-text; @panel-default-heading-bg; @color);
