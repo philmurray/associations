@@ -7,14 +7,14 @@ angular.module('associations.components.piechart', [
 	"header": {
 		"title": {
 			"text": "",
-			"color": "#ffffff",
+			"color": "#f2f2f2",
 			"fontSize": 31,
 			"font": '"Helvetica Neue", Helvetica, Arial, sans-serif'
 		}
 	},
 	"footer": {
 		"text": 	  "",
-		"color":    "#ffffff",
+		"color":    "#f2f2f2",
 		"fontSize": 18,
 		"font":     '"Helvetica Neue", Helvetica, Arial, sans-serif',
 		"location": "left"
@@ -36,7 +36,7 @@ angular.module('associations.components.piechart', [
 			"format": "none"
 		},
 		"mainLabel": {
-			"color": "#ffffff",
+			"color": "#f2f2f2",
 			"fontSize": 18
 		},
 		"lines": {

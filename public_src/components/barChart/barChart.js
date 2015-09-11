@@ -3,7 +3,13 @@
 angular.module('associations.components.barchart', [
 	'associations.components.windowResize'
 ])
-.directive('barchart', ["windowResize", function(windowResize) {
+.constant("BAR_CHART_DEFAULTS", {
+	height: 500,
+	axisColor: "#f2f2f2",
+	barColor: "#f2f2f2",
+	margin: {top: 20, right: 40, bottom: 100, left: 20}
+})
+.directive('barchart', ["windowResize", "BAR_CHART_DEFAULTS", function(windowResize, BAR_CHART_DEFAULTS) {
 	return {
 		restrict: 'EA',
 		scope: {
@@ -12,14 +18,17 @@ angular.module('associations.components.barchart', [
 		},
 		link: function($scope, $element, attrs) {
 
+
+			$scope.options = angular.extend({}, BAR_CHART_DEFAULTS, $scope.options || {});
+
 			$scope.viewModel = {
 				element: $element[0],
-				margin: {top: 20, right: 20, bottom: 30, left: 40}
+				margin: $scope.options.margin
 			};
 
 			$scope.render = function(){
 				$scope.viewModel.width = $scope.viewModel.element.offsetWidth;
-				$scope.viewModel.height = $scope.options.height || 500;
+				$scope.viewModel.height = $scope.options.height;
 
 				d3.select($scope.viewModel.element).select('svg').remove();
 
@@ -42,7 +51,16 @@ angular.module('associations.components.barchart', [
 
 				$scope.viewModel.xAxis = d3.svg.axis()
 					.scale($scope.viewModel.x)
+					.outerTickSize(3)
 					.orient("bottom");
+
+				$scope.viewModel.xAxisG = $scope.viewModel.svg.append("g")
+					.attr("class", "x axis")
+					.attr("transform", "translate(0," + $scope.viewModel.chartHeight + ")")
+					.call($scope.viewModel.xAxis);
+
+				$scope.viewModel.xAxisG.selectAll('path')
+					.attr("fill", $scope.options.axisColor);
 
 				$scope.update();
 			};
@@ -52,15 +70,20 @@ angular.module('associations.components.barchart', [
 					$scope.viewModel.x.domain($scope.data.map(function(d) { return d.key; }));
 					$scope.viewModel.y.domain([0, d3.max($scope.data, function(d) { return d.value; })]);
 
-					$scope.viewModel.svg.append("g")
-						.attr("class", "x axis")
-						.attr("transform", "translate(0," + $scope.viewModel.height + ")")
-						.call($scope.viewModel.xAxis);
+					$scope.viewModel.xAxisG
+						.call($scope.viewModel.xAxis)
+						.selectAll("text")
+							.attr("y", 9)
+							.attr("x", 9)
+							.attr("fill", $scope.options.axisColor)
+							.attr("dy", ".35em")
+							.attr("transform", "rotate(45)")
+							.style("text-anchor", "start");
 
 					var bar = $scope.viewModel.svg.selectAll(".bar").data($scope.data),
 						newBar = bar.enter()
 							.append("rect")
-							.attr("class", "bar");
+							.attr("class", "bar fill-color");
 
 					bar.attr("x", function(d) { return $scope.viewModel.x(d.key); })
 						.attr("width", $scope.viewModel.x.rangeBand())

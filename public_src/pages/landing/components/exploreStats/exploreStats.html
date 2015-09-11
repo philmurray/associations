@@ -1,12 +1,15 @@
 <div ng-controller="ExploreStatsCtrl as ctrl" class="explore-stats">
+	<h3 class="text-center">Data about the words people choose</h3>
 	<div class="col-sm-6">
 		<div piechart pie-data="ctrl.posData" pie-options="ctrl.posConfig">
 
 		</div>
+		<h4 class="text-center">Part of speech</h4>
 	</div>
 	<div class="col-sm-6">
 		<div barchart bar-data="ctrl.commonData" bar-options="ctrl.commonConfig" >
 
 		</div>
+		<h4 class="text-center">Commonality</h4>
 	</div>
 </div>
