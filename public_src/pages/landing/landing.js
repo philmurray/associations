@@ -13,6 +13,7 @@ angular.module('associations.pages.landing', [
 	'associations.pages.landing.components.playerAnalysis',
 	'associations.pages.landing.components.questionAnalysis',
 	'associations.pages.landing.components.exploreLink',
+	'associations.pages.landing.components.exploreStats',
 	'infinite-scroll'
 ])
 
@@ -98,7 +99,10 @@ angular.module('associations.pages.landing', [
 		},
 		{
 			title: "Explore",
-			components: ["pages/landing/components/exploreLink/exploreLink.html"],
+			components: [
+				"pages/landing/components/exploreLink/exploreLink.html",
+				"pages/landing/components/exploreStats/exploreStats.html"
+			],
 			visible:true
 		}
 	];

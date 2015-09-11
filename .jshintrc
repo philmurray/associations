@@ -15,6 +15,7 @@
 	"jsPlumb": false,
 	"vis": false,
 	"d3": false,
+	"d3pie": false,
 	"console": false
 }
 }
