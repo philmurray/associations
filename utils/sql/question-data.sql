@@ -17,12 +17,12 @@ SET search_path = public, pg_catalog;
 
 COPY questions (id, text) FROM stdin;
 1edf158b-cf60-4805-9390-ae2ca95d167c	People are basically
-4d097069-f5f1-4bb7-941c-004fd16395df	I am a
 ac2a3be3-1bcf-4353-8d2c-3fbff3012264	I am a
 c3e1eafa-9b42-4e76-9d62-6380ac1ee9a1	I am
 5f7a22a0-b186-4a5c-9dab-065e1688c414	I like
 1cbe82c8-4418-4b3f-9e10-c7200d286624	I am a
 9e26903f-7f39-4c5c-addc-432b666e8a48	I am
+4d097069-f5f1-4bb7-941c-004fd16395df	I like
 \.
 
 
