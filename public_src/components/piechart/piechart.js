@@ -25,7 +25,8 @@ angular.module('associations.components.piechart', [
 	"data": {
 		"sortOrder": "value-desc",
 		"smallSegmentGrouping": {
-			"enabled": true
+			"enabled": true,
+			"color": d3.rgb("#FFFC00").darker(1)
 		}
 	},
 	"labels": {
@@ -54,6 +55,7 @@ angular.module('associations.components.piechart', [
 	},
 	"misc": {
 		"colors": {
+			"segmentStroke": "#333",
 			"segments": [ //TODO: get these from the database
 				"#AAFE00",
 				"#9D08FB",
@@ -61,12 +63,12 @@ angular.module('associations.components.piechart', [
 				"#FD008F",
 				"#FF6A00",
 				"#FFFC00",
-				d3.rgb("#AAFE00").darker(5),
-				d3.rgb("#9D08FB").darker(5),
-				d3.rgb("#00FBD8").darker(5),
-				d3.rgb("#FD008F").darker(5),
-				d3.rgb("#FF6A00").darker(5),
-				d3.rgb("#FFFC00").darker(5)
+				d3.rgb("#AAFE00").darker(1),
+				d3.rgb("#9D08FB").darker(1),
+				d3.rgb("#00FBD8").darker(1),
+				d3.rgb("#FD008F").darker(1),
+				d3.rgb("#FF6A00").darker(1),
+				d3.rgb("#FFFC00").darker(1)
 			]
 		}
 	}

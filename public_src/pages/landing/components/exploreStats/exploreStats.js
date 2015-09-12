@@ -9,7 +9,7 @@ angular.module('associations.pages.landing.components.exploreStats', [
 		self.posData = [];
 		self.posConfig = {
 			"size": {
-				"pieOuterRadius": "75%",
+				"pieOuterRadius": "55%",
 				"canvasHeight": 400
 			}
 		};

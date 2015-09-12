@@ -10,6 +10,11 @@ angular.module('associations.pages.landing.components.pastGamesList', [
 			pageLength = 5;
 
 		self.games = [];
+		self.pieOptions = {
+			size: {
+				canvasHeight: 200
+			}
+		};
 
 		this.getNormal = function (player){
 			return NormalConverter.toClass(player.normal);
@@ -52,7 +57,7 @@ angular.module('associations.pages.landing.components.pastGamesList', [
 
 				if (stats.wongames > 0){
 					this.pieData.push({
-						key: "Games Won",
+						key: "Won",
 						value: stats.wongames,
 						color: d3.rgb($scope.color.hex)
 					});
@@ -60,9 +65,9 @@ angular.module('associations.pages.landing.components.pastGamesList', [
 				var lostgames = stats.multigames-stats.wongames;
 				if (lostgames > 0) {
 					this.pieData.push({
-						key: "Games Lost",
+						key: "Lost",
 						value: lostgames,
-						color: d3.rgb($scope.color.hex).darker(5)
+						color: d3.rgb($scope.color.hex).darker(3)
 					});
 				}
 			}

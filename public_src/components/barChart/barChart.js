@@ -5,7 +5,8 @@ angular.module('associations.components.barchart', [
 ])
 .constant("BAR_CHART_DEFAULTS", {
 	height: 500,
-	axisColor: "#f2f2f2",
+	axisColor: "#333",
+	fontColor: "#f2f2f2",
 	barColor: "#f2f2f2",
 	margin: {top: 20, right: 40, bottom: 100, left: 20}
 })
@@ -75,7 +76,7 @@ angular.module('associations.components.barchart', [
 						.selectAll("text")
 							.attr("y", 9)
 							.attr("x", 9)
-							.attr("fill", $scope.options.axisColor)
+							.attr("fill", $scope.options.fontColor)
 							.attr("dy", ".35em")
 							.attr("transform", "rotate(45)")
 							.style("text-anchor", "start");
