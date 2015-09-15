@@ -27,6 +27,12 @@ angular.module('associations.components.barchart', [
 				margin: $scope.options.margin
 			};
 
+			$scope.$on('$destroy', function(){
+				if ($scope.viewModel.tip){
+					$scope.viewModel.tip.destroy();
+				}
+			});
+
 			$scope.render = function(){
 				$scope.viewModel.width = $scope.viewModel.element.offsetWidth;
 				$scope.viewModel.height = $scope.options.height;
@@ -63,6 +69,12 @@ angular.module('associations.components.barchart', [
 				$scope.viewModel.xAxisG.selectAll('path')
 					.attr("fill", $scope.options.axisColor);
 
+				$scope.viewModel.tip = $scope.viewModel.tip || d3.tip()
+					.attr('class', 'd3-tip')
+					.html(function(d) { return d.description; })
+					.offset([-10, 0]);
+				$scope.viewModel.svg.call($scope.viewModel.tip);
+
 				$scope.update();
 			};
 
@@ -84,7 +96,9 @@ angular.module('associations.components.barchart', [
 					var bar = $scope.viewModel.svg.selectAll(".bar").data($scope.data),
 						newBar = bar.enter()
 							.append("rect")
-							.attr("class", "bar fill-color");
+							.attr("class", "bar svg-link")
+							.on('click', $scope.viewModel.tip.show)
+							.on('mouseout', $scope.viewModel.tip.hide);
 
 					bar.attr("x", function(d) { return $scope.viewModel.x(d.key); })
 						.attr("width", $scope.viewModel.x.rangeBand())

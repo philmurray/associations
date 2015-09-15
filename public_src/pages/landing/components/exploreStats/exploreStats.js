@@ -31,7 +31,8 @@ angular.module('associations.pages.landing.components.exploreStats', [
 			self.commonData = response.data.map(function(c){
 				return {
 					key: c.category,
-					value: parseFloat(c.count, 10)
+					value: parseFloat(c.count, 10),
+					description: c.description
 				};
 			});
 		});

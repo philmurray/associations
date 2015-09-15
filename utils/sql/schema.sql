@@ -299,6 +299,20 @@ CREATE VIEW global_to_count AS
 ALTER TABLE global_to_count OWNER TO associations_dbuser;
 
 --
+-- Name: word_rank; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+CREATE TABLE word_rank (
+    name text NOT NULL,
+    description text,
+    from_rank integer DEFAULT 0 NOT NULL,
+    to_rank integer DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE word_rank OWNER TO associations_dbuser;
+
+--
 -- Name: words; Type: TABLE; Schema: public; Owner: associations_dbuser; Tablespace: 
 --
 
@@ -319,20 +333,15 @@ ALTER TABLE words OWNER TO associations_dbuser;
 
 CREATE VIEW global_common_count AS
  SELECT w.category,
-    sum(c.count) AS count
+    sum(c.count) AS count,
+    w.description
    FROM (global_to_count c
-     JOIN ( SELECT words.text,
-                CASE
-                    WHEN (words.rank < 1000) THEN 'boring'::text
-                    WHEN (words.rank < 2500) THEN 'common'::text
-                    WHEN (words.rank < 5000) THEN 'normal'::text
-                    WHEN (words.rank < 10000) THEN 'interesting'::text
-                    WHEN (words.rank < 30000) THEN 'rare'::text
-                    WHEN (words.rank < 60000) THEN 'epic'::text
-                    ELSE 'legendary'::text
-                END AS category
-           FROM words) w ON ((c."to" = w.text)))
-  GROUP BY w.category
+     JOIN ( SELECT w_1.text,
+            r.name AS category,
+            r.description
+           FROM (words w_1
+             JOIN word_rank r ON (((w_1.rank > r.from_rank) AND (w_1.rank < r.to_rank))))) w ON ((c."to" = w.text)))
+  GROUP BY w.category, w.description
   ORDER BY sum(c.count) DESC;
 
 
@@ -771,6 +780,14 @@ ALTER TABLE ONLY users
 
 ALTER TABLE ONLY usf_norms
     ADD CONSTRAINT usf_norms_pkey PRIMARY KEY ("from", "to");
+
+
+--
+-- Name: word_rank_pkey; Type: CONSTRAINT; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+ALTER TABLE ONLY word_rank
+    ADD CONSTRAINT word_rank_pkey PRIMARY KEY (name);
 
 
 --
