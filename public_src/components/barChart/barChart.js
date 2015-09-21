@@ -97,7 +97,7 @@ angular.module('associations.components.barchart', [
 						newBar = bar.enter()
 							.append("rect")
 							.attr("class", "bar svg-link")
-							.on('click', $scope.viewModel.tip.show)
+							.on('mouseover', $scope.viewModel.tip.show)
 							.on('mouseout', $scope.viewModel.tip.hide);
 
 					bar.attr("x", function(d) { return $scope.viewModel.x(d.key); })

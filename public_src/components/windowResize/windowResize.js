@@ -16,7 +16,6 @@ angular.module("associations.components.windowResize",[])
 
 		var register = function(listener){
 			if (!listeners.length){
-				prev = getSize();
 
 				// Browser onresize event
 				w.bind('resize', function () {
@@ -30,6 +29,7 @@ angular.module("associations.components.windowResize",[])
 								listener();
 							});
 						}
+						prev = getSize();
 						debounce = null;
 					}, 100);
 				});
