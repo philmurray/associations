@@ -97,7 +97,7 @@ public class App
             createIndex.executeUpdate("CREATE INDEX ON :Word(text)");
             createIndex.close();
 
-            neo4j_connection.setAutoCommit(false);
+            // neo4j_connection.setAutoCommit(false);
 
 
             System.out.println("refreshing nodes");
@@ -139,7 +139,7 @@ public class App
             rels.close();
             getRels.close();
 
-            neo4j_connection.commit();
+            // neo4j_connection.commit();
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -181,7 +181,7 @@ public class App
                 rels.close();
             }
 
-            neo4j_connection.setAutoCommit(true);
+            //neo4j_connection.setAutoCommit(true);
         }
 
     }
