@@ -14,7 +14,7 @@ var express = require('express'),
 var app = express();
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" :response-time'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
