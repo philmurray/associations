@@ -834,6 +834,13 @@ CREATE UNIQUE INDEX graph_rels_index ON graph_rels USING btree ("from", "to");
 
 
 --
+-- Name: graph_rels_score_idx; Type: INDEX; Schema: public; Owner: associations_dbuser; Tablespace: 
+--
+
+CREATE INDEX graph_rels_score_idx ON graph_rels USING btree ("from", score DESC);
+
+
+--
 -- Name: _RETURN; Type: RULE; Schema: public; Owner: associations_dbuser
 --
 
