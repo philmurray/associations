@@ -522,12 +522,13 @@ CREATE VIEW user_game_stats AS
             ELSE NULL::integer
         END) AS wongames,
     count(*) AS allgames
-   FROM (games_users g
+   FROM ((games_users g
      JOIN ( SELECT games_users.game_id,
             count(games_users.user_id) AS count
            FROM games_users
           GROUP BY games_users.game_id) c ON ((g.game_id = c.game_id)))
-  WHERE (g.completed = true)
+     JOIN games tg ON ((g.game_id = tg.id)))
+  WHERE (tg.completed = true)
   GROUP BY g.user_id;
 
 

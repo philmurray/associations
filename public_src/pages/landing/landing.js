@@ -90,10 +90,6 @@ angular.module('associations.pages.landing', [
 				"pages/landing/components/playerLevel/playerLevel.html",
 				"break",
 				"pages/landing/components/playerNormal/playerNormal.html",
-				"break",
-				"pages/landing/components/playerAnalysis/playerAnalysis.html",
-				"break",
-				"pages/landing/components/questionAnalysis/questionAnalysis.html"
 			],
 			visible: true
 		},
