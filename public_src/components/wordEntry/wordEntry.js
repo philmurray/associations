@@ -20,7 +20,7 @@ angular.module('associations.components.wordEntry', [
 			$scope.popover = {};
 
 			$scope.selectWord = function(word){
-				$scope.selected.word = word;
+				$scope.selected.word = $scope.current = word;
 
 				$timeout(function(){
 					$element.triggerHandler('hidePopover');
@@ -32,23 +32,31 @@ angular.module('associations.components.wordEntry', [
 					$element.triggerHandler('hidePopover');
 				});
 				if (e.which === 13){
-					WordService.check($scope.current).then(function(response){
-						if (response.data && response.data.length){
-							if (response.data.length === 1 && response.data[0] === $scope.current.toLowerCase()){
-								$scope.selected.word = response.data[0];
-								return;
-							} else {
-								$scope.popover.words = response.data;
-								$scope.popover.template = "components/wordEntry/suggest.html";
-							}
-						} else {
-							$scope.popover.template = "components/wordEntry/nowords.html";
-						}
-						$timeout(function(){
-							$element.triggerHandler('showPopover');
-						});
-					});
+					$scope.search();
 				}
+			};
+
+			$scope.search = function (e) {
+				if (e && e.relatedTarget) {
+					if (angular.element(e.relatedTarget).hasClass('word-suggest')) return;
+				}
+
+				WordService.check($scope.current).then(function(response){
+					if (response.data && response.data.length){
+						if (response.data.length === 1 && response.data[0] === $scope.current.toLowerCase()){
+							$scope.selected.word = response.data[0];
+							return;
+						} else {
+							$scope.popover.words = response.data;
+							$scope.popover.template = "components/wordEntry/suggest.html";
+						}
+					} else {
+						$scope.popover.template = "components/wordEntry/nowords.html";
+					}
+					$timeout(function(){
+						$element.triggerHandler('showPopover');
+					});
+				});
 			};
 
 			$scope.$watch("selected.word", function(){

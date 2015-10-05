@@ -8,7 +8,7 @@ angular.module('associations.pages.game.components.finishModal', [
 
 	$scope.close = $modalInstance.close;
 	$scope.show = {
-		instruction: showInstructions,
+		instructions: showInstructions,
 		multi: game.players.length > 1
 	};
 

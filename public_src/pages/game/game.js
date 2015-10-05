@@ -149,6 +149,7 @@ angular.module('associations.pages.game', [
 			$interval.cancel($scope.gameTimer);
 		}
 		var showInstructions = !$scope.game.seenInstructions,
+		//var showInstructions = true,
 			previousLevel = $scope.game.level;
 		GameService.stopGame($scope.game.id).then(function(response){
 			$scope.updatePlaying(false);
@@ -228,7 +229,7 @@ angular.module('associations.pages.game', [
 		} else {
 			$scope.activateAgain();
 		}
-		// else {
+		// } else {
 		// 	$scope.stopGame();
 		// }
 	} else {
