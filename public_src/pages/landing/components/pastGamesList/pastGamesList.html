@@ -2,8 +2,10 @@
 	<div class="col-xs-12 col-sm-8">
 		<h2>
 			Past Games
-			<span><button class="btn btn-color" ng-class="{active: !ctrl.multi}" ng-click="ctrl.setMode(false)"><i class="fa fa-user"></i></button></span>
-			<span><button class="btn btn-color" ng-class="{active: ctrl.multi}" ng-click="ctrl.setMode(true)"><i class="fa fa-users"></i></button></span>
+			<span class="past-games-buttons">
+				<button class="btn btn-color" ng-class="{active: !ctrl.multi}" ng-click="ctrl.setMode(false)"><i class="fa fa-user"></i></button>
+				<button class="btn btn-color" ng-class="{active: ctrl.multi}" ng-click="ctrl.setMode(true)"><i class="fa fa-users"></i></button>
+			</span>
 		</h2>
 	</div>
 	<div class="hidden-xs col-sm-4">
@@ -22,7 +24,7 @@
 									<span ng-if="player.winner"><strong><i class="fa fa-star"></i> {{player.alias}}</strong></span>
 									<span ng-if="!player.winner" ng-class="{'text-muted':ctrl.multi}">{{player.alias}}</span>
 								</div>
-								<div class="col-xs-4">
+								<div class="col-xs-4 player-score">
 									<span ng-if="player.winner"><strong>{{player.score}}</strong>&nbsp;&nbsp;&nbsp;<i class="{{ctrl.getNormal(player)}}"></i></span>
 									<span ng-if="!player.winner && player.completed" ng-class="{'text-muted':ctrl.multi}">{{player.score}}&nbsp;&nbsp;&nbsp;<i class="{{ctrl.getNormal(player)}}"></i></span>
 									<span ng-if="!player.completed" class="text-muted">...</span>
