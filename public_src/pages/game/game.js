@@ -156,7 +156,7 @@ angular.module('associations.pages.game', [
 			$scope.player = $scope.game.players[$scope.game.player];
 			$scope.activatePlayer($scope.player);
 			$scope.activateAgain();
-			$timeout(function(){
+			// $timeout(function(){
 				$modal.open({
 					templateUrl: "pages/game/components/finishModal/finishModal.html",
 					controller: "FinishModalController",
@@ -179,7 +179,7 @@ angular.module('associations.pages.game', [
 						}
 					}
 				});
-			},1000);
+			// },1000);
 
 		});
 	};
