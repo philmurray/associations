@@ -37,7 +37,7 @@ angular.module('associations.pages.game.components.finishModal', [
 		if (!$scope.show.instructions) {
 			if ($scope.show.multi) {
 				$timeout(function(){
-					var incr = $scope.winnerScore/200;
+					var incr = $scope.winnerScore/100;
 					$interval(function(){
 						$scope.players.forEach(function(player){
 							if (player.score < player.gameScore){
@@ -47,7 +47,7 @@ angular.module('associations.pages.game.components.finishModal', [
 								}
 							}
 						});
-					}, 10, 200).then(function(){
+					}, 20, 100).then(function(){
 						$scope.players.forEach(function(player){
 							player.score = player.gameScore;
 						});
@@ -58,10 +58,10 @@ angular.module('associations.pages.game.components.finishModal', [
 			} else {
 				$timeout(function(){
 					$scope.step++;
-					var incr = player.score/100;
+					var incr = player.score/50;
 					$interval(function(){
 						$scope.score += incr;
-					}, 10, 100).then(function(){
+					}, 20, 50).then(function(){
 						$scope.score = player.score;
 					});
 				},750);

@@ -227,10 +227,9 @@ angular.module('associations.pages.game', [
 			}
 		} else {
 			$scope.activateAgain();
+		// } else {
+		//  	$scope.stopGame();
 		}
-		// else {
-		// 	$scope.stopGame();
-		// }
 	} else {
 		$scope.activatePlayer($scope.game.players[0]);
 	}
