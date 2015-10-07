@@ -10,7 +10,7 @@
 			<div class="panel panel-default">
 				<div class="list-group panel-body">
 					<div ng-repeat="player in foundPlayers" class="list-group-item">
-						<div class="row" ng-click="togglePlayer(player)">
+						<div class="row player-row" ng-click="togglePlayer(player)" ng-class="{disabled:full() && !playerSelected(player)}">
 							<div class="col-xs-10 vcenter">
 								<div class="row {{player.color.css_class}}" ng-class="{selected: playerSelected(player), available: !playerSelected(player)}">
 									<div class="col-sm-7 alias player-name">
@@ -24,7 +24,7 @@
 								</div>
 							</div><!--
 						--><div class="col-xs-2 vcenter">
-								<button class="btn btn-xs btn-color pull-right">
+								<button class="btn btn-xs btn-color pull-right" ng-disabled="full() && !playerSelected(player)">
 									<i ng-class="{'icon-invisible':!playerSelected(player)}" class="fa fa-check"></i>
 								</button>
 							</div>

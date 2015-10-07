@@ -23,14 +23,18 @@ angular.module('associations.pages.landing.components.links.components.selectPla
 			angular.forEach($scope.selectedPlayers, function(player){
 				$scope.foundPlayers.push(player);
 			});
-			$scope.foundPlayers = $scope.foundPlayers.concat(recentPlayers);
+			angular.forEach(recentPlayers, function(player){
+				if (!$scope.selectedPlayers[player.id]) {
+					$scope.foundPlayers.push(player);
+				}
+			});
 		}
 	});
 
 	$scope.togglePlayer = function(player) {
 		if ($scope.selectedPlayers[player.id]){
 			delete $scope.selectedPlayers[player.id];
-		} else {
+		} else if (!$scope.full()) {
 			$scope.selectedPlayers[player.id] = player;
 		}
 	};
@@ -41,6 +45,10 @@ angular.module('associations.pages.landing.components.links.components.selectPla
 
 	$scope.hasPlayers = function() {
 		return Object.keys($scope.selectedPlayers).length;
+	};
+
+	$scope.full = function () {
+		return Object.keys($scope.selectedPlayers).length >= 4;
 	};
 
 	$scope.startGame = function() {

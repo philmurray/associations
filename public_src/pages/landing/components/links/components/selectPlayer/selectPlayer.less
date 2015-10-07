@@ -4,7 +4,7 @@
 		max-height: 250px;
 		overflow-y: auto;
 	}
-	.row {
+	.player-row {
 		cursor: pointer;
 
 		.available {
@@ -17,6 +17,11 @@
 
 		.player-name {
 			.text-overflow();
+		}
+
+		&.disabled {
+			opacity: 0.4;
+			cursor: not-allowed;
 		}
 	}
 }
