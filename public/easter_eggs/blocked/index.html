@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+	<title>Blocked</title>
+	<script type="text/javascript" src="blocked.js"></script>
+	
+	<script type="text/javascript">
+		
+		function loadSounds(list){
+			for (var key in list) {
+			  if (list.hasOwnProperty(key)) {
+				list[key].audio = [];
+				for (i=0; i<list[key].channels; i++){
+					list[key].audio[i] = new lime.audio.Audio(list[key].src);
+				}
+				list[key].channel = 0;
+			  }
+			}
+		}
+		function playSound(sound){
+			sound.audio[sound.channel].playing_ = false;  //hack since the private var never gets set to false...
+			sound.audio[sound.channel].play();
+			sound.channel = (sound.channel + 1) % sound.channels;
+		}
+		
+		function bodyOnLoad()
+		{
+			blocked.start(loadSounds, playSound, true);
+		}
+		
+	</script>
+	
+	<style>
+	body {
+	background: #000000;
+	}
+	</style>
+</head>
+
+<body onload="bodyOnLoad()">
+
+</body>
+
+</html>

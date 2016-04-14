@@ -52,6 +52,11 @@ angular.module('associations.pages.exploreWords',[
 				$scope.getPaths();
 			}
 		}
+		if (word === "blocked") {
+			$scope.egg = "/easter_eggs/blocked/index.html";
+		} else {
+			$scope.egg = "";
+		}
 	});
 	$scope.$watch("selectedOtherWord.word", function(word){
 		$location.search("otherWord", word).replace();
